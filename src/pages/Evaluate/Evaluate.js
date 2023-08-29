@@ -59,7 +59,7 @@ const Evaluate = (props) => {
 
         setUploadFileStatus({ visible: true, status: "Loading", message: "Загрузка файла" })
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/files`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/files`, {
             method: "POST",
             body: formData,
             headers: {
@@ -101,7 +101,7 @@ const Evaluate = (props) => {
             }
         };
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/evaluation/find-bulls`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/evaluation/find-bulls`, {
             method: "POST",
             body: JSON.stringify(objectData),
             headers: {
@@ -194,7 +194,7 @@ const Evaluate = (props) => {
         formData.fileId = fileId;
         console.log(formData);
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/evaluation/evaluate`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/evaluation/evaluate`, {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
@@ -292,7 +292,7 @@ const Evaluate = (props) => {
             setCurrentStep({ step: 2 });
             setUploadFileStatus({ visible: true, message: "Файл уже загружен пользователем", status: "Success" });
 
-            fetch(`${SERVER_URL}:${SERVER_PORT}/orders/${params.get("evaluateId")}/table-dump`, {
+            fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders/${params.get("evaluateId")}/table-dump`, {
                 headers: {
                     authorization: token ? "Bearer " + token : null,
                 }

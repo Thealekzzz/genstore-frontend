@@ -45,7 +45,7 @@ const Registration = (props) => {
 
         setProccessStatus({ visible: true, status: "Loading", message: "Регистрирую" });
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/users`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/users`, {
             method: "POST",
             body: JSON.stringify(fd),
             headers: {

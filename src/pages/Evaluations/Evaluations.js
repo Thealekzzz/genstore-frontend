@@ -72,7 +72,7 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 
 	useEffect(() => {
 		setAreEvaluatesLoading(true);
-		fetch(`${SERVER_URL}:${SERVER_PORT}/orders?all=true`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders?all=true`, {
 			method: "GET",
 			headers: {
 				authorization: token ? "Bearer " + token : null,

@@ -37,7 +37,7 @@ const Login = ({ setUserData, setIsAuthorized, ...props }) => {
 
         setProccessStatus({ visible: true, status: "Loading", message: "Выполняю вход" });
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/login`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/login`, {
             method: "POST",
             body: JSON.stringify(fd),
             headers: {

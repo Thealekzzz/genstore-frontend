@@ -42,7 +42,7 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 	}
 
 	function handleDeleteButtonClick() {
-		fetch(`${SERVER_URL}:${SERVER_PORT}/api/v1/evaluations?evaluationId=${evaluationData.evaluationId}`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/api/v1/evaluations?evaluationId=${evaluationData.evaluationId}`, {
 			method: 'DELETE',
 			headers: {
 				authorization: token ? "Bearer " + token : null,
@@ -66,7 +66,7 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 
         console.log(evaluationData);
 
-		fetch(`${SERVER_URL}:${SERVER_PORT}/api/v1/evaluations/${evaluationData.evaluationId}`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/api/v1/evaluations/${evaluationData.evaluationId}`, {
 			method: "PATCH",
 			body: JSON.stringify(evaluationData),
 			headers: {

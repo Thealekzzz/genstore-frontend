@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`${SERVER_URL}:${SERVER_PORT}/users/me`, {
+    fetch(`${SERVER_URL}:${SERVER_PORT}/api/users/me`, {
       credentials: "same-origin",
       headers: {
         authorization: token ? ("Bearer " + token) : "",

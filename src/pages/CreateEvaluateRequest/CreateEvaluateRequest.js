@@ -64,7 +64,7 @@ const CreateEvaluateRequest = (props) => {
 
 			fd.append('file', e.target.files[0]);
 
-			fetch(`${SERVER_URL}:${SERVER_PORT}/files`, {
+			fetch(`${SERVER_URL}:${SERVER_PORT}/api/files`, {
 				method: 'POST',
 				body: fd,
 				headers: {
@@ -128,7 +128,7 @@ const CreateEvaluateRequest = (props) => {
 
 		console.log(fields)
 
-		fetch(`${SERVER_URL}:${SERVER_PORT}/orders`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders`, {
 			method: "POST",
 			body: JSON.stringify(fields),
 			headers: {

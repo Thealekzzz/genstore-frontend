@@ -73,7 +73,7 @@ const Profile = ({ setIsAuthorized, ...props }) => {
 
 	useEffect(() => {
 		setAreEvaluatesLoading(true);
-		fetch(`${SERVER_URL}:${SERVER_PORT}/orders`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders`, {
 			method: "GET",
 			headers: {
 				authorization: token ? "Bearer " + token : null,

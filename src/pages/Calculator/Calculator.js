@@ -46,7 +46,7 @@ const Calculator = () => {
   }
 
   function handlePromoCheck() {   
-    fetch(`${SERVER_URL}:${SERVER_PORT}/promocode?code=${promoValue}`)
+    fetch(`${SERVER_URL}:${SERVER_PORT}/api/promocode?code=${promoValue}`)
     .then(res => res.json())
     .then(response => {
       if (response.sale) {
