@@ -1,0 +1,28 @@
+.lead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 60px;
+}
+
+.leadTitleWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.leadSectionTitle {
+    margin-bottom: 10px;
+    border-left: 5px solid #4380f0;
+    padding-left: 10px;
+}
+
+.leadSectionSubtitle {
+    margin-bottom: 50px;
+}
+
+.leadButtons {
+    display: flex;
+    gap: 10px;
+}

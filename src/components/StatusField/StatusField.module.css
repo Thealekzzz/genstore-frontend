@@ -1,0 +1,28 @@
+.statusWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 20px;
+
+    min-height: 40px;
+
+    border-radius: 5px;
+
+    background-color: #4380f0;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+.statusWrapperSuccess {
+    background-color: seagreen;
+}
+
+.statusWrapperError {
+    background-color: tomato;
+}

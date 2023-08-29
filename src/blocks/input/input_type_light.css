@@ -1,0 +1,12 @@
+.input_type_light {
+  width: 80px;
+  padding: 10px 5px;
+
+  background-color: #535e7010;
+  border: none;
+  border-bottom: 2px solid #888;
+  border-radius: 5px 5px 0 0;
+  outline: none;
+  
+  text-align: center;
+}

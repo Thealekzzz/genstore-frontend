@@ -1,0 +1,189 @@
+/* profile-lead */
+
+.profile-lead {
+    box-sizing: border-box;
+
+    position: relative;
+
+    display: flex;
+    align-items: flex-end;
+
+    width: 100%;
+    height: 300px;
+
+    margin: 50px auto 0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    background-color: #5B98E0;
+}
+
+.profile-lead__bottom {
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+
+    height: 150px;
+    width: 100%;
+
+    border-radius: 20px 20px 10px 10px;
+
+    padding: 20px 20px 20px 220px;
+
+    background-color: white;
+}
+
+.profile-lead__point {
+    height: 4px;
+    width: 4px;
+
+    background-color: black;
+
+    border-radius: 50%;
+}
+
+.profile-lead__right-side {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-lead__user-photo {
+    width: 150px;
+    height: 150px;
+
+    box-sizing: border-box;
+
+    background-color: #EBEDF0;
+    
+    border: 4px solid white;
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    position: absolute;
+    bottom: 75px;
+    left: 50px;
+}
+
+/* .profile-lead__user-photo::after {
+    content: " ";
+
+    z-index: 2;
+
+    position: absolute;
+    border-radius: 1px;
+    
+    background-color: black;
+    height: 100px;
+    width: 100px;
+
+    opacity: 1;
+
+
+} */
+
+.profile-lead__username-and-balance {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-weight: bold;
+}
+
+
+.profile-container__unathorized-message {
+    margin: 100px auto 0;
+
+}
+
+/* EVALUATIONS BLOCK */
+
+.orders {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    margin: 20px 0;
+
+    border-radius: 10px;
+    
+    background-color: white;
+
+}
+
+.ordersTitle {
+    margin: 30px 0 20px 30px;
+}
+
+.ordersList {
+    width: 100%;
+    
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+.header, .orderItem {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr 3fr 1.4fr;
+
+    width: 100%;
+    padding: 20px 10px;
+    
+    font-size: 14px;
+
+}
+
+.header > p, .orderItem > p {
+    padding-left: 20px;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.orderItem {
+    align-items: center;
+
+    border-top: 1px solid #eee;
+
+    cursor: pointer;
+    transition: background-color .1s;
+}
+
+.orderItem > p {
+    width: fit-content;
+}
+
+.orderItem:hover {
+    background-color: #f2f2f5;
+}
+
+.orderItem > p:last-child {
+    height: fit-content;
+    padding: 5px 10px;
+    margin-left: 20px;
+
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+
+    border-radius: 2px;
+}
+
+.noEvaluates {
+    margin: 50px auto;
+    text-align: center;
+}
+
+
+
+@media (max-width: 1440px) {
+    .profile-lead {
+        width: 100%;
+    }
+}

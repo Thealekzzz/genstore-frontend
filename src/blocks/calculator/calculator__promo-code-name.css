@@ -1,0 +1,10 @@
+.calculator__promo-code-name {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+
+  /* min-width: 60px; */
+}

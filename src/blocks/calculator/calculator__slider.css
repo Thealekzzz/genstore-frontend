@@ -1,0 +1,43 @@
+element {
+  --thumb-size: 10px;
+}
+
+.calculator__slider {
+  flex-grow: 1;
+}
+
+.calculator__slider::-webkit-slider-thumb {
+  transform: translateY(-6px);
+  background-color: white;
+  border: 2px solid #5590E8;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  cursor: pointer;
+}
+
+.calculator__slider::-moz-range-thumb {
+  transform: translateY(-6px);
+  background-color: white;
+  border: 2px solid #5590E8;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  cursor: pointer;
+}
+
+.calculator__slider::-webkit-slider-runnable-track {
+  background-color: #ADC6ED;
+  height: 2px;
+}
+
+.calculator__slider::-moz-range-track {
+  background-color: #ADC6ED;
+  height: 2px;
+}
+
+
+
+@media (max-width: 700px) {
+  .calculator__slider {
+    width: 100%;
+  }
+}

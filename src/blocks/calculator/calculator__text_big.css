@@ -1,0 +1,10 @@
+.calculator__text_big {
+  color: var(--regular-text, #434343);
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+
+  
+}

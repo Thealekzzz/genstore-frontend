@@ -1,0 +1,44 @@
+.ButtonFile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 50px;
+  min-width: 220px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0 20px;
+
+  background-color: transparent;
+  
+  outline: none;
+  border: 3px dashed #5590E8;
+  border-radius: 10px;
+
+  
+  font-family: inherit;
+  color: #5590E8;
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: none;
+
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: opacity .2s, background-color .2s;
+}
+
+.ButtonFile:not([disabled]):hover {
+  background-color: #ebedf3;
+}
+
+.ButtonFile:not([disabled]):active {
+  background-color: #ccd5e6;
+}
+
+.ButtonFile[disabled] {
+  background-color: #9ca3af;
+  
+  cursor: auto;
+  pointer-events: none;
+
+}

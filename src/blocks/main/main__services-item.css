@@ -1,0 +1,7 @@
+.main__services-item {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  
+}

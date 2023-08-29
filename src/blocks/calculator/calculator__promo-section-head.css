@@ -1,0 +1,17 @@
+.calculator__promo-section-head {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 700px) {
+  .calculator__promo-section-head {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .calculator__promo-section-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

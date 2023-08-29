@@ -1,0 +1,110 @@
+.title {
+    margin-bottom: 20px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    gap: 20px;
+
+    align-items: start;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.section {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ECF2FA;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sectionName {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+
+    margin-bottom: 10px;
+
+}
+
+.sectionItem {
+    display: flex;
+    align-items: center;
+
+}
+
+.itemName {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #5C5C5C;
+
+    display: inline-block;
+    width: 120px;
+}
+
+.itemValue {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.statusWrapper {
+    list-style: none;
+    padding: 0;
+
+    display: flex;
+    gap: 10px;
+
+    font-size: 12px;
+}
+
+.statusItem {
+    border-radius: 3px;
+    border: 1px solid #7A8493;
+    
+    padding: 5px 10px;
+    color: #7A8493;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background-color .2s,
+                border .2s;
+}
+
+.statusItem:not(.statusItemActive):hover {
+    border: 1px solid #575757;
+    background-color: #f7f7f7;
+    color: #575757;
+
+}
+
+.statusItemActive {
+    background-color: #5590E8;
+    border: 1px solid #5590E8;
+
+    color: white;
+}
+
+.statusItemActive:hover {
+    background-color: #4a84db;
+
+}
+
+.bottom {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: auto;
+}

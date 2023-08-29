@@ -1,0 +1,9 @@
+.highlighted {
+  padding: 2px 8px;
+
+  background-color: #106CF4;
+  color: white;
+
+  display: inline-block;
+  transform: translateX(-8px);
+}

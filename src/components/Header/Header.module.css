@@ -1,0 +1,82 @@
+@import url(./blocks/burger.module.css);
+
+.header {
+    height: 60px;
+    background-color: white;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+.header__container {
+    box-sizing: border-box;
+
+    /* max-width: 1200px; */
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.header__logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--regular-text, #434343);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+
+    transition: color .2s;
+}
+
+.header__logo-wrapper:hover {
+    color: black;
+}
+
+.header__links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.header__link {
+    color: var(--regular-text, #434343);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    text-decoration: none;
+
+    transition: color .2s;
+}
+
+.header__link:hover {
+    color: black;
+}
+
+.header__icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    /* margin-left: 10%; */
+
+}
+
+@media (max-width: 767px) {
+    .header__container {
+        padding: 0 20px;
+    }
+    
+}

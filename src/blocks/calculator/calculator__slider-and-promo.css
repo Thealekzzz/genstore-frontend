@@ -1,0 +1,11 @@
+.calculator__slider-and-promo {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .calculator__slider-and-promo {
+    flex-direction: column;
+  }
+}

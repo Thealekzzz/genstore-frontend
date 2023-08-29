@@ -1,0 +1,4 @@
+.input__label {
+  flex-grow: 1;
+  position: relative;
+}

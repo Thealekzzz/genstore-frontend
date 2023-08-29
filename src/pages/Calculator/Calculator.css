@@ -1,0 +1,49 @@
+@import url(../../blocks/page/page__head.css);
+@import url(../../blocks/page/page__container.css);
+@import url(../../blocks/page/page__head.css);
+@import url(../../blocks/page/page__text.css);
+@import url(../../blocks/page/page__title.css);
+
+@import url(../../blocks/section/section.css);
+@import url(../../blocks/section/section__text.css);
+@import url(../../blocks/section/section__title.css);
+
+
+@import url(../../blocks/input/input.css);
+@import url(../../blocks/input/input_type_simple.css);
+@import url(../../blocks/input/input_color_white.css);
+@import url(../../blocks/input/input_type_light.css);
+
+@import url(../../blocks/input/input__error.css);
+@import url(../../blocks/input/input__label.css);
+
+@import url(../../blocks/button/button.css);
+
+@import url(../../blocks/calculator/calculator__text.css);
+@import url(../../blocks/calculator/calculator__graph.css);
+@import url(../../blocks/calculator/calculator__slider-section.css);
+@import url(../../blocks/calculator/calculator__text_big.css);
+@import url(../../blocks/calculator/calculator__slider.css);
+@import url(../../blocks/calculator/calculator__section.css);
+@import url(../../blocks/calculator/calculator__promo-section.css);
+@import url(../../blocks/calculator/calculator__slider-and-promo.css);
+@import url(../../blocks/calculator/calculator__animal-number.css);
+@import url(../../blocks/calculator/calculator__result-secton.css);
+@import url(../../blocks/calculator/calculator__old-price.css);
+@import url(../../blocks/calculator/calculator__promo-input.css);
+
+@import url(../../blocks/calculator/calculator__promo-and-result.css);
+
+@import url(../../blocks/calculator/calculator__promo-section-head.css);
+@import url(../../blocks/calculator/calculator__promo-codes.css);
+@import url(../../blocks/calculator/calculator__promo-code.css);
+@import url(../../blocks/calculator/calculator__promo-code-name.css);
+@import url(../../blocks/calculator/calculator__promo-code-description.css);
+
+@import url(../../blocks/calculator/calculator__price-wrapper.css);
+
+
+
+
+
+@import url(../../blocks/hidden/hidden.css);

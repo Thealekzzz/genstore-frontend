@@ -1,0 +1,33 @@
+
+.tableWrapper {
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    font-size: 12px;
+    
+    border: none;
+    border-collapse: collapse;
+
+}
+
+.cell {
+    min-height: 40px;
+    min-width: 100px;
+    
+    padding: 2px 5px;
+
+    border: 1px solid #CCCCCC;
+}
+  
+.letters > td {
+    background-color: #5B98E0;
+
+    color: white;
+    font-weight: bold;
+    text-align: center;
+
+    border: 1px solid #444444;
+    height: 30px;
+}

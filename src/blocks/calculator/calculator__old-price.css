@@ -1,0 +1,9 @@
+.calculator__old-price {
+  color: #8F8F8F;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+  text-decoration: line-through;
+}

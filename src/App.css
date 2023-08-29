@@ -1,0 +1,22 @@
+@import url(./vendor/normalize.css);
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', "Arial", sans-serif;
+}
+
+.content {
+  min-height: calc(100vh - 60px);
+}
+
+.page {
+  margin: 0;
+  padding: 0;
+  
+  background-color: #EBEDF0;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}

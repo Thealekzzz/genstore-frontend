@@ -1,0 +1,44 @@
+.button {
+    display: flex;
+
+    height: 40px;
+    padding: 0 20px;
+
+    background-color: transparent;
+
+    align-items: center;
+
+    outline: none;
+    border: 2px solid #4380f0;    
+    border-radius: 4px;
+    
+    font-family: inherit;
+    color: #4380f0;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: opacity .2s, background-color .2s;
+}
+
+.button:not([disabled]):hover {
+    border: 2px solid #3973df; 
+    color: #3973df; 
+    background-color: rgba(33, 104, 170, 0.1);
+    
+    /* background-color: rgb(223, 237, 255); */
+}
+
+.button[disabled] {
+    color: #ccc;
+    
+    border: 2px solid #ccc;
+    background-color: transparent;
+    opacity: 1;
+    
+    cursor: auto;
+    pointer-events: none;
+
+}

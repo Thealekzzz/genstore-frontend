@@ -1,0 +1,9 @@
+.main__services-item-title {
+  color: black;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 150%;
+
+  max-width: 350px;
+}

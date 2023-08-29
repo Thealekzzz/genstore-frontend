@@ -1,0 +1,58 @@
+.popup {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, .7);
+
+    transition: visibility .2s cubic-bezier(0.165, 0.84, 0.44, 1),
+                opacity .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.hidden > .popupContainer {
+    transform: translateY(10px);
+
+}
+
+.popupContainer {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 500px;
+    min-height: 200px;
+
+    padding: 20px;
+
+    background-color: white;
+    border-radius: 10px;
+
+    transition: transform .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.closeButton {
+    position: absolute;
+
+    cursor: pointer;
+
+    top: -30px;
+    right: -30px;
+
+    transition: opacity 0.2s;
+}
+
+.closeButton:hover {
+    opacity: .8;
+}   

@@ -1,0 +1,30 @@
+.input_type_simple {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+
+  padding: 12px 20px;
+
+  border: none;
+  border-radius: 5px;
+  background: #E4E9F0;
+
+  outline-color: transparent;
+
+  transition: outline .2s, background-color .2s;
+}
+
+.input_type_simple:active, .input_type_simple:focus {
+  outline: 1px solid #5590E8;
+}
+
+.input_type_simple:hover {
+  background-color: #dce0e6;
+}
+
+.input_type_simple::placeholder {
+  color: #808080;
+
+}

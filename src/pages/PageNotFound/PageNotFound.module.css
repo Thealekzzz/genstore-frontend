@@ -1,0 +1,30 @@
+.imageWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 30px;
+
+  margin-top: 30vh;
+  margin-bottom: 30px;
+}
+
+.image {
+
+}
+
+.errorNumber {
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 117px;
+
+  color: #5590E8;
+}
+
+.errorText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center; 
+  
+  color: #3E3E3E;
+}

@@ -1,0 +1,14 @@
+.search__extra-filter-input {
+  max-width: 100%;
+  width: 100px;
+
+  padding: 5px 10px;
+
+  font-size: 10px;
+
+  transform: translateX(-10px);
+}
+
+.search__extra-filter-input:focus {
+  outline: 1px solid black;
+}

@@ -1,0 +1,8 @@
+.block__title {
+  color: var(--subtitle, #484848);
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+}

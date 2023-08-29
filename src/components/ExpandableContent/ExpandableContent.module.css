@@ -1,0 +1,58 @@
+.Content {
+  height: fit-content;
+  width: fit-content;
+  background-color: #fff;
+
+  border-radius: 5px;
+  overflow: hidden;
+
+  transition: border-radius .2s;
+}
+
+/* .ContentExpanded {
+  border-radius: 10px;
+} */
+
+.ContentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px;
+
+  cursor: pointer;
+
+  transition: background-color .2s;
+}
+
+.ContentHeader:hover {
+  background-color: rgb(227, 234, 243);
+
+}
+
+.ContentTitle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.ContentIcon {
+  transition: transform .2s ease-out;
+}
+
+.ContentInner {
+  /* box-sizing: border-box;
+  padding: 20px 10px; */
+
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.ContentInnerExpanded {
+  max-height: fit-content;
+  /* transition: max-height 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); */
+}

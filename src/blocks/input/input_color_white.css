@@ -1,0 +1,7 @@
+.input_color_white {
+  background-color: white;
+}
+
+.input_color_white:hover {
+  background-color: rgb(250, 250, 250);
+}

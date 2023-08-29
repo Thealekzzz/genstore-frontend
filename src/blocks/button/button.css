@@ -1,0 +1,34 @@
+.button {
+  display: inline-block;
+  color: white;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+  text-decoration: none;
+
+  border: none;
+  border-radius: 5px;
+  background: #5590E8;
+
+  padding: 12px 20px;
+
+  cursor: pointer;
+  outline-color: transparent;
+  transition: background-color .2s, outline-color .2s, transform .2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* .button:focus {
+  outline: 1px solid black;
+} */
+
+.button:hover {
+  background-color: #457dd1;
+}
+
+.button:active {
+  transform: scale(.97);
+  background-color: #3d73c4;
+  outline-color: transparent;
+}

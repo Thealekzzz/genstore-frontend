@@ -1,0 +1,22 @@
+.input__error {
+  position: absolute;
+  top: 44px;
+
+  font-size: 12px;
+  color: tomato;
+
+  padding: 0 20px;
+  max-width: 100%;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+
+  transition: visibility .2s, opacity .2s, transform .2s;
+}
+
+.input__error_visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
