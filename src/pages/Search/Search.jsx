@@ -95,7 +95,7 @@ const Search = () => {
 
     console.log(markers);
 
-    fetch(`${SERVER_URL}:${SERVER_PORT}/api/api/v1/bulls`, {
+    fetch(`${SERVER_URL}:${SERVER_PORT}/api/bulls`, {
       method: "POST",
       body: JSON.stringify({ markers, markerType: markerTypes[markerType] }),
       headers: {

@@ -38,7 +38,7 @@ const Main = (props) => {
 			childrens: (
 				<>
 					<p className={styles['concept__scheme-popup-text']}>Для расчета необходим файл с данными о трех поколениях предков</p>
-					<a href={require("./files/Пример файла для расчета.xlsx")} download={true} className={styles['concept__scheme-popup-link']}>Скачать пример файла</a>
+					<a href='/assets/files/Пример файла для расчета.xlsx' download={true} className={styles['concept__scheme-popup-link']}>Скачать пример файла</a>
 				</>
 			)
 		},

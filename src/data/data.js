@@ -8,4 +8,4 @@ export const SERVER_PORT = 3001;
 // Данные для разработки
 export const SERVER_URL = "http://localhost";
 export const SITE_URL = "http://localhost";
-export const SITE_PORT = 3000;
+export const SITE_PORT = 5173;

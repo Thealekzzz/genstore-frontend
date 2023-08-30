@@ -100,11 +100,11 @@ const Profile = ({ setIsAuthorized, ...props }) => {
 							<div className="profile-lead__info-block">
 								<div className="profile-lead__username-and-balance">
 									{props.userData.name}
-									<div className="profile-lead__point"></div>
+									{/* <div className="profile-lead__point"></div>
 									<div className="profile-lead__balance">
 										Баланс 0
-										<img src="./src/rouble.svg" alt="" />
-									</div>
+										<img src="/assets/rouble.svg" alt="" />
+									</div> */}
 								</div>
 							</div>
 

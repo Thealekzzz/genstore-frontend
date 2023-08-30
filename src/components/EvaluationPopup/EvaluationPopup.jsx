@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import styles from "./EvaluationPopup.module.css";
 
@@ -12,12 +12,12 @@ import downloadFile from '../../utils/downloadFile.js';
 
 import TokenContext from '../../contexts/TokenContext';
 
-const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOpen, onDeleteEvaluation }) => {
+const EvaluationPopup = ({ orderData, onOrderDataSave, isOpen, setIsOpen, onDeleteOrder }) => {
 	const token = useContext(TokenContext);
 
-	const [isPaid, setIsPaid] = useState(evaluationData.isPaid);
-	const [isEvaluated, setIsEvaluated] = useState(evaluationData.isEvaluated);
-	const [status, setStatus] = useState(evaluationData.status);
+	const [isPaid, setIsPaid] = useState(orderData.isPaid);
+	const [isEvaluated, setIsEvaluated] = useState(orderData.isEvaluated);
+	const [status, setStatus] = useState(orderData.status);
 	const [isDataChanged, setIsDataChanged] = useState(false);
 
     function handleIsPaidClick() {
@@ -36,13 +36,14 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 	}
 
 	function handleDownloadButtonClick() {
-		const urlToFile = `${SERVER_URL}:${SERVER_PORT}/uploadedFile/${evaluationData.savedFilename}`;
+		console.log(orderData);
+		const urlToFile = `${SERVER_URL}:${SERVER_PORT}/uploadedFile/${orderData.savedFilename}`;
 		// console.log(urlToFile);
-		downloadFile(urlToFile, evaluationData.filename);
+		downloadFile(urlToFile, orderData.filename);
 	}
 
 	function handleDeleteButtonClick() {
-		fetch(`${SERVER_URL}:${SERVER_PORT}/api/api/v1/evaluations?evaluationId=${evaluationData.evaluationId}`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders/${orderData.orderId}`, {
 			method: 'DELETE',
 			headers: {
 				authorization: token ? "Bearer " + token : null,
@@ -50,25 +51,23 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 		})
 			.then(res => res.json())
 			.then((response) => {
-				onDeleteEvaluation(evaluationData.evaluationId);
+				onDeleteOrder(orderData.orderId);
 			})
-			.catch((error) => {
-				console.error("Ошибка при удалении заявки");
-			});
+			.catch(console.log);
 	}
 
     function handleSaveButtonClick() {
-        const evaluationData = {
+        const orderDataToUpdate = {
             isPaid,
             isEvaluated,
             status,
         }
 
-        console.log(evaluationData);
+        console.log(orderDataToUpdate);
 
-		fetch(`${SERVER_URL}:${SERVER_PORT}/api/api/v1/evaluations/${evaluationData.evaluationId}`, {
+		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders/${orderData.orderId}`, {
 			method: "PATCH",
-			body: JSON.stringify(evaluationData),
+			body: JSON.stringify(orderDataToUpdate),
 			headers: {
 				authorization: token ? "Bearer " + token : null,
 				'Content-type': 'application/json; charset=UTF-8',
@@ -78,16 +77,16 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 			.then((data) => {
 				console.log(data);
 
-				onEvaluationDataSave({
-					id: evaluationData.evaluationId,
+				onOrderDataSave({
+					id: orderData.orderId,
 					isPaid,
 					isEvaluated,
 					status,
 				});
 
-            // setIsPaid(props.evaluationData.isPaid);
-            // setIsEvaluated(props.evaluationData.isEvaluated);
-            // setStatus(props.evaluationData.status);
+            // setIsPaid(props.orderData.isPaid);
+            // setIsEvaluated(props.orderData.isEvaluated);
+            // setStatus(props.orderData.status);
         })
         .catch(console.log)
         .finally(() => {
@@ -100,22 +99,22 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 	// Обновляю значения input в попапе при его открытии
 	useEffect(() => {
 		if (isOpen) {
-			setIsPaid(evaluationData.isPaid);
-			setIsEvaluated(evaluationData.isEvaluated);
-			setStatus(evaluationData.status);
+			setIsPaid(orderData.isPaid);
+			setIsEvaluated(orderData.isEvaluated);
+			setStatus(orderData.status);
 
 		}
 
 		setIsDataChanged(false);
 
-	}, [isOpen, evaluationData])
+	}, [isOpen, orderData])
 
 
 
 
 	return (
 		<Popup isOpen={isOpen} setIsOpen={setIsOpen} style={{ minWidth: 1000, minHeight: 400 }}>
-			<h2 className={styles.title}>{evaluationData.evaluationName}</h2>
+			<h2 className={styles.title}>{orderData.name}</h2>
 
 			<ul className={styles.content}>
 				<li className={styles.section}>
@@ -124,28 +123,28 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>Оригинал</span>
 						<span className={styles.itemValue}>
-							{evaluationData.filename}
+							{orderData.filename}
 						</span>
 
 					</p>
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>На сервере</span>
 						<span className={styles.itemValue}>
-							{evaluationData.savedFilename}
+							{orderData.savedFilename}
 						</span>
 
 					</p>
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>Отправлен</span>
 						<span className={styles.itemValue}>
-							{getPrettyDateTime(evaluationData.createdAt)}
+							{getPrettyDateTime(orderData.createdAt)}
 						</span>
 
 					</p>
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>Комментарий</span>
 						<span className={styles.itemValue}>
-							{evaluationData.userComment || "-"}
+							{orderData.userComment || "-"}
 						</span>
 
 					</p>
@@ -158,14 +157,14 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>Имя</span>
 						<span className={styles.itemValue}>
-							{evaluationData.name}
+							{orderData.name}
 						</span>
 
 					</p>
 					<p className={styles.sectionItem}>
 						<span className={styles.itemName}>Email</span>
 						<span className={styles.itemValue}>
-							{evaluationData.login}
+							{orderData.login}
 						</span>
 
 					</p>
@@ -234,7 +233,7 @@ const EvaluationPopup = ({ evaluationData, onEvaluationDataSave, isOpen, setIsOp
 				<Button onClick={handleDeleteButtonClick}>Удалить заявку</Button>
 				<Button onClick={handleSaveButtonClick} buttonDisabled={!isDataChanged}>Сохранить</Button>
 				<Button onClick={handleDownloadButtonClick}>Скачать исходный файл</Button>
-				<ButtonAccent buttonDisabled={isDataChanged} href={`${SITE_URL}:${SITE_PORT}/evaluate?evaluateId=${evaluationData.evaluationId}`}>Выполнить расчет</ButtonAccent>
+				<ButtonAccent buttonDisabled={isDataChanged} href={`${SITE_URL}:${SITE_PORT}/evaluate?evaluateId=${orderData.orderId}`}>Выполнить расчет</ButtonAccent>
 			</div>
 		</Popup>
 

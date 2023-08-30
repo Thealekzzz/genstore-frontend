@@ -8,7 +8,7 @@ import { SERVER_PORT, SERVER_URL } from '../../data/data';
 // import Button from '../../components/Button/Button';
 import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
 import Container from '../../components/Container/Container';
-import EvaluationPopup from '../../components/EvaluationPopup/EvaluationPopup';
+import OrderPopup from '../../components/EvaluationPopup/EvaluationPopup';
 import getPrettyDateTime from '../../utils/getPrettyDateTime';
 
 // import AuthorizedContext from '../../contexts/AuthorizedContext';
@@ -32,9 +32,9 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 	const navigate = useNavigate();
 
 	const [orders, setOrders] = useState([]);
-	const [areEvaluatesLoading, setAreEvaluatesLoading] = useState(false);
-	const [isEvaluationPopupOpen, setIsEvaluationPopupOpen] = useState(false);
-	const [selectedEvaluationData, setSelectedEvaluationData] = useState({});
+	const [areOrdersLoading, setAreOrdersLoading] = useState(false);
+	const [isOrderPopupOpen, setIsOrderPopupOpen] = useState(false);
+	const [selectedOrderData, setSelectedOrderData] = useState({});
 
 	// const isAuthorized = useContext(AuthorizedContext);
 	const token = useContext(TokenContext);
@@ -45,33 +45,34 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 		navigate("/login");
 	}
 
-	function handleEvaluationItemClick(order) {
-		setSelectedEvaluationData(order);
-		setIsEvaluationPopupOpen(true);
+	function handleOrderItemClick(order) {
+		console.log(order);
+		setSelectedOrderData(order);
+		setIsOrderPopupOpen(true);
 	}
 
-	function onEvaluationDataSave(evaluationData) {
+	function onOrderDataSave(orderData) {
 		// Когда данные о заявке были изменены и сохранены - 
 		// нужно обновить о ней инфу в переменной orders
 		setOrders(prev => {
 			// Беру старое значение orders, нахожу по ID заявку, которую нужно изменить
 			// и меняю ее данные на актуальные
-			const evaluateToUpdateIndex = prev.findIndex((evaluate) => evaluate.evaluationId === evaluationData.id)
-			delete evaluationData.id
+			const evaluateToUpdateIndex = prev.findIndex((evaluate) => evaluate.orderId === orderData.id)
+			delete orderData.id
 
-			prev[evaluateToUpdateIndex] = { ...prev[evaluateToUpdateIndex], ...evaluationData };
+			prev[evaluateToUpdateIndex] = { ...prev[evaluateToUpdateIndex], ...orderData };
 
 			return prev;
 		});
 	}
 
-	function handleDeleteEvaluation(evaluationId) {
-		setOrders(prev => prev.filter(evaluate => +evaluate.evaluationId !== +evaluationId));
-		setIsEvaluationPopupOpen(false);
+	function handleDeleteOrder(orderId) {
+		setOrders(prev => prev.filter(evaluate => +evaluate.orderId !== +orderId));
+		setIsOrderPopupOpen(false);
 	}
 
 	useEffect(() => {
-		setAreEvaluatesLoading(true);
+		setAreOrdersLoading(true);
 		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders?all=true`, {
 			method: "GET",
 			headers: {
@@ -80,8 +81,9 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				setAreEvaluatesLoading(false);
+				setAreOrdersLoading(false);
 				setOrders(data.orders);
+				console.log(data);
 			})
 			.catch(err => {
 				console.error("Ошибка при получении данных о расчетах пользователя");
@@ -128,7 +130,7 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 							</div>
 							<ul className={styles.ordersList}>
 								{orders.map(order => (
-									<li key={order.orderId} onClick={() => handleEvaluationItemClick(order)} className={styles.evaluateItem}>
+									<li key={order.orderId} onClick={() => handleOrderItemClick(order)} className={styles.evaluateItem}>
 										<p>{getPrettyDateTime(order.createdAt)}</p>
 										<p>{order.user.name}</p>
 										<p>{order.filename}</p>
@@ -139,11 +141,11 @@ const Evaluations = ({ setIsAuthorized, ...props }) => {
 							</ul>
 						</>
 					) : (
-						<p className={styles.noEvaluates}>{areEvaluatesLoading ? "Загрузка заявок..." : "Заявок пока нет"}</p>
+						<p className={styles.noEvaluates}>{areOrdersLoading ? "Загрузка заявок..." : "Заявок пока нет"}</p>
 					)}
 				</section>
 
-				<EvaluationPopup onEvaluationDataSave={onEvaluationDataSave} evaluationData={selectedEvaluationData} isOpen={isEvaluationPopupOpen} setIsOpen={setIsEvaluationPopupOpen} onDeleteEvaluation={handleDeleteEvaluation} />
+				<OrderPopup onOrderDataSave={onOrderDataSave} orderData={selectedOrderData} isOpen={isOrderPopupOpen} setIsOpen={setIsOrderPopupOpen} onDeleteOrder={handleDeleteOrder} />
 			</Container>
 		</>
 	);

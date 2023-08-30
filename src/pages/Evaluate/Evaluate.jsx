@@ -7,11 +7,11 @@ import "./Evaluate.css";
 import ColumnPickerTable from "../../components/ColumnPickerTable/ColumnPickerTable";
 import ExtraBullsList from "../../components/ExtraBullsList/ExtraBullsList";
 
-import PageHeading from '../../ui/PageHeading/PageHeading.js';
+import PageHeading from '../../ui/PageHeading/PageHeading';
 import SectionHeading from "../../ui/SectionHeading/SectionHeading";
-import Paragraph from '../../ui/Paragraph/Paragraph.js';
+import Paragraph from '../../ui/Paragraph/Paragraph';
 import PreviewTable from "../../components/PreviewTable/PreviewTable";
-import ButtonWithStatus from "../../components/ButtonWithStatus/ButtonWithStatus.js";
+import ButtonWithStatus from "../../components/ButtonWithStatus/ButtonWithStatus";
 import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
 
 import TokenContext from '../../contexts/TokenContext';
