@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "./Profile.css";
 import styles from "./Profile.module.css";

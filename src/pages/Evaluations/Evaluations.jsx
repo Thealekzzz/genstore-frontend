@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from "./Evaluations.module.css";
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 // import Button from '../../components/Button/Button';
 import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';

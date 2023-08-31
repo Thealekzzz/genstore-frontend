@@ -7,7 +7,7 @@ import ButtonAccent from '../ButtonAccent/ButtonAccent';
 import Button from '../Button/Button';
 
 import getPrettyDateTime from '../../utils/getPrettyDateTime';
-import { SERVER_PORT, SERVER_URL, SITE_PORT, SITE_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL, SITE_PORT, SITE_URL } from '../../config';
 import downloadFile from '../../utils/downloadFile.js';
 
 import TokenContext from '../../contexts/TokenContext';

@@ -14,7 +14,7 @@ import DropdownMenu from '../../components/Dropdown/Dropdown';
 
 import TokenContext from '../../contexts/TokenContext';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 import wordEnding from '../../utils/wordEnding';
 
 const Search = () => {
@@ -95,7 +95,7 @@ const Search = () => {
 
     console.log(markers);
 
-    fetch(`${SERVER_URL}:${SERVER_PORT}/api/bulls`, {
+    fetch(`${SERVER_URL}:${SERVER_PORT}/api/search`, {
       method: "POST",
       body: JSON.stringify({ markers, markerType: markerTypes[markerType] }),
       headers: {

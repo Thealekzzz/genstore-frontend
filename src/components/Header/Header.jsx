@@ -18,7 +18,7 @@ import AuthorizedContext from '../../contexts/AuthorizedContext';
 
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 // styles = {...styles, ...burgerStyles};
 

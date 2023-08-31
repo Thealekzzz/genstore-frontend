@@ -5,7 +5,7 @@ import StatusField from '../../components/StatusField/StatusField';
 
 import AuthorizedContext from '../../contexts/AuthorizedContext';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "../Login/Login.css"
 

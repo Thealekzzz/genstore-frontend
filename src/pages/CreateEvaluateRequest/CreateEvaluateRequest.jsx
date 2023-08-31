@@ -7,7 +7,7 @@ import SectionHeading from '../../ui/SectionHeading/SectionHeading';
 import infoIcon_blue from "../../imgs/info_blue.svg";
 import questionIcon from "../../imgs/question.svg";
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import capitalize from '../../utils/capitalize';
 import InfoPopup from '../../ui/InfoPopup/InfoPopup';

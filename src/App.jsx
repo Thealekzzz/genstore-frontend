@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { SERVER_PORT, SERVER_URL } from "./data/data";
+import { SERVER_PORT, SERVER_URL } from "./config";
 
 import './App.css';
 import Main from './pages/Main/Main';

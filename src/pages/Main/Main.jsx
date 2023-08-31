@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
 
-import { SERVER_URL, SERVER_PORT } from '../../data/data';
+import { SERVER_URL, SERVER_PORT } from '../../config';
 
 import arrowImage from "./imgs/arrow.svg";
 import timeIcon from "./imgs/time.jpg";
