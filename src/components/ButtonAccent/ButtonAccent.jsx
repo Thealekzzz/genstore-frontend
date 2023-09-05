@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 
 import styles from './ButtonAccent.module.css';
 
-const ButtonAccent = React.forwardRef(({ 
+const ButtonAccent = React.forwardRef(({
     href,
     buttonDisabled,
     onClick,
     children,
     type,
-    isOnCenter=false
+    isOnCenter = false,
+    ...props
 }, ref) => {
     return (
         <>
@@ -20,7 +21,8 @@ const ButtonAccent = React.forwardRef(({
                     disabled={buttonDisabled || false}
                     onClick={onClick}
                     ref={ref}
-                    style={{justifyContent: isOnCenter ? "center" : "initial"}}
+                    style={{ justifyContent: isOnCenter ? "center" : "initial" }}
+                    {...props}
                 >
                     {children}
                 </Link>
@@ -32,7 +34,8 @@ const ButtonAccent = React.forwardRef(({
                     disabled={buttonDisabled || false}
                     onClick={onClick}
                     ref={ref}
-                    style={{justifyContent: isOnCenter ? "center" : "initial"}}
+                    style={{ justifyContent: isOnCenter ? "center" : "initial" }}
+                    {...props}
                 >
                     {children}
                 </button>
