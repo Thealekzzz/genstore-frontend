@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import styles from "./Search.module.css";
 import "./Search.css";
@@ -30,8 +30,9 @@ const Search = () => {
   const [separator, setSeparator] = useState("Пробел");
 
   const [inputValue, setInputValue] = useState("");
-
   const [filterInputsValue, setFilterInputsValue] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [
     extendedMarkersOfBullsWithSingleMatch,
@@ -64,12 +65,11 @@ const Search = () => {
       const prevForMarker = prev.marker || {};
 
       // Записываю значения фильтров, изменяя только текущий фильтр (evt.target.id) для текущего запроса (marker)
-      return {...prev, [marker]: {...prevForMarker, [evt.target.id]: evt.target.value}};
+      return { ...prev, [marker]: { ...prevForMarker, [evt.target.id]: evt.target.value } };
     });
   }
 
-
-  function handleOptionClick(marker, bullData, evt) {
+  function handleOptionClick(marker, bullData) {
     const prevSeveral = new Map(extendedMarkersOfBullsWithSeveralMatches);
     const prevSingle = new Map(extendedMarkersOfBullsWithSingleMatch);
 
@@ -91,10 +91,17 @@ const Search = () => {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    const markers = inputValue.split(separators[separator]).map(el => el.trim()).filter(el => el.length);
+    if (isLoading) return;
+
+    const markers = [...new Set(inputValue
+      .split(separators[separator])
+      .map(el => el.trim())
+      .filter(el => el.length)
+    )];
 
     console.log(markers);
 
+    setIsLoading(true);
     fetch(`${SERVER_URL}:${SERVER_PORT}/api/search`, {
       method: "POST",
       body: JSON.stringify({ markers, markerType: markerTypes[markerType] }),
@@ -105,43 +112,46 @@ const Search = () => {
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
-        // По инфе в стейтам рисовать таблицу и окна выбора быка
+        const noMatches = new Set(extendedMarkersOfBullsWithNoMatches);
+        const singleMatch = new Map(extendedMarkersOfBullsWithSingleMatch);
+        const extraMatches = new Map(extendedMarkersOfBullsWithSeveralMatches);
 
         // Добавляю данные быков в стейты, соответствующие кол-ву совпадений
         data.data.forEach(markerExtended => {
           if (markerExtended.matches.length === 0) {
             // console.log("Ноль совпадений");
-            setExtendedMarkersOfBullsWithNoMatches(prev => {
-              return prev.add(markerExtended.marker);
-            });
+            noMatches.add(markerExtended.marker);
 
           } else if (markerExtended.matches.length === 1) {
             // console.log("1 совпадение");
-            setExtendedMarkersOfBullsWithSingleMatch(prev => {
-              // const current = new Map(prev);
-              // current.set(markerExtended.marker, markerExtended.matches[0]);
-              return prev.set(markerExtended.marker, markerExtended.matches[0]);
-            });
+            singleMatch.set(markerExtended.marker, markerExtended.matches[0]);
 
           } else {
             // console.log("Много совпадений");
-            setExtendedMarkersOfBullsWithSeveralMatches(prev => {
-              return prev.set(markerExtended.marker, markerExtended.matches);
-            });
+            extraMatches.set(markerExtended.marker, markerExtended.matches);
 
           }
         });
 
-        setTimeout(() => {
-          console.log("No matches", extendedMarkersOfBullsWithNoMatches);
-          console.log("1 match", extendedMarkersOfBullsWithSingleMatch);
-          console.log("Several matches", extendedMarkersOfBullsWithSeveralMatches);
-
-        }, 200);
-
+        setExtendedMarkersOfBullsWithNoMatches(noMatches);
+        setExtendedMarkersOfBullsWithSingleMatch(singleMatch);
+        setExtendedMarkersOfBullsWithSeveralMatches(extraMatches);
       })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log("Ошибка запроса данных", err);
+      });
   }
+
+  useEffect(() => {
+    console.log("No matches", extendedMarkersOfBullsWithNoMatches);
+    console.log("1 match", extendedMarkersOfBullsWithSingleMatch);
+    console.log("Several matches", extendedMarkersOfBullsWithSeveralMatches);
+  }, [
+    extendedMarkersOfBullsWithNoMatches,
+    extendedMarkersOfBullsWithSingleMatch,
+    extendedMarkersOfBullsWithSeveralMatches
+  ]);
 
 
   return (
@@ -190,7 +200,7 @@ const Search = () => {
           <h3 className={styles['search__section-title']}>Ненайденные животные</h3>
           <ul className={styles['search__unfound-items']}>
             {[...extendedMarkersOfBullsWithNoMatches.values()].map(extendedMarker => (
-              <li className={styles['search__unfound-item']}>
+              <li key={extendedMarker} className={styles['search__unfound-item']}>
                 {extendedMarker}
               </li>
             ))}
@@ -245,40 +255,40 @@ const Search = () => {
                     </div>
 
                     <div className="search__extra-filter-row">
-                      <input 
-                        type="text" 
-                        className="search__extra-filter-input" 
-                        id='NAAB Code' 
-                        placeholder='NAAB' 
+                      <input
+                        type="text"
+                        className="search__extra-filter-input"
+                        id='NAAB Code'
+                        placeholder='NAAB'
                         autoComplete='nope'
-                        value={filterInputsValue[marker]?.["NAAB Code"] || ""} 
+                        value={filterInputsValue[marker]?.["NAAB Code"] || ""}
                         onChange={(evt) => handleFilterInputChange(evt, marker)} />
 
-                      <input 
-                        type="text" 
-                        className="search__extra-filter-input" 
-                        id='InterRegNumber' 
-                        placeholder='ID' 
+                      <input
+                        type="text"
+                        className="search__extra-filter-input"
+                        id='InterRegNumber'
+                        placeholder='ID'
                         autoComplete='nope'
-                        value={filterInputsValue[marker]?.["InterRegNumber"] || ""} 
+                        value={filterInputsValue[marker]?.["InterRegNumber"] || ""}
                         onChange={(evt) => handleFilterInputChange(evt, marker)} />
 
-                      <input 
-                        type="text" 
-                        className="search__extra-filter-input" 
-                        id='Name' 
-                        placeholder='Имя' 
+                      <input
+                        type="text"
+                        className="search__extra-filter-input"
+                        id='Name'
+                        placeholder='Имя'
                         autoComplete='nope'
-                        value={filterInputsValue[marker]?.["Name"] || ""} 
+                        value={filterInputsValue[marker]?.["Name"] || ""}
                         onChange={(evt) => handleFilterInputChange(evt, marker)} />
 
-                      <input 
-                        type="text" 
-                        className="search__extra-filter-input" 
-                        id='Full Name' 
-                        placeholder='Полное имя' 
+                      <input
+                        type="text"
+                        className="search__extra-filter-input"
+                        id='Full Name'
+                        placeholder='Полное имя'
                         autoComplete='nope'
-                        value={filterInputsValue[marker]?.["Full Name"] || ""} 
+                        value={filterInputsValue[marker]?.["Full Name"] || ""}
                         onChange={(evt) => handleFilterInputChange(evt, marker)} />
 
                       {/* <input type="text" className="search__extra-filter-input" placeholder='TPI' /> */}
