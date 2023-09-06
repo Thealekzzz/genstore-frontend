@@ -31,8 +31,6 @@ const Header = ({ userData }) => {
 
 	const location = useLocation();
 
-	console.log(location)
-
 	function handleBurgerClick() {
 		setIsMobileNavOpen(!isMobileNavOpen);
 	}

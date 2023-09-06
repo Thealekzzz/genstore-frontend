@@ -70,9 +70,11 @@
 .header__link::after {
     display: block;
     content: '';
+
     position: absolute;
     bottom: -4px;
-    
+
+
     height: 2px;
     background-color: black;
 
