@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import logo from "./imgs/logo.svg";
 import calcIcon from "./imgs/calc.svg";
@@ -10,17 +10,17 @@ import closeIcon from "./imgs/close.svg";
 import styles from "./Header.module.css";
 import burger from "./blocks/burger.module.css";
 
-import Container from '../Container/Container';
-import ButtonAccent from '../ButtonAccent/ButtonAccent';
-import Button from '../Button/Button';
-
 import AuthorizedContext from '../../contexts/AuthorizedContext';
 
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
-
 // styles = {...styles, ...burgerStyles};
+
+const headerLinks = [
+	{link: '/', name: 'Главная'},
+	{link: '/createrequest', name: 'Расчёт'},
+	{link: '/search', name: 'Поиск'},
+];
 
 const Header = ({ userData }) => {
 	const isAuthorized = useContext(AuthorizedContext);
@@ -28,6 +28,8 @@ const Header = ({ userData }) => {
 	const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
 	const { width } = useWindowDimensions();
+
+	const location = useLocation();
 
 	function handleBurgerClick() {
 		setIsMobileNavOpen(!isMobileNavOpen);
@@ -45,9 +47,19 @@ const Header = ({ userData }) => {
 					? (
 						<>
 							<nav className={styles['header__links']}>
-								<Link to="/" className={styles['header__link']}>Главная</Link>
-								<Link to="/createrequest" className={styles['header__link']}>Расчет</Link>
-								<Link to="/search" className={styles['header__link']}>Поиск</Link>
+								{headerLinks.map((link) => (
+									<Link 
+										key={link.name} 
+										to={link.link} 
+										className={[
+											styles['header__link'], 
+											location.pathname === link.link ? styles['header__link_active'] : '',
+										].join(' ')}
+									>{link.name}</Link>
+
+								))}
+								{/* <Link to="/createrequest" className={styles['header__link']}>Расчет</Link>
+								<Link to="/search" className={styles['header__link']}>Поиск</Link> */}
 							</nav>
 
 							<nav className={styles['header__icons']}>

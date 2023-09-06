@@ -7,14 +7,14 @@ import SectionHeading from '../../ui/SectionHeading/SectionHeading';
 import infoIcon_blue from "../../imgs/info_blue.svg";
 import questionIcon from "../../imgs/question.svg";
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import capitalize from '../../utils/capitalize';
 import InfoPopup from '../../ui/InfoPopup/InfoPopup';
-import ButtonWithStatus from '../../components/ButtonWithStatus/ButtonWithStatus.js';
+import ButtonWithStatus from '../../components/ButtonWithStatus/ButtonWithStatus';
 import Form from '../../components/Form/Form';
 import Container from '../../components/Container/Container';
-import ButtonFile from '../../components/ButtonFile/ButtonFile.js';
+import ButtonFile from '../../components/ButtonFile/ButtonFile';
 
 import styles from "./CreateEvaluateRequest.module.css";
 
@@ -24,7 +24,7 @@ import AuthorizedContext from '../../contexts/AuthorizedContext';
 import WhiteContainer from '../../components/WhiteContainer/WhiteContainer';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
-const CreateEvaluateRequest = (props) => {
+const CreateEvaluateRequest = () => {
 	const token = useContext(TokenContext);
 
 	const fileInput = React.useRef();

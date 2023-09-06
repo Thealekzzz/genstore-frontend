@@ -4,7 +4,7 @@ import styles from "./StatusField.module.css";
 
 import infoIcon from "../../imgs/info.svg";
 import doneIcon from "../../imgs/done.svg";
-import LoadingSpinner from '../../ui/LoadingSpinner/LoadingSpinner.js';
+import LoadingSpinner from '../../ui/LoadingSpinner/LoadingSpinner';
 
 const StatusField = ({ status }) => {
     const classesByStatus = {

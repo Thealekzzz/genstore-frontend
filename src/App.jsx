@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { SERVER_PORT, SERVER_URL } from "./data/data";
+import { SERVER_PORT, SERVER_URL } from "./config";
 
 import './App.css';
-import Main from './pages/Main/Main.js';
-import Evaluate from './pages/Evaluate/Evaluate.js';
+import Main from './pages/Main/Main';
+import Evaluate from './pages/Evaluate/Evaluate';
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import HowItWorks from "./pages/HowItWorks/HowItWorks";

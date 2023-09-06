@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "./Profile.css";
 import styles from "./Profile.module.css";
@@ -100,11 +100,11 @@ const Profile = ({ setIsAuthorized, ...props }) => {
 							<div className="profile-lead__info-block">
 								<div className="profile-lead__username-and-balance">
 									{props.userData.name}
-									<div className="profile-lead__point"></div>
+									{/* <div className="profile-lead__point"></div>
 									<div className="profile-lead__balance">
 										Баланс 0
-										<img src="./src/rouble.svg" alt="" />
-									</div>
+										<img src="/assets/rouble.svg" alt="" />
+									</div> */}
 								</div>
 							</div>
 

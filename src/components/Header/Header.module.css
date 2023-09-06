@@ -59,10 +59,36 @@
     text-decoration: none;
 
     transition: color .2s;
+
+    position: relative;
 }
 
 .header__link:hover {
     color: black;
+}
+
+.header__link::after {
+    display: block;
+    content: '';
+
+    position: absolute;
+    bottom: -4px;
+
+
+    height: 2px;
+    background-color: black;
+
+    width: 0%;
+    transform: translateX(60%);
+
+    transition:
+        width 1s cubic-bezier(0.075, 0.82, 0.165, 1),
+        transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.header__link_active::after {
+    width: 100%;
+    transform: translateX(0%);
 }
 
 .header__icons {
@@ -78,5 +104,5 @@
     .header__container {
         padding: 0 20px;
     }
-    
+
 }

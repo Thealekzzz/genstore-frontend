@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import "./Calculator.css";
 import pragh from "./imgs/graph.svg";
-import { SERVER_PORT, SERVER_URL } from '../../data/data.js';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 const Calculator = () => {
   const animalMax = countValue(1200);

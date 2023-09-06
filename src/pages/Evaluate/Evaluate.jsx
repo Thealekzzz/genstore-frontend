@@ -1,22 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
-import { SERVER_PORT, SERVER_URL } from '../../data/data';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "./Evaluate.css";
 
 import ColumnPickerTable from "../../components/ColumnPickerTable/ColumnPickerTable";
 import ExtraBullsList from "../../components/ExtraBullsList/ExtraBullsList";
 
-import PageHeading from '../../ui/PageHeading/PageHeading.js';
+import PageHeading from '../../ui/PageHeading/PageHeading';
 import SectionHeading from "../../ui/SectionHeading/SectionHeading";
-import Paragraph from '../../ui/Paragraph/Paragraph.js';
+import Paragraph from '../../ui/Paragraph/Paragraph';
 import PreviewTable from "../../components/PreviewTable/PreviewTable";
-import ButtonWithStatus from "../../components/ButtonWithStatus/ButtonWithStatus.js";
+import ButtonWithStatus from "../../components/ButtonWithStatus/ButtonWithStatus";
 import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
 
 import TokenContext from '../../contexts/TokenContext';
 
-const Evaluate = (props) => {
+const Evaluate = () => {
     const fileInput = useRef();
     const continueButton = useRef();
     const pickForm = useRef();
@@ -85,7 +85,7 @@ const Evaluate = (props) => {
 
     }
 
-    function continueButtonClick(e) {
+    function continueButtonClick() {
         setSecondStepStatus({ visible: true, status: "Loading", message: "Поиск быков в БД" });
 
         const inputs = [...columnPickerTable.current.querySelectorAll("input")];
@@ -177,7 +177,7 @@ const Evaluate = (props) => {
             })
     }
 
-    function evaluateButtonClick(e) {
+    function evaluateButtonClick() {
         setThirdStepStatus({ visible: true, status: "Loading", message: "Происходит расчет" })
 
         // Получаю данные всех инпутов
@@ -202,28 +202,14 @@ const Evaluate = (props) => {
             }
         })
             .then(data => data.json())
-            .then(data => {
-                console.log(data);
-
-                setThirdStepStatus({ visible: true, status: data.status, message: data.message });
+            .then(({ status, message, linkToFile }) => {
+                setThirdStepStatus({ visible: true, status, message });
 
                 // Показываю следующий этап с задержкой
                 setTimeout(() => {
                     setCurrentStep({ step: 4 });
 
-                    setLinkToResultFile(data.linkToFile);
-
-                    // // Алгоритм для автоматического скачивания файла
-                    // fetch(data.linkToFile)
-                    //     .then(response => response.blob())
-                    //     .then(blob => {
-                    //         const link = document.createElement("a");
-                    //         link.href = URL.createObjectURL(blob);
-                    //         link.download = savedFilename;
-                    //         link.click();
-                    //     })
-                    //     .catch(console.error);
-
+                    setLinkToResultFile(linkToFile);
                 }, 500);
 
             })
@@ -390,7 +376,7 @@ const Evaluate = (props) => {
 
                 <div className="button-wrapper">
 
-                    <ButtonAccent onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
+                    <ButtonAccent onClick={handleDownloadButtonClick} href={linkToResultFile} download>Скачать</ButtonAccent>
 
                     {/* <a href="#temp" download className='button button_accent' >
                         Скачать
