@@ -16,6 +16,7 @@ import TokenContext from '../../contexts/TokenContext';
 
 import { SERVER_PORT, SERVER_URL } from '../../config';
 import wordEnding from '../../utils/wordEnding';
+import Loader from '../../components/Loader/Loader';
 
 const Search = () => {
   // const [isSearchBySingleParameter, setIsSearchBySingleParameter] = useState(true);
@@ -136,6 +137,7 @@ const Search = () => {
         setExtendedMarkersOfBullsWithNoMatches(noMatches);
         setExtendedMarkersOfBullsWithSingleMatch(singleMatch);
         setExtendedMarkersOfBullsWithSeveralMatches(extraMatches);
+        setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -152,7 +154,6 @@ const Search = () => {
     extendedMarkersOfBullsWithSingleMatch,
     extendedMarkersOfBullsWithSeveralMatches
   ]);
-
 
   return (
     <Container className={styles["container"]}>
@@ -185,8 +186,12 @@ const Search = () => {
 
             <form className={styles["search__line-wrapper"]} onSubmit={handleSubmit}>
               <input placeholder={`Введите ${markerType}`} value={inputValue} onChange={evt => setInputValue(evt.target.value)} type="text" className={styles["search__line"]} />
-              <button className={styles['search_icon-wrapper']} type='submit'>
-                <img src={searchIcon} alt="" className={styles["search_icon"]} />
+              <button className={styles['search_icon-wrapper']} type='submit' disabled={isLoading}>
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <img src={searchIcon} alt="" className={styles["search_icon"]} />
+                )}
 
               </button>
 

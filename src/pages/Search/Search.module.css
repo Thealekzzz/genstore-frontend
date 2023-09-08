@@ -222,6 +222,10 @@
   background-color: #efefef;
 }
 
+.search_icon-wrapper:disabled {
+  cursor: auto;
+}
+
 
 /* NO MATCHES */
 
