@@ -160,7 +160,7 @@ const CreateEvaluateRequest = () => {
 			{!isAuthorized && <Navigate to="/" />}
 
 			<Container style={{ marginTop: 50, maxWidth: 700 }} direction="column">
-				<PageHeading>Создать заявку</PageHeading>
+				<PageHeading>Отправить заявку</PageHeading>
 
 				<div className={styles["create-request__content"]}>
 					<WhiteContainer extClass={styles["create-request__info"]}>

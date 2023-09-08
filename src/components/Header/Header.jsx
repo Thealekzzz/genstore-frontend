@@ -18,7 +18,7 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const headerLinks = [
 	{link: '/', name: 'Главная'},
-	{link: '/createrequest', name: 'Расчёт'},
+	{link: '/createrequest', name: 'Отправить заявку'},
 	{link: '/search', name: 'Поиск'},
 ];
 
