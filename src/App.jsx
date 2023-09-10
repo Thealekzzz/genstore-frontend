@@ -9,7 +9,7 @@ import Evaluate from './pages/Evaluate/Evaluate';
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import HowItWorks from "./pages/HowItWorks/HowItWorks";
-import CreateEvaluateRequest from "./pages/CreateEvaluateRequest/CreateEvaluateRequest";
+import CreateOrder from "./pages/CreateOrder/CreateOrder";
 import Profile from "./pages/Profile/Profile";
 // import EditProfile from "./pages/EditProfile/EditProfile";
 import Evaluations from "./pages/Evaluations/Evaluations";
@@ -80,7 +80,7 @@ function App() {
 
             <Route
               path="/createrequest"
-              element={<ProtectedRoute element={CreateEvaluateRequest} isLogged={isAuthorized} />} />
+              element={<ProtectedRoute element={CreateOrder} isLogged={isAuthorized} />} />
             <Route
               path="/search"
               element={<ProtectedRoute element={Search} userData={userData} isLogged={isAuthorized} />} />
