@@ -1,5 +1,14 @@
 @import url(./blocks/burger.module.css);
 
+.hoverable {
+    opacity: 1;
+    transition: opacity .2s;
+}
+
+.hoverable:hover {
+    opacity: .7;
+}
+
 .header {
     height: 60px;
     background-color: white;
@@ -24,6 +33,11 @@
     padding: 0 60px;
 }
 
+.header__logo {
+    width: 52px;
+    height: 52px;
+}
+
 .header__logo-wrapper {
     display: flex;
     align-items: center;
@@ -35,12 +49,6 @@
     font-weight: 700;
     line-height: normal;
     text-decoration: none;
-
-    transition: color .2s;
-}
-
-.header__logo-wrapper:hover {
-    color: black;
 }
 
 .header__links {
@@ -58,13 +66,7 @@
 
     text-decoration: none;
 
-    transition: color .2s;
-
     position: relative;
-}
-
-.header__link:hover {
-    color: black;
 }
 
 .header__link::after {

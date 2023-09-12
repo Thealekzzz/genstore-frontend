@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import logo from "./imgs/logo.svg";
+import logo from "../../imgs/logo.png";
 import calcIcon from "./imgs/calc.svg";
 import profileIcon from "./imgs/profile.svg";
 import managerPageIcon from "./imgs/managerPage.svg";
@@ -38,7 +38,7 @@ const Header = ({ userData }) => {
 	return (
 		<header className={styles.header}>
 			<div className={styles['header__container']}>
-				<Link to="/" className={styles['header__logo-wrapper']}>
+				<Link to="/" className={[styles['header__logo-wrapper'], styles['hoverable']].join(' ')}>
 					<img src={logo} className={styles['header__logo']} alt="Логотип, фото" />
 					<span>Генстор</span>
 				</Link>
@@ -53,6 +53,7 @@ const Header = ({ userData }) => {
 										to={link.link} 
 										className={[
 											styles['header__link'], 
+											styles['hoverable'], 
 											location.pathname === link.link ? styles['header__link_active'] : '',
 										].join(' ')}
 									>{link.name}</Link>
@@ -63,9 +64,9 @@ const Header = ({ userData }) => {
 							</nav>
 
 							<nav className={styles['header__icons']}>
-								{isAuthorized && userData?.role === "manager" && <Link to="/evaluate"><img src={calcIcon} alt="Выполнить расчет, кнопка" /></Link>}
-								{isAuthorized && userData?.role === "manager" && <Link to="/managerpage"><img src={managerPageIcon} alt="Аккаунт менеджера, кнопка" /></Link>}
-								<Link to="/profile"><img src={profileIcon} alt="Профиль, кнопка" /></Link>
+								{isAuthorized && userData?.role === "manager" && <Link to="/evaluate" className={styles['hoverable']}><img src={calcIcon} alt="Выполнить расчет, кнопка" /></Link>}
+								{isAuthorized && userData?.role === "manager" && <Link to="/managerpage" className={styles['hoverable']}><img src={managerPageIcon} alt="Аккаунт менеджера, кнопка" /></Link>}
+								<Link to="/profile" className={styles['hoverable']}><img src={profileIcon} alt="Профиль, кнопка" /></Link>
 							</nav>
 						</>
 
