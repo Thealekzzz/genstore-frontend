@@ -59,7 +59,7 @@ const Evaluate = () => {
 
         setUploadFileStatus({ visible: true, status: "Loading", message: "Загрузка файла" })
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/api/files`, {
+        fetch(`${SERVER_URL}:${SERVER_PORT}/api/files/upload/evaluate`, {
             method: "POST",
             body: formData,
             headers: {

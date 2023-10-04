@@ -64,7 +64,7 @@ const CreateEvaluateRequest = () => {
 
 			fd.append('file', e.target.files[0]);
 
-			fetch(`${SERVER_URL}:${SERVER_PORT}/api/files`, {
+			fetch(`${SERVER_URL}:${SERVER_PORT}/api/files/upload/order`, {
 				method: 'POST',
 				body: fd,
 				headers: {
