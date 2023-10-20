@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 
 import StatusField from '../../components/StatusField/StatusField';
@@ -9,7 +9,7 @@ import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "../Login/Login.css"
 
-const Registration = (props) => {
+const Registration = () => {
     const navigate = useNavigate();
 
     const [nameInputValue, setNameInputValue] = useState("");
