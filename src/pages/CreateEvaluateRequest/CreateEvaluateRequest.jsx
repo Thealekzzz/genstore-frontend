@@ -123,7 +123,7 @@ const CreateEvaluateRequest = () => {
 		}
 
 
-		const { file, ...fields } = form;
+		const { ...fields } = form;
 		fields.fileId = fileId;
 
 		console.log(fields)

@@ -1,7 +1,9 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 import styles from './ColumnPickerTable.module.css'
 
+// eslint-disable-next-line react/display-name
 const columnPickerTable = React.forwardRef((props, ref) => {
     // TODO запоминать элементы inputs чтобы не искать их на каждом рендере
     const inputs = [...document.querySelectorAll("." + styles.tableInput)];
@@ -41,5 +43,10 @@ const columnPickerTable = React.forwardRef((props, ref) => {
         </div>
     );
 });
+
+columnPickerTable.propTypes = {
+    onInputChange: PropTypes.func,
+    style: PropTypes.Object
+};
 
 export default columnPickerTable;
