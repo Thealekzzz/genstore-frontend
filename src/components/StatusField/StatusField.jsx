@@ -13,7 +13,7 @@ const iconsByStatus = {
 const StatusField = ({ status }) => {
 
     return (
-        <Wrapper>
+        <Wrapper visible={status.visible} status={status.status}>
             {status.status === "Loading"
                 ? <LoadingSpinner />
                 : <Image src={iconsByStatus[status.status] || infoIcon} alt="" />}
