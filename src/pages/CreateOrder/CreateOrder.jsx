@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Box, Button, CircularProgress, Container, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Snackbar, TextField, Typography } from "@mui/material";
 
 import { SERVER_PORT, SERVER_URL } from '../../config';
 
@@ -156,7 +156,7 @@ const CreateOrder = () => {
 	const [isInformationSnackOpen, setIsInformationSnackOpen] = useState(false);
 	const [informationMessage, setInformationMessage] = useState(null);
 
-	const [isOrderCreating, setIsOrderCreating] = useState(false);
+	const [, setIsOrderCreating] = useState(false);
 	const [isPromocodeFetching, setIsPromocodeFetching] = useState(false);
 
 	const sale = Object
