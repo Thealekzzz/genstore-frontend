@@ -16,6 +16,8 @@ import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
 
 import TokenContext from '../../contexts/TokenContext';
 
+const allowedExtensions = ['.xlsx', '.csv'];
+
 const Evaluate = () => {
     const fileInput = useRef();
     const continueButton = useRef();
@@ -35,7 +37,7 @@ const Evaluate = () => {
     const [childColumnInputValue, setChildColumnInputValue] = useState("A");
 
     const [tableDump, setTableDump] = useState([]);
-    const [savedFilename, setSavedFilename] = useState("");
+    const [, setSavedFilename] = useState("");
     const [fileId, setFileId] = useState(null);
     const [extraMatchesBullsMarkers, setExtraMatchesBullsMarkers] = useState([]);
     const [thirdStepText, setThirdStepText] = useState([]);
@@ -53,9 +55,17 @@ const Evaluate = () => {
             return;
         }
 
+        const filename = fileInput.current.files[0].name
+        const fileExtension = filename.match(/\.[^.\\/:*?"<>|\r\n]+$/)[0];
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            setUploadFileStatus({ visible: true, status: "Error", message: "Формат файла не поддерживается" });
+            return;
+        }
+
         let formData = new FormData();
         formData.append("file", fileInput.current.files[0]);
-        formData.append("filename", fileInput.current.files[0].name);
+        formData.append("filename", filename);
 
         setUploadFileStatus({ visible: true, status: "Loading", message: "Загрузка файла" })
 
@@ -224,15 +234,15 @@ const Evaluate = () => {
         e.target.setAttribute("disabled", true)
 
         // Алгоритм для скачивания файла
-        fetch(linkToResultFile)
-            .then(response => response.blob())
-            .then(blob => {
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = savedFilename;
-                link.click();
-            })
-            .catch(console.error);
+        // fetch(linkToResultFile)
+        //     .then(response => response.blob())
+        //     .then(blob => {
+        //         const link = document.createElement("a");
+        //         link.href = URL.createObjectURL(blob);
+        //         link.download = savedFilename;
+        //         link.click();
+        //     })
+        //     .catch(console.error);
 
         setTimeout(() => {
             e.target.removeAttribute("disabled")

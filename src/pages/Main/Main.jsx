@@ -150,7 +150,7 @@ const Main = (props) => {
 
 				<div className="main__services block">
 					<div className="page__container block__head">
-						<h2 className="block__title block__title_center">Что мы умеем?</h2>
+						<h2 className="block__title block__title_center main__services-title">Что мы умеем?</h2>
 					</div>
 
 					<ul className="page__container main__services-list">
@@ -165,7 +165,7 @@ const Main = (props) => {
 					</ul>
 
 					<div className="page__container main__services-foooter">
-						<ButtonAccent href="/createrequest">Создать заявку</ButtonAccent>
+						<ButtonAccent href="/createrequest" style={{ marginTop: 40 }}>Создать заявку</ButtonAccent>
 					</div>
 
 				</div>
