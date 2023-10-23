@@ -37,7 +37,7 @@ const Evaluate = () => {
     const [childColumnInputValue, setChildColumnInputValue] = useState("A");
 
     const [tableDump, setTableDump] = useState([]);
-    const [, setSavedFilename] = useState("");
+    const [savedFilename, setSavedFilename] = useState("");
     const [fileId, setFileId] = useState(null);
     const [extraMatchesBullsMarkers, setExtraMatchesBullsMarkers] = useState([]);
     const [thirdStepText, setThirdStepText] = useState([]);
@@ -234,15 +234,16 @@ const Evaluate = () => {
         e.target.setAttribute("disabled", true)
 
         // Алгоритм для скачивания файла
-        // fetch(linkToResultFile)
-        //     .then(response => response.blob())
-        //     .then(blob => {
-        //         const link = document.createElement("a");
-        //         link.href = URL.createObjectURL(blob);
-        //         link.download = savedFilename;
-        //         link.click();
-        //     })
-        //     .catch(console.error);
+        fetch(linkToResultFile)
+            .then(response => response.blob())
+            .then(blob => {
+                console.log(savedFilename)
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = savedFilename;
+                link.click();
+            })
+            .catch(console.error);
 
         setTimeout(() => {
             e.target.removeAttribute("disabled")
@@ -386,7 +387,8 @@ const Evaluate = () => {
 
                 <div className="button-wrapper">
 
-                    <ButtonAccent onClick={handleDownloadButtonClick} href={linkToResultFile} download>Скачать</ButtonAccent>
+                    {/* <ButtonAccent onClick={handleDownloadButtonClick} href={linkToResultFile} download>Скачать</ButtonAccent> */}
+                    <ButtonAccent onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
 
                     {/* <a href="#temp" download className='button button_accent' >
                         Скачать
