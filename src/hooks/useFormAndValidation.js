@@ -1,6 +1,11 @@
 
 import { useState, useCallback } from 'react';
 
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
 export function useFormAndValidation() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
@@ -37,12 +42,22 @@ export function useFormAndValidation() {
         }
         break;
 
+      case 'email':
+        setValues({ ...values, [name]: value });
+        break;
+
       default:
         setValues({ ...values, [name]: value });
     }
 
-    setErrors({ ...errors, [name]: areInputsVisited[name] ? e.target.validationMessage : "" });
-    setIsValid(e.target.closest('form').checkValidity());
+    const errorMessage = type === 'email' 
+      ? validateEmail(value)
+        ? null
+        : "Некорректный email"
+      : e.target.validationMessage;
+
+    setErrors({ ...errors, [name]: areInputsVisited[name] ? errorMessage : "" });
+    setIsValid(!errorMessage && e.target.closest('form').checkValidity());
   };
 
   const handleBlur = (e) => {

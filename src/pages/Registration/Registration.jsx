@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 
 import StatusField from '../../components/StatusField/StatusField';
@@ -8,39 +8,30 @@ import AuthorizedContext from '../../contexts/AuthorizedContext';
 import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "../Login/Login.css"
+import { useFormAndValidation } from '../../hooks/useFormAndValidation';
+import { getCompanies } from '../../api/companies';
+import { regions } from '../../consts';
 
 const Registration = () => {
     const navigate = useNavigate();
-
-    const [nameInputValue, setNameInputValue] = useState("");
-    const [loginInputValue, setLoginInputValue] = useState("");
-    const [passwordInputValue, setPasswordInputValue] = useState("");
-
+    
     const [proccessStatus, setProccessStatus] = useState({ visible: false, message: "", status: "" });
-
+    const [companies, setCompanies] = useState([]);
+    
+    const { values, handleChange, handleBlur, errors, isValid } = useFormAndValidation();
     const isAuthorized = useContext(AuthorizedContext);
 
-    function handleInputChange(e, setter) {
-        setter(e.target.value);
-    }
-
-    // function updateButtonState() {
-    //     setIsButtonDisabled(loginInputValue.length <= 5 && passwordInputValue.length < 8 ? true : false);
-    // }
 
     function submitLoginHandler(e) {
         e.preventDefault();
 
-        if (nameInputValue.trim() === "" || loginInputValue.trim() === "" || passwordInputValue.trim() === "") {
-            console.log("Данные не введены");
-            setProccessStatus({ visible: true, status: "Error", message: "Данные не введены" });
-            return;
-        }
-
         const fd = {
-            name: nameInputValue,
-            login: loginInputValue,
-            password: passwordInputValue,
+            name: values.name,
+            surname: values.surname,
+            company: values.company,
+            region: values.region,
+            login: values.email,
+            password: values.password,
         };
 
         setProccessStatus({ visible: true, status: "Loading", message: "Регистрирую" });
@@ -69,6 +60,17 @@ const Registration = () => {
             });
     }
 
+    useEffect(() => {
+        getCompanies()
+        .then((data) => {
+            setCompanies(data);
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log(values);
+    }, [values]);
+
     return (
         <>
             {isAuthorized && <Navigate to="/" />}
@@ -76,37 +78,90 @@ const Registration = () => {
             <section className="login-container ">
                 <h1 className="login-container__title">Регистрация</h1>
                 <form action="/registration" method="post" className="login-container__form" onSubmit={submitLoginHandler}>
+                    <div className="login-container__name-fields">
+                        <input
+                            required
+                            minLength={3}
+                            value={values.name}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            autoComplete="new-password"
+                            type="text"
+                            placeholder="Имя"
+                            name="name"
+                            className={`login-container__form-input form-input ${errors.name ? 'form-input__error' : ''}`}
+                        />
+                        <input
+                            required
+                            minLength={2}
+                            value={values.surname}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            autoComplete="new-password"
+                            type="text"
+                            placeholder="Фамилия"
+                            name="surname"
+                            className={`login-container__form-input form-input ${errors.surname ? 'form-input__error' : ''}`}
+                        />
+                    </div>
                     <input
                         required
-                        value={nameInputValue}
-                        onChange={e => handleInputChange(e, setNameInputValue)}
-                        autoComplete="new-password"
-                        type="text"
-                        placeholder="Ваше имя"
-                        name="name"
-                        className="login-container__form-input form-input" />
-                    <input
-                        required
-                        value={loginInputValue}
-                        onChange={e => handleInputChange(e, setLoginInputValue)}
+                        minLength={3}
+                        value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         autoComplete="new-password"
                         type="email"
-                        placeholder="Электронная почта"
+                        placeholder="Почта"
                         name="email"
-                        className="login-container__form-input form-input" />
+                        className={`login-container__form-input form-input ${errors.email ? 'form-input__error' : ''}`}
+                    />
+                    <select
+                        required
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.company}
+                        autoComplete="new-password"
+                        name="company"
+                        className={`login-container__form-input form-input ${errors.company ? 'form-input__error' : ''}`}
+                    >
+                        <option disabled selected hidden value=''>Хозяйство</option>
+                        {companies.map((company) => (
+                            <option key={company.id} value={company.name}>{company.name}</option>
+                        ))}
+                    </select>
+                    <select
+                        required
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.region}
+                        autoComplete="new-password"
+                        name="region"
+                        className={`login-container__form-input form-input ${errors.region ? 'form-input__error' : ''}`}
+                    >
+                        <option disabled selected hidden value=''>Регион</option>
+                        {regions.map((region) => (
+                            <option key={region} value={region}>{region}</option>
+                        ))}
+                    </select>
                     <input
                         required
-                        value={passwordInputValue}
-                        onChange={e => handleInputChange(e, setPasswordInputValue)}
+                        minLength={8}
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         autoComplete="new-password"
                         type="password"
                         placeholder="Пароль"
                         name="password"
-                        className="login-container__form-input form-input" />
-                    {/* <input type="password" placeholder="Повторение пароля" name="passwordAgain" className="login-container__form-input form-input"> */}
-
+                        className={`login-container__form-input form-input ${errors.password ? 'form-input__error' : ''}`}
+                    />
                     <StatusField status={proccessStatus} />
-                    <button type="submit" disabled={["Loading", "Success"].includes(proccessStatus.status)} className="login-container__form-submit form-button">Регистрация</button>
+                    <button
+                        type="submit"
+                        disabled={!isValid}
+                        className="login-container__form-submit form-button"
+                    >Регистрация</button>
                     <div className="login-container__errors-field login-container__errors-field_hidden"></div>
 
                 </form>
