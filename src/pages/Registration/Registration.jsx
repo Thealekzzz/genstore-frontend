@@ -5,12 +5,11 @@ import StatusField from '../../components/StatusField/StatusField';
 
 import AuthorizedContext from '../../contexts/AuthorizedContext';
 
-import { SERVER_PORT, SERVER_URL } from '../../config';
-
 import "../Login/Login.css"
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import { getCompanies } from '../../api/companies';
 import { regions } from '../../consts';
+import { register } from '../../api/auth';
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -36,14 +35,7 @@ const Registration = () => {
 
         setProccessStatus({ visible: true, status: "Loading", message: "Регистрирую" });
 
-        fetch(`${SERVER_URL}:${SERVER_PORT}/api/register`, {
-            method: "POST",
-            body: JSON.stringify(fd),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-            .then(data => data.json())
+        register(fd)
             .then(data => {
                 setProccessStatus({ visible: true, status: "Success", message: data.message });
                 setTimeout(() => {
@@ -67,9 +59,9 @@ const Registration = () => {
         });
     }, []);
 
-    useEffect(() => {
-        console.log(values);
-    }, [values]);
+    // useEffect(() => {
+    //     console.log(values);
+    // }, [values]);
 
     return (
         <>

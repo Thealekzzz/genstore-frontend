@@ -1,5 +1,3 @@
-import React from 'react';
-
 import "./NoAccess.css";
 
 const NoAccess = () => {

@@ -14,7 +14,7 @@ const PageNotFound = () => {
         <span className={styles.errorNumber}>404</span>
       </div>
 
-      <p className={styles.errorText}>Ой... Такой страницы у нас точно нет.</p>
+      <p className={styles.errorText}>Ой... Такой страницы у нас нет.</p>
     </Container>
   );
 };

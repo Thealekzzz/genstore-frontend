@@ -49,5 +49,23 @@ export const theme = createTheme({
         }
       },
     },
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: 'circle' },
+          style: {
+            borderRadius: 50,
+            minWidth: 10,
+            padding: 8,
+
+            transition: 'opacity .2s',
+
+            '&:hover': {
+              backgroundColor: '#eee',
+            },
+          },
+        },
+      ],
+    },
   },
 });

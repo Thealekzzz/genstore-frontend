@@ -1,238 +1,288 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SERVER_PORT, SERVER_URL } from '../../config';
 
 import "./Profile.css";
-import styles from "./Profile.module.css";
 
-import ButtonAccent from '../../components/ButtonAccent/ButtonAccent';
-import Container from '../../components/Container/Container';
-import getPrettyDateTime from '../../utils/getPrettyDateTime';
-import EvaluationUserPopup from '../../components/EvaluationUserPopup/EvaluationUserPopup';
-import Popup from '../../components/Popup/Popup';
-import SectionTitle from '../../components/SectionTitle/SectionTitle';
-import Form from '../../components/Form/Form';
+import { Box, Button, MenuItem, Select, TextField, Typography, styled } from '@mui/material';
+import Sidebar from '../../components/Sidebar';
+import { useFormAndValidation } from '../../hooks/useFormAndValidation';
+import { regions } from '../../consts';
+import { getCompanies } from '../../api/companies';
+import { patchMe } from '../../api/user';
+import { deepEqual } from '../../utils/objects';
 
-import AuthorizedContext from '../../contexts/AuthorizedContext';
-import TokenContext from '../../contexts/TokenContext';
-
-const Profile = ({ setIsAuthorized, ...props }) => {
-	const nameByStatus = {
-		"created": "Создана",
-		"pending": "В работе",
-		"awaiting payment": "Ожидает оплаты",
-		"done": "Выполнена",
-	}
-
-	const colorByStatus = {
-		"created": "tomato",
-		"pending": "#4380f0",
-		"awaiting payment": "#f2ae21",
-		"done": "#CACACA",
-	}
-
+const Profile = ({ setIsAuthorized, userData, setUserData }) => {
+	const { values, handleChange, handleBlur, errors, setValues } = useFormAndValidation();
+	const [companies, setCompanies] = useState([]);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [initialState, setInitialState] = useState({});
 	const navigate = useNavigate();
 
-	const token = useContext(TokenContext);
-
-	const [orders, setOrders] = useState([]);
-	const [areEvaluatesLoading, setAreEvaluatesLoading] = useState(false);
-	const [isEvaluationPopupOpen, setIsEvaluationPopupOpen] = useState(false);
-	const [selectedEvaluationData, setSelectedEvaluationData] = useState({});
-	const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
-
-	const [nameInputValue, setNameInputValue] = useState("");
-	const [surnameInputValue, setSurameInputValue] = useState("");
-	const [lastnameInputValue, setLastameInputValue] = useState("");
-
-	const isAuthorized = useContext(AuthorizedContext);
 
 	function handleLogoutButtonClick() {
 		localStorage.removeItem("token");
 		setIsAuthorized(false);
+		setUserData({});
 		navigate("/login");
 	}
 
-	function handleEvaluationItemClick(evaluationData) {
-		setIsEvaluationPopupOpen(true);
-		setSelectedEvaluationData(evaluationData);
-	}
+	function handlePatchUser() {
+		const { name, surname, region, company } = values;
 
-	function handleNameInput(evt) {
-		setNameInputValue(evt.target.value);
-	}
+		if (!name || !surname) {
+			setErrorMessage("Имя и фамилия должны быть заполнены");
+			return;
+		}
 
-	function handleSurnameInput(evt) {
-		setSurameInputValue(evt.target.value);
-	}
+		patchMe({ name, surname, region, company })
+			.then((data) => {
+				setErrorMessage('');
+				setUserData((prev) => ({ ...prev, ...data.changes }));
 
-	function handleLastnameInput(evt) {
-		setLastameInputValue(evt.target.value);
+			})
+			.catch((error) => {
+				setErrorMessage(error.message);
+			});
 	}
 
 	useEffect(() => {
-		setAreEvaluatesLoading(true);
-		fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders`, {
-			method: "GET",
-			headers: {
-				authorization: token ? "Bearer " + token : null,
-			}
-		})
-			.then(res => res.json())
-			.then(data => {
-				setAreEvaluatesLoading(false);
-				setOrders(data.orders);
-			})
-			.catch(err => {
-				console.error("Ошибка при получении данных о расчетах пользователя");
-			});
-	}, [token]);
+		console.log(userData);
+		setValues(userData);
+		setInitialState({ ...userData });
+	}, []);
+
+	useEffect(() => {
+		console.log(values);
+	}, [values]);
+	
+	useEffect(() => {
+		getCompanies()
+		.then((data) => {
+				setCompanies(data);
+		});
+	}, []);
+
 
 	return (
-		<>
-			<Container style={{ flexDirection: "column", maxWidth: 1000 }}>
-				{isAuthorized ? (<>
-					<section className="profile-lead">
-						<div className="profile-lead__back"></div>
-						<img src={`${SERVER_URL}:${SERVER_PORT}/images/${props.userData.photo || 'sample.jpg'}`} alt="" className="profile-lead__user-photo" />
-						<div className="profile-lead__bottom">
-							<div className="profile-lead__info-block">
-								<div className="profile-lead__username-and-balance">
-									{props.userData.name}
-									{/* <div className="profile-lead__point"></div>
-									<div className="profile-lead__balance">
-										Баланс 0
-										<img src="/assets/rouble.svg" alt="" />
-									</div> */}
-								</div>
-							</div>
+		<Container>
+			<Sidebar userData={userData} />
+			<ContentContainer>
+        <ProfileContainer>
 
-							<div className="profile-lead__right-side">
-								{/* <Button onClick={() => setIsEditPopupOpen(true)}>Редактировать профиль</Button> */}
-								<ButtonAccent onClick={handleLogoutButtonClick}>Выйти</ButtonAccent>
+					<Top>
+						<AvatarBlock>
+							<Avatar src={`${SERVER_URL}:${SERVER_PORT}/images/${userData.photo || 'sample.jpg'}`} />
 
-							</div>
-						</div>
-					</section>
+							<NameBlock>
+								<Name variant='h3'>
+									{userData.name} {userData.surname}
+								</Name>
+								<Email>
+									{userData.login}
+								</Email>
+							</NameBlock>
 
-					<section
-						className={["orders"].join((" "))}
-						style={{
-							justifyContent: orders.length > 0 ? "center" : "initial",
-							marginTop: 20
-						}}>
-						<h2 className='ordersTitle'>Мои заявки</h2>
-						{orders.length > 0 ? (
-							<>
-								<div className="header">
-									<p>Дата</p>
-									<p>Название</p>
-									<p>Файл</p>
-									<p>Статус</p>
-								</div>
-								<ul className='ordersList'>
-									{orders.map(order => (
-										<li onClick={() => handleEvaluationItemClick(order)} className="orderItem" key={order.orderId}>
-											<p>{getPrettyDateTime(order.createdAt)}</p>
-											<p>{order.name}</p>
-											<p>{order.filename}</p>
-											<p style={{ backgroundColor: colorByStatus[order.status] }}>{nameByStatus[order.status]}</p>
-										</li>
-									))}
+						</AvatarBlock>
 
-								</ul>
-							</>
-						) : (
-							<p className="noEvaluates">{areEvaluatesLoading ? "Загрузка заявок..." : "Заявок пока нет"}</p>
+						<Button onClick={handleLogoutButtonClick} variant='outlined' size='large'>Выйти</Button>
+					</Top>
 
-						)}
-					</section>
+					<Information>
+						<BlockTitle>
+							Информация
+						</BlockTitle>
 
-				</>) : (
-					<p className='profile-container__unathorized-message'>Для просмотра профиля необходимо войти в аккаунт</p>
-				)}
-
-			</Container >
-
-			<EvaluationUserPopup isOpen={isEvaluationPopupOpen} setIsOpen={setIsEvaluationPopupOpen} evaluationData={selectedEvaluationData} />
-			<Popup isOpen={isEditPopupOpen} setIsOpen={setIsEditPopupOpen} style={{ gap: 20, width: 600 }}>
-				<div className={styles["popup__header"]}>
-					<SectionTitle>Редактировать профиль</SectionTitle>
-				</div>
-
-				<div className={styles["popup__photo-section"]}>
-					<img src="" alt="" className={styles["popup__photo"]} />
-
-					<div className={styles["popup__personal-info"]}>
-						<h3 className={styles["popup__name"]}>Алексей Кузнецов</h3>
-						<span className={styles["popup__city"]}>Санкт-Петербург</span>
-					</div>
-				</div>
-
-				<Form className={styles["popup__form"]} onSubmit={console.log}>
-					<div className={styles["form__general"]}>
-						<div className={styles["input-field"]}>
-							<input
+						<TwoColumns>
+							<TextField
 								required
-								minLength={5}
-								maxLength={80}
-								type="text"
-								name="name"
-								id="name"
-								className={styles["input-field__input"]}
-								value={nameInputValue}
-								onChange={handleNameInput}
-								placeholder=" "
-								autoComplete="nope"
+								name='name'
+								value={values.name || ''}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								error={errors.name}
+								placeholder='Имя'
+								label='Имя'
 							/>
-							<label htmlFor="name" className={styles["input-field__label"]}>Имя</label>
-							<span className={styles["input-field__error-message"]}></span>
-						</div>
 
-						<div className={styles["input-field"]}>
-							<input
-								minLength={5}
-								maxLength={80}
-								type="text"
-								name="surname"
-								id="surname"
-								className={styles["input-field__input"]}
-								value={surnameInputValue}
-								onChange={handleSurnameInput}
-								placeholder=" "
-								autoComplete="nope"
+							<TextField
+								required
+								name='surname'
+								value={values.surname || ''}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								error={errors.surname}
+								placeholder='Фамилия'
+								label='Фамилия'
 							/>
-							<label htmlFor="surname" className={styles["input-field__label"]}>Фамилия</label>
-							<span className={styles["input-field__error-message"]}></span>
-						</div>
+						</TwoColumns>
 
-						<div className={styles["input-field"]}>
-							<input
-								minLength={5}
-								maxLength={80}
-								type="text"
-								name="lastname"
-								id="lastname"
-								className={styles["input-field__input"]}
-								value={lastnameInputValue}
-								onChange={handleLastnameInput}
-								placeholder=" "
-								autoComplete="nope"
-							/>
-							<label htmlFor="lastname" className={styles["input-field__label"]}>Отчество</label>
-							<span className={styles["input-field__error-message"]}></span>
-						</div>
-					</div>
+						<TwoColumns>
+							<Select
+								required
+								labelId='test-select-label'
+								id='test-select'
 
-					<div className={styles["form__additional"]}>
+								value={values.region || ''}
+								name='region'
+								color="primary"
+								label='Регион'
+								
+								onChange={handleChange}
+								onBlur={handleBlur}
+								
+								autoWidth={false}
+								placeholder='Регион'
+								
+								style={{ 
+									maxWidth: '100%',
+									color: 'black'
+								}}
+							>
+								{regions.map((region) => (
+									<MenuItem key={region} value={region}>{region}</MenuItem>
+								))}
+							</Select>
+							
+							<Select
+								required
+								value={values.company || ''}
+								name='company'
+								color="primary"
+								label='Хозяйство'
 
-					</div>
-				</Form>
-			</Popup>
+								onChange={handleChange}
+								onBlur={handleBlur}
+								
+								style={{ maxWidth: '100%' }}
+								autoWidth={false}
+							>
+								{companies.map((company) => (
+									<MenuItem key={company.name} value={company.name}>{company.name}</MenuItem>
+								))}
+							</Select>
+						</TwoColumns>
+						
+						<ButtonBlock>
+							<Button
+								variant='contained'
+								size='large'
 
-		</>
+								disabled={deepEqual(initialState, values)}
+
+								onClick={handlePatchUser}
+							>Сохранить</Button>
+
+							{errorMessage && (
+								<ErrorMessage>{errorMessage}</ErrorMessage>
+							)}
+						</ButtonBlock>
+
+					</Information>
+
+				</ProfileContainer>
+			</ContentContainer>
+			
+		</Container>
 	);
 };
 
 export default Profile;
+
+const Container = styled(Box)(() => ({
+	display: 'flex',
+}));
+
+const ContentContainer = styled(Box)(() => ({
+  boxSizing: 'border-box',
+
+  width: '100%',
+  height: 'calc(100vh - 60px)',
+  padding: 20,
+
+  overflowY: 'scroll',
+
+}));
+
+const ProfileContainer = styled(Box)(() => ({
+  width: '100%',
+  minHeight: 200,
+  padding: 40,
+
+  backgroundColor: 'white',
+
+  borderRadius: 10,
+}));
+
+const Avatar = styled('img')(() => ({
+	width: 200,
+	height: 200,
+
+	borderRadius: 100,
+	objectFit: 'cover',
+}));
+
+const Information = styled('form')(() => ({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'start',
+	gap: 20,
+
+	padding: '40px 20px 0',
+}));
+
+const BlockTitle = styled(Typography)(() => ({
+	fontSize: 20,
+
+	fontWeight: 600,
+
+}));
+
+const TwoColumns = styled(Box)(() => ({
+	display: 'grid',
+	gridTemplateColumns: '1fr 1fr',
+	alignItems: 'stretch',
+	gap: 20,
+
+	maxWidth: 800,
+	width: '100%',
+}));
+
+const ButtonBlock = styled(Box)(() => ({
+	display: 'flex',
+	alignItems: 'center',
+	gap: 20,
+}));
+
+const ErrorMessage = styled(Typography)(() => ({
+	color: 'red',
+	fontSize: 12,
+}));
+
+const Top = styled(Box)(() => ({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'start',
+}));
+
+const AvatarBlock = styled(Box)(() => ({
+	display: 'flex',
+	alignItems: 'center',
+	gap: 20,
+}));
+
+const NameBlock = styled(Box)(() => ({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: 0,
+}));
+
+const Name = styled(Typography)(() => ({
+	fontSize: 20,
+	fontWeight: 700,
+}));
+
+const Email = styled(Typography)(() => ({
+	fontSize: 12,
+}));

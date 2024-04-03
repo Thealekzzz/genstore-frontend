@@ -336,7 +336,7 @@ const Evaluate = () => {
                     <PreviewTable tableDump={tableDump} style={{ marginTop: 50 }} />
 
                     <div className="child-column-picker" style={{ marginTop: 50 }} >
-                        <div className="child-column-picker__title">Столбец с кличкой или инвентарным номером потомка</div>
+                        <div className="child-column-picker__title">Столбец с кличкой потомка</div>
                         <input
                             type="text"
                             name="child-column"

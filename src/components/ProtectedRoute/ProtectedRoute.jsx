@@ -1,7 +1,5 @@
-import React from 'react';
-// import { Navigate } from 'react-router-dom';
 import NoAccess from '../NoAccess/NoAccess';
-import NeedAuth from '../NeedAuth/NeedAuth';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ isLogged, allowedRoles = [], userData, element: Container, ...props }) => {
   return (
@@ -15,7 +13,7 @@ const ProtectedRoute = ({ isLogged, allowedRoles = [], userData, element: Contai
               <NoAccess />
             )
 
-        } </> ) : <NeedAuth />}
+        } </> ) : <Navigate to="/login" />}
     </>
   );
 };

@@ -23,6 +23,7 @@ import useWindowDimention from "../../hooks/useWindowDimensions.js";
 
 import styles from "./Main.module.css";
 import "./Main.css";
+import Footer from '../../components/Footer/Footer.jsx';
 
 const Main = (props) => {
 	const actionTexts = [
@@ -215,6 +216,8 @@ const Main = (props) => {
 					</ul>
 				</div>
 			</div>
+
+			<Footer />
 		</>
 	);
 };

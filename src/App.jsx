@@ -17,12 +17,13 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Search from "./pages/Search/Search";
 
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 
 import AuthorizedContext from "./contexts/AuthorizedContext";
 import TokenContext from "./contexts/TokenContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Calculator from "./pages/Calculator/Calculator";
+import Orders from "./pages/Orders";
+import Animals from "./pages/Animals";
 
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -96,13 +97,18 @@ function App() {
               element={<ProtectedRoute element={Profile} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />} />
 
             <Route
+              path="/orders"
+              element={<ProtectedRoute element={Orders} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />} />
+            <Route
+              path="/animals"
+              element={<ProtectedRoute element={Animals} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />} />
+
+            <Route
               path="*"
               element={<PageNotFound />} />
           </Routes>
 
         </div>
-
-        <Footer />
       </TokenContext.Provider>
     </AuthorizedContext.Provider>
   );

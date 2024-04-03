@@ -57,7 +57,7 @@ export function useFormAndValidation() {
       : e.target.validationMessage;
 
     setErrors({ ...errors, [name]: areInputsVisited[name] ? errorMessage : "" });
-    setIsValid(!errorMessage && e.target.closest('form').checkValidity());
+    setIsValid(!errorMessage && e.target.closest?.('form').checkValidity());
   };
 
   const handleBlur = (e) => {
