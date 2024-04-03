@@ -24,6 +24,15 @@ const Registration = () => {
     function submitLoginHandler(e) {
         e.preventDefault();
 
+        if (!values.company || !values.region) {
+            setProccessStatus({
+                visible: true,
+                message: "Поля регион и хозяйство должны быть заполнены",
+                status: "Error"
+            })
+            return;
+        }
+
         const fd = {
             name: values.name,
             surname: values.surname,
@@ -74,7 +83,7 @@ const Registration = () => {
                         <input
                             required
                             minLength={3}
-                            value={values.name}
+                            value={values.name || ''}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             autoComplete="new-password"
@@ -86,7 +95,7 @@ const Registration = () => {
                         <input
                             required
                             minLength={2}
-                            value={values.surname}
+                            value={values.surname || ''}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             autoComplete="new-password"
@@ -99,7 +108,7 @@ const Registration = () => {
                     <input
                         required
                         minLength={3}
-                        value={values.email}
+                        value={values.email || ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         autoComplete="new-password"
@@ -112,26 +121,26 @@ const Registration = () => {
                         required
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.company}
+                        value={values.company || '-'}
                         autoComplete="new-password"
                         name="company"
                         className={`login-container__form-input form-input ${errors.company ? 'form-input__error' : ''}`}
                     >
-                        <option disabled selected hidden value=''>Хозяйство</option>
+                        <option disabled hidden value='-'>Хозяйство</option>
                         {companies.map((company) => (
-                            <option key={company.id} value={company.name}>{company.name}</option>
+                            <option key={company.companyId} value={company.companyId}>{company.name}</option>
                         ))}
                     </select>
                     <select
                         required
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.region}
+                        value={values.region || '-'}
                         autoComplete="new-password"
                         name="region"
                         className={`login-container__form-input form-input ${errors.region ? 'form-input__error' : ''}`}
                     >
-                        <option disabled selected hidden value=''>Регион</option>
+                        <option disabled hidden value='-'>Регион</option>
                         {regions.map((region) => (
                             <option key={region} value={region}>{region}</option>
                         ))}
@@ -139,7 +148,7 @@ const Registration = () => {
                     <input
                         required
                         minLength={8}
-                        value={values.password}
+                        value={values.password || ''}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         autoComplete="new-password"

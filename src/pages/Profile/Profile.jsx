@@ -159,7 +159,7 @@ const Profile = ({ setIsAuthorized, userData, setUserData }) => {
 								autoWidth={false}
 							>
 								{companies.map((company) => (
-									<MenuItem key={company.name} value={company.name}>{company.name}</MenuItem>
+									<MenuItem key={company.companyId} value={company.companyId}>{company.name}</MenuItem>
 								))}
 							</Select>
 						</TwoColumns>

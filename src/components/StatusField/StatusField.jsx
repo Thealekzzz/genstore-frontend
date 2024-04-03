@@ -18,7 +18,7 @@ const StatusField = ({ status }) => {
                 ? <LoadingSpinner />
                 : <Image src={iconsByStatus[status.status] || infoIcon} alt="" />}
 
-            <Typography>{status.message}</Typography>
+            <Message>{status.message}</Message>
         </Wrapper>
     );
 };
@@ -43,15 +43,21 @@ const Wrapper = styled(Box)(({ visible, status }) => ({
     display: visible ? "flex" : "none",
     alignItems: "center",
     gap: "10px",
-    padding: "0 20px",
+
     minHeight: "40px",
+    padding: "10px 20px",
+
     borderRadius: "5px",
     backgroundColor: "#4380f0",
+
+    ...stylesByStatus[status],
+
+}));
+
+const Message = styled(Typography)(() => ({
     color: "white",
     fontWeight: "bold",
     fontSize: "12px",
-
-    ...stylesByStatus[status],
 
 }));
 
