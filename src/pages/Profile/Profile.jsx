@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { SERVER_PORT, SERVER_URL } from '../../config';
 
@@ -12,13 +12,18 @@ import { regions } from '../../consts';
 import { getCompanies } from '../../api/companies';
 import { patchMe } from '../../api/user';
 import { deepEqual } from '../../utils/objects';
+import Animals from '../Animals';
+import Orders from '../Orders';
 
 const Profile = ({ setIsAuthorized, userData, setUserData }) => {
 	const { values, handleChange, handleBlur, errors, setValues } = useFormAndValidation();
+
 	const [companies, setCompanies] = useState([]);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [initialState, setInitialState] = useState({});
+
 	const navigate = useNavigate();
+	const { page } = useParams();
 
 
 	function handleLogoutButtonClick() {
@@ -56,134 +61,146 @@ const Profile = ({ setIsAuthorized, userData, setUserData }) => {
 	useEffect(() => {
 		console.log(values);
 	}, [values]);
-	
+
 	useEffect(() => {
 		getCompanies()
-		.then((data) => {
+			.then((data) => {
 				setCompanies(data);
-		});
+			});
 	}, []);
 
 
 	return (
 		<Container>
-			<Sidebar userData={userData} />
+			<Sidebar userData={userData} page={page} />
 			<ContentContainer>
-        <ProfileContainer>
 
-					<Top>
-						<AvatarBlock>
-							<Avatar src={`${SERVER_URL}:${SERVER_PORT}/images/${userData.photo || 'sample.jpg'}`} />
+				{page === 'animals' && (
+					<Animals userData={userData} />
+				)}
 
-							<NameBlock>
-								<Name variant='h3'>
-									{userData.name} {userData.surname}
-								</Name>
-								<Email>
-									{userData.login}
-								</Email>
-							</NameBlock>
+				{page === 'orders' && (
+					<Orders userData={userData} />
+				)}
 
-						</AvatarBlock>
 
-						<Button onClick={handleLogoutButtonClick} variant='outlined' size='large'>Выйти</Button>
-					</Top>
 
-					<Information>
-						<BlockTitle>
-							Информация
-						</BlockTitle>
+				{page === undefined && (
+					<ProfileContainer>
+						<Top>
+							<AvatarBlock>
+								<Avatar src={`${SERVER_URL}:${SERVER_PORT}/images/${userData.photo || 'sample.jpg'}`} />
 
-						<TwoColumns>
-							<TextField
-								required
-								name='name'
-								value={values.name || ''}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								error={errors.name}
-								placeholder='Имя'
-								label='Имя'
-							/>
+								<NameBlock>
+									<Name variant='h3'>
+										{userData.name} {userData.surname}
+									</Name>
+									<Email>
+										{userData.login}
+									</Email>
+								</NameBlock>
 
-							<TextField
-								required
-								name='surname'
-								value={values.surname || ''}
-								onChange={handleChange}
-								onBlur={handleBlur}
-								error={errors.surname}
-								placeholder='Фамилия'
-								label='Фамилия'
-							/>
-						</TwoColumns>
+							</AvatarBlock>
 
-						<TwoColumns>
-							<Select
-								required
-								labelId='test-select-label'
-								id='test-select'
+							<Button onClick={handleLogoutButtonClick} variant='outlined' size='large'>Выйти</Button>
+						</Top>
 
-								value={values.region || ''}
-								name='region'
-								color="primary"
-								label='Регион'
-								
-								onChange={handleChange}
-								onBlur={handleBlur}
-								
-								autoWidth={false}
-								placeholder='Регион'
-								
-								style={{ 
-									maxWidth: '100%',
-									color: 'black'
-								}}
-							>
-								{regions.map((region) => (
-									<MenuItem key={region} value={region}>{region}</MenuItem>
-								))}
-							</Select>
-							
-							<Select
-								required
-								value={values.company || ''}
-								name='company'
-								color="primary"
-								label='Хозяйство'
+						<Information>
+							<BlockTitle>
+								Информация
+							</BlockTitle>
 
-								onChange={handleChange}
-								onBlur={handleBlur}
-								
-								style={{ maxWidth: '100%' }}
-								autoWidth={false}
-							>
-								{companies.map((company) => (
-									<MenuItem key={company.companyId} value={company.companyId}>{company.name}</MenuItem>
-								))}
-							</Select>
-						</TwoColumns>
-						
-						<ButtonBlock>
-							<Button
-								variant='contained'
-								size='large'
+							<TwoColumns>
+								<TextField
+									required
+									name='name'
+									value={values.name || ''}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									error={Boolean(errors.name)}
+									placeholder='Имя'
+									label='Имя'
+								/>
 
-								disabled={deepEqual(initialState, values)}
+								<TextField
+									required
+									name='surname'
+									value={values.surname || ''}
+									onChange={handleChange}
+									onBlur={handleBlur}
+									error={Boolean(errors.surname)}
+									placeholder='Фамилия'
+									label='Фамилия'
+								/>
+							</TwoColumns>
 
-								onClick={handlePatchUser}
-							>Сохранить</Button>
+							<TwoColumns>
+								<Select
+									required
+									labelId='test-select-label'
+									id='test-select'
 
-							{errorMessage && (
-								<ErrorMessage>{errorMessage}</ErrorMessage>
-							)}
-						</ButtonBlock>
+									value={values.region || ''}
+									name='region'
+									color="primary"
+									label='Регион'
 
-					</Information>
+									onChange={handleChange}
+									onBlur={handleBlur}
 
-				</ProfileContainer>
+									autoWidth={false}
+									placeholder='Регион'
+
+									style={{
+										maxWidth: '100%',
+										color: 'black'
+									}}
+								>
+									{regions.map((region) => (
+										<MenuItem key={region} value={region}>{region}</MenuItem>
+									))}
+								</Select>
+
+								<Select
+									required
+									value={values.company || ''}
+									name='company'
+									color="primary"
+									label='Хозяйство'
+
+									onChange={handleChange}
+									onBlur={handleBlur}
+
+									style={{ maxWidth: '100%' }}
+									autoWidth={false}
+								>
+									{companies.map((company) => (
+										<MenuItem key={company.companyId} value={company.companyId}>{company.name}</MenuItem>
+									))}
+								</Select>
+							</TwoColumns>
+
+							<ButtonBlock>
+								<Button
+									variant='contained'
+									size='large'
+
+									disabled={deepEqual(initialState, values)}
+
+									onClick={handlePatchUser}
+								>Сохранить</Button>
+
+								{errorMessage && (
+									<ErrorMessage>{errorMessage}</ErrorMessage>
+								)}
+							</ButtonBlock>
+
+						</Information>
+
+					</ProfileContainer>
+				)}
 			</ContentContainer>
-			
+
 		</Container>
 	);
 };
@@ -195,24 +212,24 @@ const Container = styled(Box)(() => ({
 }));
 
 const ContentContainer = styled(Box)(() => ({
-  boxSizing: 'border-box',
+	boxSizing: 'border-box',
 
-  width: '100%',
-  height: 'calc(100vh - 60px)',
-  padding: 20,
+	width: '100%',
+	height: 'calc(100vh - 60px)',
+	padding: 20,
 
-  overflowY: 'scroll',
+	overflowY: 'scroll',
 
 }));
 
 const ProfileContainer = styled(Box)(() => ({
-  width: '100%',
-  minHeight: 200,
-  padding: 40,
+	width: '100%',
+	minHeight: 200,
+	padding: 40,
 
-  backgroundColor: 'white',
+	backgroundColor: 'white',
 
-  borderRadius: 10,
+	borderRadius: 10,
 }));
 
 const Avatar = styled('img')(() => ({

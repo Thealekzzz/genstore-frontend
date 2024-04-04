@@ -94,7 +94,13 @@ function App() {
               element={<ProtectedRoute element={Evaluations} isLogged={isAuthorized} allowedRoles={["manager"]} userData={userData} setIsAuthorized={setIsAuthorized} />} />
             <Route
               path="/profile"
-              element={<ProtectedRoute element={Profile} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />} />
+              element={<ProtectedRoute element={Profile} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />}
+            />
+
+            <Route
+              path="/profile/:page"
+              element={<ProtectedRoute element={Profile} isLogged={isAuthorized} userData={userData} setUserData={setUserData} setIsAuthorized={setIsAuthorized} />}
+            />
 
             <Route
               path="/orders"

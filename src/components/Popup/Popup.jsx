@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect } from 'react';
 
 import closeImage from "../../imgs/close.svg";
 
@@ -13,12 +13,15 @@ const Popup = ({ isOpen, setIsOpen, style, children }) => {
 
     // const [isVisible, setIsVisible] = useState(isOpen);
 
-    // const handleCloseByEscape = evt => {
-    //     console.log(evt.key)
-    //     if (evt.key === "Escape") {
-    //         closePopup();
-    //     }
-    // }
+    const closePopup = useCallback(() => {
+        setIsOpen(false);
+    }, []);
+
+    const handleCloseByEscape = useCallback((evt) => {
+        if (evt.key === "Escape") {
+            closePopup();
+        }
+    }, []);
 
     function handleWrapperClick(evt) {
         if (evt.target.classList.contains(styles.popup)) {
@@ -26,23 +29,16 @@ const Popup = ({ isOpen, setIsOpen, style, children }) => {
         }
     }
 
-    function closePopup() {
-        setIsOpen(false);
-    }
-
     // Добавляю возможность закрыть попап нажатием Escape
-    // useEffect(() => {
-    //     if (isOpen) {
-    //         console.log("Добавляю")
-    //         window.addEventListener("keydown", handleCloseByEscape);
+    useEffect(() => {
+        if (isOpen) {
+            window.addEventListener("keydown", handleCloseByEscape);
 
-    //     } else {
-    //         console.log("Убираю")
-    //         window.removeEventListener("keydown", handleCloseByEscape);
+        } else {
+            window.removeEventListener("keydown", handleCloseByEscape);
 
-    //     }
-
-    // }, [isOpen]);
+        }
+    }, [isOpen, handleCloseByEscape]);
 
     return (
         <div

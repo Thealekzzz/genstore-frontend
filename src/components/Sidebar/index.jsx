@@ -1,11 +1,16 @@
-import { Box, Button, styled } from '@mui/material';
+import { Box, Button, Typography, styled } from '@mui/material';
 
 import AnimalIcon from '../../imgs/animal.svg';
 import OrderIcon from '../../imgs/order.svg';
 import { SERVER_PORT, SERVER_URL } from '../../config';
 import { Link } from 'react-router-dom';
 
-const Sidebar = ({ userData }) => {
+const links = [
+	{ name: 'Заявки', link: '/profile/orders', icon: OrderIcon, alt: 'Иконка страницы заказов' },
+	{ name: 'Животные', link: '/profile/animals', icon: AnimalIcon, alt: 'Иконка страницы животных' },
+];
+
+const Sidebar = ({ userData, page }) => {
   return (
     <Container>
 			<Link to="/profile" style={{ textDecoration: 'none' }}>
@@ -16,14 +21,14 @@ const Sidebar = ({ userData }) => {
 			</Link>
 
       <SidebarGroup>
-        <SidebarLink to='/orders'>
-          <img src={OrderIcon} alt="Иконка страницы заказов" />
-          <p>Заявки</p>
-        </SidebarLink>
-        <SidebarLink to='/animals'>
-          <img src={AnimalIcon} alt="Иконка страницы животных" />
-          <p>Быки</p>
-        </SidebarLink>
+				{links.map(({ name, link, icon, alt }) => (
+					<Link to={link} key={link} style={{ textDecoration: 'none' }}>
+						<SidebarLink isActive={page === link.slice('/profile/'.length)} >
+							<img src={icon} alt={alt} width={20} />
+							<LinkText>{name}</LinkText>
+						</SidebarLink>
+					</Link>
+				))}
       </SidebarGroup>
     </Container>
   );
@@ -47,9 +52,9 @@ const Container = styled(Box)(() => ({
 const SidebarGroup = styled(Box)(() => ({
 	display: 'flex',
 	flexDirection: 'column',
-	gap: 16,
+	gap: 5,
 
-	padding: '0 15px',
+	// padding: '0 15px',
 
 	borderRadius: 5,
 	// backgroundColor: '#ecf0f5',
@@ -96,25 +101,37 @@ const Avatar = styled('img')(() => ({
 	objectFit: 'cover',
 }));
 
-const SidebarLink = styled(Link)(({ isActive }) => ({
+const SidebarLink = styled(Button)(({ isActive }) => ({
 	display: 'flex',
 	alignItems: 'center',
+	justifyContent: 'start',
 	gap: 6,
+
+	width: '100%',
+	padding: 10,
 
 	fontSize: 14,
 	fontWeight: 500,
 	
 	backgroundColor: isActive ? '#ecf0f5' : 'transparent',
-	textDecoration: 'none',
+	textTransform: 'none',
 	color: 'black',
 
-	opacity: .6,
+	opacity: .8,
+	borderRadius: 20,
 
 	transition: 'opacity .2s linear, background-color .2s linear',
   cursor: 'pointer',
 
 	'&:hover': {
-		// backgroundColor: '#eef2f5',
+		backgroundColor: isActive ? '#dee5ec' : '#f5f6f8',
 		opacity: 1,
 	}
+}));
+
+const LinkText = styled(Typography)(() => ({
+	fontSize: 14,
+	color: 'black',
+	lineHeight: 1,
+	textDecoration: 'none',
 }));
