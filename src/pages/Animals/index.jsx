@@ -32,6 +32,8 @@ const Animals = ({ userData }) => {
 	const [areBullsLoading, setAreBullsLoading] = useState(false);
 
 	const [bulls, setBulls] = useState([]);
+	const [hasMoreBulls, setHasMoreBulls] = useState([]);
+	const [offset, setOffset] = useState(0);
 	const [filteredBulls, setFilteredBulls] = useState([]);
 	const [orderIds, setOrderIds] = useState([]);
 	const [averageValues, setAverageValues] = useState([]);
@@ -63,6 +65,27 @@ const Animals = ({ userData }) => {
 	function handleSortButtonClick(sortBy) {
 		const newSortedBy = { value: sortBy, asc: sortedBy.value === sortBy ? !sortedBy.asc : false };
 		setSortedBy(newSortedBy);
+	}
+
+	function handleLoadMoreBulls() {
+		const newOffset = offset + 200;
+
+		getBulls(userData.userId, newOffset)
+			.then(({ data, hasMoreData }) => {
+				const newBulls = [...bulls, ...data];
+
+				setBulls(newBulls);
+				setHasMoreBulls(hasMoreData);
+				setAverageValues(getAvarageValues(newBulls));
+			})
+			.catch(() => {
+				console.error("Ошибка при получении данных о быках");
+			})
+			.finally(() => {
+				setAreBullsLoading(false);
+			});
+
+		setOffset(newOffset);
 	}
 
 	function handleBullCheckboxChange(event, bull) {
@@ -137,8 +160,9 @@ const Animals = ({ userData }) => {
 		setAreBullsLoading(true);
 
 		getBulls(userData.userId)
-			.then(({ data: bulls }) => {
+			.then(({ data: bulls, hasMoreData }) => {
 				setBulls(bulls);
+				setHasMoreBulls(hasMoreData);
 				setFilteredBulls(bulls);
 				setOrderIds([...new Set(bulls.map((bull) => bull.orderId))]);
 				setAverageValues(getAvarageValues(bulls));
@@ -229,6 +253,16 @@ const Animals = ({ userData }) => {
 							))}
 
 						</TableBody>
+						{hasMoreBulls && (
+							<Button
+								onClick={handleLoadMoreBulls}
+								variant="contained"
+								sx={{
+									margin: '50px auto',
+									display: 'block',
+								}}
+							>Загрузить еще</Button>
+						)}
 					</>
 				) : (
 					<p className="noEvaluates">{areBullsLoading ? "Загрузка животных..." : "Животных пока нет"}</p>
