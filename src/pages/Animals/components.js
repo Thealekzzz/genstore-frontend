@@ -47,7 +47,7 @@ export const Title = styled(Typography)(() => ({
 
 export const TableHeader = styled(Box)(({ numberOfFields }) => ({
 	display: 'grid',
-	gridTemplateColumns: `repeat(${numberOfFields}, 1fr)`,
+	gridTemplateColumns: `50px repeat(${numberOfFields}, 1fr)`,
 
 	padding: 15,
 
@@ -66,9 +66,12 @@ export const TableBody = styled('ul')(() => ({
 
 export const TableRow = styled(Box)(({ numberOfFields }) => ({
 	display: 'grid',
-	gridTemplateColumns: `repeat(${numberOfFields}, 1fr)`,
+	gridTemplateColumns: `50px repeat(${numberOfFields}, 1fr)`,
+	alignItems: 'center',
 
-	padding: 15,
+	height: 50,
+
+	padding: '0 15px',
 	borderTop: '1px solid #eee',
 	
 	cursor: 'pointer',

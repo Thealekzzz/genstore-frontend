@@ -298,6 +298,7 @@ const Evaluate = () => {
                 .then(data => {
                     setTableDump(data.tableDump);
                     setSavedFilename(data.savedFilename);
+                    setFileId(data.fileId);
                 })
                 .catch(console.log)
 
