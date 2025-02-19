@@ -48,6 +48,36 @@
     color: black;
 }
 
+.titleRight {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.globalSearchLabel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+}
+
+.globalSearchLabelText {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.globalSearchPlaceholderBlock {
+    height: 140px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .blockTitle {
     font-size: 16px;
     
@@ -83,7 +113,7 @@
     opacity: .8;
 }
 
-.bullsOption:has(input:checked) {
+.bullsOption:has(input:checked), .bullsOption.active {
     background-color: #5fbe4e;
     color: white;
     font-weight: bold;

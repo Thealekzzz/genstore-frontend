@@ -43,6 +43,10 @@ const Evaluate = () => {
     const [thirdStepText, setThirdStepText] = useState([]);
     const [linkToResultFile, setLinkToResultFile] = useState("");
 
+    // Пользователь может выполнить поиск в глобальной базе, если не нашел нужное животное в предложенном списке
+    // Данные о выбранных таким образом быках хранятся тут
+    const [globalSearchSelectedBulls, setGlobalSearchSelectedBulls] = useState({});
+
 
     function uploadFileButtonClick() {
         fileInput.current.click();
@@ -193,20 +197,22 @@ const Evaluate = () => {
         // Получаю данные всех инпутов
         let fd = new FormData(pickForm.current)
         let temp = [...fd.entries()] // Переделываю их в массив
-        console.log(temp);
 
         // Создаю объект с данными инпутов
-        let formData = {}
+        let formDataObject = {}
         temp.forEach(inputData => {
-            formData[inputData[0]] = inputData[1].split("_")[1]
+            formDataObject[inputData[0]] = inputData[1].split("_")[1]
         })
 
-        formData.fileId = fileId;
-        console.log(formData);
+        // Добавляю быков, которые были найдены в глобальном поиске
+        formDataObject.foundGlobally = Object.fromEntries(Object.entries(globalSearchSelectedBulls).filter(([bullName, bullId]) => Boolean(bullId)));
+
+        formDataObject.fileId = fileId;
+        console.log("formDataObject", formDataObject);
 
         fetch(`${SERVER_URL}:${SERVER_PORT}/api/evaluation/evaluate`, {
             method: "POST",
-            body: JSON.stringify(formData),
+            body: JSON.stringify(formDataObject),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -274,6 +280,10 @@ const Evaluate = () => {
             // setSecondStepStatus(prev => {return {...prev, status: "Error"}});
 
         }
+    }
+
+    function handleGlobalSearchBullClicked(bullName, foundedBullId) {
+        setGlobalSearchSelectedBulls((prev) => ({ ...prev, [bullName]: foundedBullId }))
     }
 
     // Слушатели для проверки правильности данных для настройки расчета
@@ -366,7 +376,12 @@ const Evaluate = () => {
                     <SectionHeading style={{ marginBottom: 10 }}>3. {thirdStepText.title}</SectionHeading>
                     <Paragraph style={{ maxWidth: 800 }}>{thirdStepText.paragraph}</Paragraph>
 
-                    <ExtraBullsList extraMatchesBullsMarkers={extraMatchesBullsMarkers} ref={pickForm} />
+                    <ExtraBullsList
+                        globalSearchSelectedBulls={globalSearchSelectedBulls}
+                        handleGlobalSearchBullClicked={handleGlobalSearchBullClicked}
+                        extraMatchesBullsMarkers={extraMatchesBullsMarkers} 
+                        ref={pickForm} 
+                    />
 
                 </div>
 
