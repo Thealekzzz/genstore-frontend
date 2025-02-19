@@ -30,6 +30,8 @@ const Sidebar = ({ userData, page }) => {
 					</Link>
 				))}
       </SidebarGroup>
+
+		<VersionText>V1.0.12</VersionText>
     </Container>
   );
 };
@@ -134,4 +136,13 @@ const LinkText = styled(Typography)(() => ({
 	color: 'black',
 	lineHeight: 1,
 	textDecoration: 'none',
+}));
+
+export const VersionText = styled("p")(({ theme }) => ({
+	fontSize: 10,
+	color: "gray",
+
+	position: "absolute",
+	bottom: 20,
+   left: 20,
 }));
