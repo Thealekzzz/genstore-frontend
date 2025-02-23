@@ -331,7 +331,7 @@
 
 .extra__table-header, .extra__table-row {
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr 4fr 1fr;
+  grid-template-columns: 2fr 3fr 2fr 2fr 4fr 1fr;
 
   padding: 0 0 0 20px;
 }

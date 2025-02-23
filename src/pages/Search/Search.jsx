@@ -51,6 +51,8 @@ const Search = () => {
   const markerTypes = {
     "NAAB": "NAAB Code",
     "ID": "InterRegNumber",
+    "Кличка": "Name",
+    "Инв. Номер": "InventoryNumber",
   };
 
   const separators = {
@@ -254,7 +256,7 @@ const Search = () => {
 
                   <div className={styles["extra__table"]}>
                     <div className={styles["extra__table-header"]}>
-                      {["NAAB", "ID", "Имя", "Полное имя", "TPI"].map((name, index) => {
+                      {["NAAB", "ID", "Инв. номер", "Имя", "Полное имя", "TPI"].map((name, index) => {
                         return (<span key={index}>{name}</span>)
                       })}
                     </div>
@@ -276,6 +278,15 @@ const Search = () => {
                         placeholder='ID'
                         autoComplete='nope'
                         value={filterInputsValue[marker]?.["InterRegNumber"] || ""}
+                        onChange={(evt) => handleFilterInputChange(evt, marker)} />
+
+                      <input
+                        type="text"
+                        className="search__extra-filter-input"
+                        id='InventoryNumber'
+                        placeholder='Инв. номер'
+                        autoComplete='nope'
+                        value={filterInputsValue[marker]?.["InventoryNumber"] || ""}
                         onChange={(evt) => handleFilterInputChange(evt, marker)} />
 
                       <input
@@ -315,7 +326,7 @@ const Search = () => {
                             ].join(" ")}
                             onClick={(evt) => handleOptionClick(marker, match, evt)}
                           >
-                            {["NAAB Code", "InterRegNumber", "Name", "Full Name", "TPI"].map((char, index) => {
+                            {["NAAB Code", "InterRegNumber", "InventoryNumber", "Name", "Full Name", "TPI"].map((char, index) => {
                               return (<span key={"char_" + index}>{match[char]}</span>)
                             })}
                           </div>
