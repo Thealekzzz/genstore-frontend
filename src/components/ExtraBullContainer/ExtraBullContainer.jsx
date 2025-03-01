@@ -5,12 +5,12 @@ import { search } from '../../api/search';
 
 const minSymbolsForSearch = 2;
 
-const ExtraBullContainer = ({ bullData, handleGlobalSearchBullClicked, globalSearchSelectedBulls }) => {
+const ExtraBullContainer = ({ bullData, handleGlobalSearchBullClicked, globalSearchSelectedBulls, isGlobalSearchSelectedDefault=false }) => {
 
 	// let markerCaptions = ["семенной код", "идентификационный номер", "инвентарный номер"]
 
 	const [inputValue, setInputValue] = useState("");
-	const [isGlobalSearchSelected, setIsGlobalSearchSelected] = useState(false);
+	const [isGlobalSearchSelected, setIsGlobalSearchSelected] = useState(isGlobalSearchSelectedDefault);
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchResult, setSearchResult] = useState([]);
 
@@ -69,7 +69,7 @@ const ExtraBullContainer = ({ bullData, handleGlobalSearchBullClicked, globalSea
 
 				<div className={styles.titleRight}>
 					<label htmlFor={`global_${bullData.name}`} className={styles.globalSearchLabel}>
-						<input type="checkbox" id={`global_${bullData.name}`} onChange={() => setIsGlobalSearchSelected(!isGlobalSearchSelected)} />
+						<input type="checkbox" id={`global_${bullData.name}`} checked={isGlobalSearchSelected} onChange={() => setIsGlobalSearchSelected(!isGlobalSearchSelected)} />
 						<span className={styles.globalSearchLabelText}>Глобальный поиск</span>
 					</label>
 

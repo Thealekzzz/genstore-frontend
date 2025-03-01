@@ -4,7 +4,7 @@ import ExtraBullContainer from '../ExtraBullContainer/ExtraBullContainer';
 
 import styles from "./ExtraBullsList.module.css"
 
-const ExtraBullsList = React.forwardRef(({ extraMatchesBullsMarkers, handleGlobalSearchBullClicked, globalSearchSelectedBulls }, ref) => {
+const ExtraBullsList = React.forwardRef(({ extraMatchesBullsMarkers, handleGlobalSearchBullClicked, globalSearchSelectedBulls, isGlobalSearchSelectedDefault }, ref) => {
     return (
         <form action="/evaluate2" className={[styles.bullsList, "animated"].join(" ")} ref={ref}>
 
@@ -13,7 +13,8 @@ const ExtraBullsList = React.forwardRef(({ extraMatchesBullsMarkers, handleGloba
                     bullData={el} 
                     key={el.name} 
                     handleGlobalSearchBullClicked={handleGlobalSearchBullClicked}
-                    globalSearchSelectedBulls={globalSearchSelectedBulls} 
+                    globalSearchSelectedBulls={globalSearchSelectedBulls}
+                    isGlobalSearchSelectedDefault={isGlobalSearchSelectedDefault}
                 />
             })}
         

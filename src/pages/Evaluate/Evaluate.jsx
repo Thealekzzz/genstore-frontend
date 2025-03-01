@@ -40,6 +40,7 @@ const Evaluate = () => {
     const [savedFilename, setSavedFilename] = useState("");
     const [fileId, setFileId] = useState(null);
     const [extraMatchesBullsMarkers, setExtraMatchesBullsMarkers] = useState([]);
+    const [noMatchesBullsMarkers, setNoMatchesBullsMarkers] = useState([]);
     const [thirdStepText, setThirdStepText] = useState([]);
     const [linkToResultFile, setLinkToResultFile] = useState("");
 
@@ -153,6 +154,7 @@ const Evaluate = () => {
                 }
 
                 setExtraMatchesBullsMarkers(parentsWithExtraMatches);
+                setNoMatchesBullsMarkers(parentsWithNoMatches);
 
                 if (parentsWithExtraMatches?.length && parentsWithNoMatches.length) {
                     setThirdStepText({
@@ -374,14 +376,44 @@ const Evaluate = () => {
             <section className={`evaluate-container animated ${currentStep.step >= 3 ? "" : "hidden"}`}>
                 <div className="text-block">
                     <SectionHeading style={{ marginBottom: 10 }}>3. {thirdStepText.title}</SectionHeading>
-                    <Paragraph style={{ maxWidth: 800 }}>{thirdStepText.paragraph}</Paragraph>
+                    <Paragraph style={{ maxWidth: 800, lineHeight: 1.5 }}>{thirdStepText.paragraph}</Paragraph>
 
-                    <ExtraBullsList
-                        globalSearchSelectedBulls={globalSearchSelectedBulls}
-                        handleGlobalSearchBullClicked={handleGlobalSearchBullClicked}
-                        extraMatchesBullsMarkers={extraMatchesBullsMarkers} 
-                        ref={pickForm} 
-                    />
+                    {extraMatchesBullsMarkers.length && (
+                        <ExtraBullsList
+                            globalSearchSelectedBulls={globalSearchSelectedBulls}
+                            handleGlobalSearchBullClicked={handleGlobalSearchBullClicked}
+                            extraMatchesBullsMarkers={extraMatchesBullsMarkers} 
+                            ref={pickForm} 
+                        />
+                    )}
+                    
+                    {noMatchesBullsMarkers.length && (
+                        <>
+                            <SectionHeading style={{
+                                margin: '0 auto 10px',
+                                display: 'block',
+                                maxWidth: 800,
+                                padding: '0 20px',
+
+                            }}>Ненайденные животные</SectionHeading>
+                            <Paragraph style={{
+                                maxWidth: 800,
+                                lineHeight: 1.5,
+                                margin: '0 auto 10px',
+                                display: 'block',
+                                maxWidth: 800,
+                                padding: '0 20px',
+
+                            }}>Животные ниже не были найдены в базе по представленным в таблице данным. Но их можно найти в глобальном поиске вручную.</Paragraph>
+                            
+                            <ExtraBullsList
+                                globalSearchSelectedBulls={globalSearchSelectedBulls}
+                                handleGlobalSearchBullClicked={handleGlobalSearchBullClicked}
+                                extraMatchesBullsMarkers={noMatchesBullsMarkers}
+                                isGlobalSearchSelectedDefault={true}
+                            />
+                        </>
+                    )}
 
                 </div>
 

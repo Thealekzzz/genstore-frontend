@@ -51,7 +51,7 @@
 .titleRight {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 16px;
 }
 
 .globalSearchLabel {
@@ -67,7 +67,7 @@
 }
 
 .globalSearchPlaceholderBlock {
-    height: 140px;
+    height: 100px;
     width: 100%;
 
     display: flex;
