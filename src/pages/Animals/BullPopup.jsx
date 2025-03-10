@@ -1,10 +1,10 @@
-import styled from "@emotion/styled";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
-import { Title } from "./components";
-import { useEffect, useState } from "react";
-import FirstTab from "./tabs/FirstTab";
-import FourTab from "./tabs/FourTab";
-import { searchBulls } from "../../api/search";
+import styled from '@emotion/styled';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Title } from './components';
+import { useEffect, useState } from 'react';
+import FirstTab from './tabs/FirstTab';
+import FourTab from './tabs/FourTab';
+import { searchBulls } from '../../api/search';
 
 const mainFields = [
   { name: 'Кличка', key: 'Name' },
@@ -16,7 +16,7 @@ const mainFields = [
 ];
 
 const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
-	const [isPedigreeLoading, setIsPedigreeLoading] = useState(false);
+  const [isPedigreeLoading, setIsPedigreeLoading] = useState(false);
   const [pedigree, setPedigree] = useState({});
   const [tabValue, setTabValue] = useState(1);
 
@@ -24,44 +24,44 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
     setTabValue(newValue);
   };
 
-
   useEffect(() => {
     if (isPopupOpen) {
-      setIsPedigreeLoading(true);      
+      setIsPedigreeLoading(true);
       searchBulls({
-        data: selectedBull.techPedigree.split(":").map((parentData) => parentData.split("-")).map(([naab, ID]) => ({ naab, ID }))
+        data: selectedBull.techPedigree
+          .split(':')
+          .map((parentData) => parentData.split('-'))
+          .map(([naab, ID]) => ({ naab, ID })),
       })
         .then((data) => {
           setPedigree({
-            'O': data[0],
-            'M': null,
-            'OO': null,
-            'MO': null,
-            'OM': data[1],
-            'MM': null,
-            'OOO': null,
-            'MOO': null,
-            'OMO': null,
-            'MMO': null,
-            'OOM': null,
-            'MOM': null,
-            'OMM': data[2],
-            'MMM': null,
+            O: data[0],
+            M: null,
+            OO: null,
+            MO: null,
+            OM: data[1],
+            MM: null,
+            OOO: null,
+            MOO: null,
+            OMO: null,
+            MMO: null,
+            OOM: null,
+            MOM: null,
+            OMM: data[2],
+            MMM: null,
           });
         })
         .catch((err) => {
-          console.error("Ошибка загрузки родословной для быка");
+          console.error('Ошибка загрузки родословной для быка');
           console.log(err);
         })
         .finally(() => {
           setIsPedigreeLoading(false);
         });
-
     } else {
       setPedigree({});
     }
   }, [selectedBull, isPopupOpen]);
-
 
   return (
     <Container>
@@ -87,17 +87,12 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
       </MainInformation>
 
       <TabsContainer>
-        <Tabs
-          value={tabValue}
-          onChange={handleChange}
-          aria-label="wrapped label tabs example"
-        >
+        <Tabs value={tabValue} onChange={handleChange} aria-label="wrapped label tabs example">
           <Tab value={1} label="Общие" />
           <Tab value={2} label="Фенотип" />
           <Tab value={3} label="Здоровье" />
           <Tab value={4} label="Родословная" />
         </Tabs>
-
 
         {tabValue === 1 && (
           <FirstTab selectedBull={selectedBull} isPopupOpen={isPopupOpen} averageValues={averageValues} />
@@ -112,7 +107,6 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
             isPedigreeLoading={isPedigreeLoading}
           />
         )}
-
       </TabsContainer>
     </Container>
   );
@@ -161,7 +155,6 @@ const FieldValue = styled(Typography)(() => ({
   fontSize: 14,
   color: 'black',
   fontWeight: 600,
-
 }));
 
 const TabsContainer = styled(Box)(() => ({

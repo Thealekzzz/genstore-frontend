@@ -1,4 +1,4 @@
-import { SERVER_PORT, SERVER_URL } from "../config";
+import { SERVER_PORT, SERVER_URL } from '../config';
 
 export function getOrders() {
   const token = localStorage.getItem('token');
@@ -7,8 +7,8 @@ export function getOrders() {
 
   return fetch(`${SERVER_URL}:${SERVER_PORT}/api/orders`, {
     headers: {
-      authorization: token ? "Bearer " + token : null,
+      authorization: token ? 'Bearer ' + token : null,
       'cache-control': 'max-age=60',
-    }
-  }).then(res => res.json());
+    },
+  }).then((res) => res.json());
 }

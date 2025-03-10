@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import styles from "./ExtraBullContainer.module.css";
-import { search } from "../../api/search";
+import styles from './ExtraBullContainer.module.css';
+import { search } from '../../api/search';
 
 const minSymbolsForSearch = 2;
 
@@ -13,10 +13,8 @@ const ExtraBullContainer = ({
 }) => {
   // let markerCaptions = ["семенной код", "идентификационный номер", "инвентарный номер"]
 
-  const [inputValue, setInputValue] = useState("");
-  const [isGlobalSearchSelected, setIsGlobalSearchSelected] = useState(
-    isGlobalSearchSelectedDefault
-  );
+  const [inputValue, setInputValue] = useState('');
+  const [isGlobalSearchSelected, setIsGlobalSearchSelected] = useState(isGlobalSearchSelectedDefault);
   const [isLoading, setIsLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
 
@@ -27,7 +25,7 @@ const ExtraBullContainer = ({
   function handleGlobalSearch(searchValue) {
     search({
       isShort: true,
-      markerType: "Name",
+      markerType: 'Name',
       markers: [searchValue],
     })
       .then(({ data }) => {
@@ -35,7 +33,7 @@ const ExtraBullContainer = ({
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error("error", error);
+        console.error('error', error);
         setIsLoading(false);
       });
   }
@@ -68,27 +66,18 @@ const ExtraBullContainer = ({
       <p className={styles.title}>
         <div className={styles.titleLeft}>
           <span className={styles.titleAccent}>{bullData.name}</span>
-          {[bullData.naab, bullData.id, bullData.inv]
-            .filter((el) => Boolean(el))
-            .join(", ")}
+          {[bullData.naab, bullData.id, bullData.inv].filter((el) => Boolean(el)).join(', ')}
         </div>
 
         <div className={styles.titleRight}>
-          <label
-            htmlFor={`global_${bullData.name}`}
-            className={styles.globalSearchLabel}
-          >
+          <label htmlFor={`global_${bullData.name}`} className={styles.globalSearchLabel}>
             <input
               type="checkbox"
               id={`global_${bullData.name}`}
               checked={isGlobalSearchSelected}
-              onChange={() =>
-                setIsGlobalSearchSelected(!isGlobalSearchSelected)
-              }
+              onChange={() => setIsGlobalSearchSelected(!isGlobalSearchSelected)}
             />
-            <span className={styles.globalSearchLabelText}>
-              Глобальный поиск
-            </span>
+            <span className={styles.globalSearchLabelText}>Глобальный поиск</span>
           </label>
 
           <input
@@ -126,25 +115,19 @@ const ExtraBullContainer = ({
           <div className={styles.bullsOptions}>
             {searchResult?.map((foundedBull) => (
               <div
-                onClick={() =>
-                  handleGlobalSearchBullClicked(bullData.name, foundedBull.id)
-                }
+                onClick={() => handleGlobalSearchBullClicked(bullData.name, foundedBull.id)}
                 className={[
                   styles.bullsOption,
-                  globalSearchSelectedBulls[bullData.name] === foundedBull.id
-                    ? styles.active
-                    : "",
-                ].join(" ")}
+                  globalSearchSelectedBulls[bullData.name] === foundedBull.id ? styles.active : '',
+                ].join(' ')}
                 key={foundedBull.id}
               >
                 <p></p>
-                <p className={styles.bullInfo}>{foundedBull["Name"]}</p>
-                <p className={styles.bullInfo}>{foundedBull["NAAB Code"]}</p>
-                <p className={styles.bullInfo}>
-                  {foundedBull["InterRegNumber"]}
-                </p>
-                <p className={styles.bullInfo}>{foundedBull["TPI"]}</p>
-                <p className={styles.bullInfo}>{foundedBull["Milk"]}</p>
+                <p className={styles.bullInfo}>{foundedBull['Name']}</p>
+                <p className={styles.bullInfo}>{foundedBull['NAAB Code']}</p>
+                <p className={styles.bullInfo}>{foundedBull['InterRegNumber']}</p>
+                <p className={styles.bullInfo}>{foundedBull['TPI']}</p>
+                <p className={styles.bullInfo}>{foundedBull['Milk']}</p>
               </div>
             ))}
           </div>
@@ -152,12 +135,8 @@ const ExtraBullContainer = ({
       ) : (
         <div className={styles.bullsOptions}>
           {bullData.matches
-            .filter((option) => option.Name.trim() !== "")
-            .filter(
-              (option) =>
-                option.Name.toUpperCase().indexOf(inputValue.toUpperCase()) !==
-                -1
-            )
+            .filter((option) => option.Name.trim() !== '')
+            .filter((option) => option.Name.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1)
             .slice(0, 100)
             .map((option) => {
               return (
@@ -165,9 +144,7 @@ const ExtraBullContainer = ({
                   htmlFor={`${bullData.name}_${option.Name}`}
                   className={styles.bullsOption}
                   key={`${bullData.name}_${option.Name}_${
-                    option.InterRegNumber
-                      ? option.InterRegNumber
-                      : option["NAAB Code"]
+                    option.InterRegNumber ? option.InterRegNumber : option['NAAB Code']
                   }`}
                 >
                   <input
@@ -176,22 +153,17 @@ const ExtraBullContainer = ({
                     id={`${bullData.name}_${option.Name}`}
                     value={`${bullData.name}_${option.Name}`}
                   />
-                  <p className={styles.bullInfo}>{option["Name"]}</p>
-                  <p className={styles.bullInfo}>{option["NAAB Code"]}</p>
-                  <p className={styles.bullInfo}>{option["InterRegNumber"]}</p>
-                  <p className={styles.bullInfo}>{option["TPI"]}</p>
-                  <p className={styles.bullInfo}>{option["Milk"]}</p>
+                  <p className={styles.bullInfo}>{option['Name']}</p>
+                  <p className={styles.bullInfo}>{option['NAAB Code']}</p>
+                  <p className={styles.bullInfo}>{option['InterRegNumber']}</p>
+                  <p className={styles.bullInfo}>{option['TPI']}</p>
+                  <p className={styles.bullInfo}>{option['Milk']}</p>
                 </label>
               );
             })}
 
           <label htmlFor={`${bullData.name}`} className={styles.bullsOption}>
-            <input
-              type="radio"
-              name={bullData.name}
-              id={`${bullData.name}`}
-              value={`${bullData.name}`}
-            />
+            <input type="radio" name={bullData.name} id={`${bullData.name}`} value={`${bullData.name}`} />
             <p className={styles.bullInfo}>Если ни один не подошел</p>
           </label>
         </div>

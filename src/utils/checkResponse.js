@@ -1,4 +1,4 @@
-export default function(res) {
+export default function (res) {
   if (res.ok) {
     return res.json();
   }

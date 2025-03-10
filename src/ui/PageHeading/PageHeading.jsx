@@ -1,13 +1,13 @@
 import React from 'react';
 
-import "./PageHeading.css"
+import './PageHeading.css';
 
 const PageHeading = (props) => {
-    return (
-        <h1 className='page-heading' style={props.style}>
-            {props.children}
-        </h1>
-    );
+  return (
+    <h1 className="page-heading" style={props.style}>
+      {props.children}
+    </h1>
+  );
 };
 
 export default PageHeading;

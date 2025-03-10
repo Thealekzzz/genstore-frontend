@@ -2,9 +2,9 @@ import React from 'react';
 
 import Container from '../../components/Container/Container';
 
-import styles from "./PageNotFound.module.css";
+import styles from './PageNotFound.module.css';
 
-import cow from "../../imgs/cow.svg";
+import cow from '../../imgs/cow.svg';
 
 const PageNotFound = () => {
   return (

@@ -1,10 +1,20 @@
 import React from 'react';
-import "./LoadingSpinner.css";
+import './LoadingSpinner.css';
 
 const LoadingSpinner = (props) => {
-    return (
-        <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    );
+  return (
+    <div className="lds-grid">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  );
 };
 
 export default LoadingSpinner;

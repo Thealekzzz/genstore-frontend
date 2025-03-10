@@ -15,7 +15,7 @@ export const theme = createTheme({
       dark: '#1d6fe9',
     },
     paper: {
-      main: '#FFF'
+      main: '#FFF',
     },
     background: {
       black: '#000',
@@ -39,14 +39,14 @@ export const theme = createTheme({
         body: {
           margin: 0,
           backgroundColor: '#EBEDF0',
-        }
-      }
+        },
+      },
     },
     MuiTextField: {
       styleOverrides: {
         'MuiInputBase-input': {
           border: '2px solid #3580E8',
-        }
+        },
       },
     },
     MuiButton: {

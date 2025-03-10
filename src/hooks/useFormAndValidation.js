@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 
 function validateEmail(email) {
@@ -27,7 +26,6 @@ export function useFormAndValidation() {
 
         if (values[name]?.includes(id)) {
           setValues({ ...values, [name]: values[name].filter((el) => el !== id) });
-
         } else {
           setValues({ ...values, [name]: [...values[name], id] });
         }
@@ -36,7 +34,6 @@ export function useFormAndValidation() {
       case 'file':
         if (files.length) {
           setValues({ ...values, [name]: files[0] });
-
         } else {
           setValues({ ...values, [name]: null });
         }
@@ -50,13 +47,10 @@ export function useFormAndValidation() {
         setValues({ ...values, [name]: value });
     }
 
-    const errorMessage = type === 'email' 
-      ? validateEmail(value)
-        ? null
-        : "Некорректный email"
-      : e.target.validationMessage;
+    const errorMessage =
+      type === 'email' ? (validateEmail(value) ? null : 'Некорректный email') : e.target.validationMessage;
 
-    setErrors({ ...errors, [name]: areInputsVisited[name] ? errorMessage : "" });
+    setErrors({ ...errors, [name]: areInputsVisited[name] ? errorMessage : '' });
     setIsValid(!errorMessage && e.target.closest?.('form').checkValidity());
   };
 
@@ -66,12 +60,14 @@ export function useFormAndValidation() {
     setErrors({ ...errors, [name]: e.target.validationMessage });
   };
 
-  const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
-    setValues(newValues);
-    setErrors(newErrors);
-    setIsValid(newIsValid);
-  }, [setValues, setErrors, setIsValid]);
+  const resetForm = useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+    },
+    [setValues, setErrors, setIsValid],
+  );
 
   return { values, handleChange, handleBlur, errors, isValid, resetForm, setValues, setIsValid };
 }
-

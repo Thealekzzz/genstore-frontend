@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "./CustomLink.module.css";
+import styles from './CustomLink.module.css';
 import { Link } from 'react-router-dom';
 
 const CustomLink = ({ to, children }) => {

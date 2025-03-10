@@ -14,8 +14,7 @@ export const horizontalSideContainer = {
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 2,
-
-  }
+  },
 };
 
 export const horizontalFixedContainer = {
@@ -25,8 +24,7 @@ export const horizontalFixedContainer = {
     gap: 2,
     px: 2,
     mt: 2,
-
-  }
+  },
 };
 
 export const section = {
@@ -34,7 +32,7 @@ export const section = {
     backgroundColor: '#efefef',
     padding: 2,
     borderRadius: 2,
-  }
+  },
 };
 
 export const label = {
@@ -46,14 +44,12 @@ export const label = {
   },
 };
 
-
-
 export const wrapper = {
   sx: {
     width: '100%',
     px: 2,
   },
-}
+};
 
 export const container = {
   sx: {
@@ -90,24 +86,21 @@ export const form = {
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
-
-  }
+  },
 };
 
 export const fileWrapper = {
   // display: 'flex',
   // alignItems: 'center',
   // gap: 2,
-
   // padding: 1,
-
   // borderRadius: 1,
   // border: '1px solid #00000040',
 };
 
 export const fileButton = {
-  variant: "text",
-  component: "label",
+  variant: 'text',
+  component: 'label',
   sx: {
     display: 'flex',
     flexDirection: 'column',
@@ -122,7 +115,7 @@ export const fileButton = {
 
     border: '2px dashed #3580E8',
     borderRadius: 2,
-  }
+  },
 };
 
 export const fileText = {
@@ -135,7 +128,7 @@ export const inputList = {
   justifyContent: 'flex-start',
   width: '100%',
   gap: 1,
-}
+};
 
 const input = {
   variant: 'outlined',
@@ -144,37 +137,35 @@ const input = {
   min: 2,
   sx: {
     fontSize: 8,
-
-  }
+  },
 };
 
 export const orderNameInput = {
   ...input,
   required: true,
   label: 'Название',
-  helperText: 'По нему позже можно будет найти этот расчет'
-}
+  helperText: 'По нему позже можно будет найти этот расчет',
+};
 
 export const orderCommentInput = {
   ...input,
   label: 'Комментарий',
-  helperText: 'Дополнительные пожелания / вопросы'
-}
+  helperText: 'Дополнительные пожелания / вопросы',
+};
 
 export const extraInfo = {
   sx: {
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
-
-  }
+  },
 };
 
 export const typeGroup = {
   sx: {
     mt: 1,
     px: 1,
-  }
+  },
 };
 
 export const typeContainer = {
@@ -204,7 +195,6 @@ export const typeOption = {
     // '&:hover': {
     //   backgroundColor: '#00000018',
     // },
-
   },
 };
 
@@ -224,31 +214,31 @@ export const typeText = {
 
 export const promoInput = {
   ...input,
-  placeholder: "SALE10",
-  label: "Промокод",
+  placeholder: 'SALE10',
+  label: 'Промокод',
   size: 'small',
   sx: {
     fontSize: 8,
-  }
+  },
 };
 
 export const promoButton = {
-  variant: "contained",
+  variant: 'contained',
   sx: {
     px: 5,
     py: 1,
-  }
-}
+  },
+};
 
 export const promoName = {
   sx: {
     fontSize: 12,
     fontWeight: 600,
   },
-}
+};
 
 export const promoDescription = {
   sx: {
     fontSize: 12,
   },
-}
+};

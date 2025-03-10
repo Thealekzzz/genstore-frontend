@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 
-import styles from "./ExpandableContent.module.css";
-import plusIcon from "./imgs/plus.svg";
+import styles from './ExpandableContent.module.css';
+import plusIcon from './imgs/plus.svg';
 
-function ExpandableContent({ title, children, titleItem, isExpandable=true, style }) {
+function ExpandableContent({ title, children, titleItem, isExpandable = true, style }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef(null);
 
   const toggleExpand = () => {
     if (isExpandable) {
       setIsExpanded(!isExpanded);
-
     }
   };
 
@@ -20,34 +19,26 @@ function ExpandableContent({ title, children, titleItem, isExpandable=true, styl
 
   useEffect(() => {
     setIsExpanded(false);
-  }, [isExpandable])
+  }, [isExpandable]);
 
   return (
-    <div 
-      className={`${styles.Content} ${isExpanded && styles.ContentExpanded}`}
-      style={{...style}}
-    >
+    <div className={`${styles.Content} ${isExpanded && styles.ContentExpanded}`} style={{ ...style }}>
       <div className={styles.ContentHeader} onClick={toggleExpand}>
-        <div className={styles.ContentTitle}>
-          {title ? title : titleItem}
-        </div>
+        <div className={styles.ContentTitle}>{title ? title : titleItem}</div>
 
-        <img 
+        <img
           src={plusIcon}
-          className={styles.ContentIcon} 
-          width={16} 
-          alt="" 
-          style={{transform: `rotateZ(${isExpanded ? "45deg" : "0"})`}}
+          className={styles.ContentIcon}
+          width={16}
+          alt=""
+          style={{ transform: `rotateZ(${isExpanded ? '45deg' : '0'})` }}
         />
-
       </div>
       <div
         ref={contentRef}
-        className={`${styles.ContentInner} ${
-          isExpanded ? styles.ContentInnerExpanded : ""
-        }`}
+        className={`${styles.ContentInner} ${isExpanded ? styles.ContentInnerExpanded : ''}`}
         style={{
-          maxHeight: isExpanded ? `${getContentHeight()}px` : "0",
+          maxHeight: isExpanded ? `${getContentHeight()}px` : '0',
         }}
       >
         {children}

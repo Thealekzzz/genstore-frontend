@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "./Footer.module.css";
+import styles from './Footer.module.css';
 
 const Footer = () => {
   return (
@@ -15,8 +15,6 @@ const Footer = () => {
             <p>ООО Генстор</p>
             <p className={styles['footer__text_small']}>ОГРН 1237800057461</p>
           </div>
-
-
         </div>
 
         <div className={styles['footer__right']}>
@@ -24,7 +22,9 @@ const Footer = () => {
             <div className={styles['footer__column-title']}>Контакты</div>
             <ul className={styles['footer__links']}>
               {/* <li className={styles['footer__text'] + " " + styles['footer__link']}><a href="#">+7 800 555 35 35</a></li> */}
-              <li className={styles['footer__text'] + " " + styles['footer__link']}><a href='mailto:genstore.spb@yandex.ru'>genstore.spb@gmail.com</a></li>
+              <li className={styles['footer__text'] + ' ' + styles['footer__link']}>
+                <a href="mailto:genstore.spb@yandex.ru">genstore.spb@gmail.com</a>
+              </li>
             </ul>
           </div>
           {/* <div className={styles['footer__column']}>
@@ -34,7 +34,6 @@ const Footer = () => {
             </ul>
           </div> */}
         </div>
-
       </div>
     </footer>
   );

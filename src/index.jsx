@@ -16,6 +16,5 @@ root.render(
         <App />
       </HashRouter>
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
-

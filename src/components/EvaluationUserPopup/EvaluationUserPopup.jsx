@@ -3,11 +3,11 @@ import Popup from '../Popup/Popup';
 
 import getPrettyDateTime from '../../utils/getPrettyDateTime';
 
-import styles from "./EvaluationUserPopup.module.css";
-import lockedIcon from "../../imgs/locked.svg";
-import questionIcon from "../../imgs/question.svg";
-import catImage from "./imgs/cat.png";
-import dogImage from "./imgs/dog.png";
+import styles from './EvaluationUserPopup.module.css';
+import lockedIcon from '../../imgs/locked.svg';
+import questionIcon from '../../imgs/question.svg';
+import catImage from './imgs/cat.png';
+import dogImage from './imgs/dog.png';
 
 import InfoPopup from '../InfoPopup/InfoPopup';
 import ExpandableContent from '../ExpandableContent/ExpandableContent';
@@ -20,13 +20,11 @@ const EvaluationUserPopup = (props) => {
 
   // Секции
 
-
   const statusInfoVariants = [
-    "Эта заявка еще не обработана. Оплата будет возможна после того, как менеджеры произведут расчет по отправленным данным",
-    "Менеджеры уже обработали эту заявку, ниже доступны варианты оплаты",
-    "Менеджеры обработали эту заявку, оплата произведена",
+    'Эта заявка еще не обработана. Оплата будет возможна после того, как менеджеры произведут расчет по отправленным данным',
+    'Менеджеры уже обработали эту заявку, ниже доступны варианты оплаты',
+    'Менеджеры обработали эту заявку, оплата произведена',
   ];
-
 
   return (
     <Popup isOpen={props.isOpen} setIsOpen={props.setIsOpen} style={{ width: 800 }}>
@@ -38,46 +36,38 @@ const EvaluationUserPopup = (props) => {
 
           <p className={styles.sectionItem}>
             <span className={styles.itemName}>Название файла</span>
-            <span className={styles.itemValue}>
-              {props.evaluationData.filename}
-            </span>
-
+            <span className={styles.itemValue}>{props.evaluationData.filename}</span>
           </p>
           <p className={styles.sectionItem}>
             <span className={styles.itemName}>Дата создания</span>
-            <span className={styles.itemValue}>
-              {getPrettyDateTime(props.evaluationData.createdAt)}
-            </span>
-
+            <span className={styles.itemValue}>{getPrettyDateTime(props.evaluationData.createdAt)}</span>
           </p>
 
           <p className={styles.sectionItem}>
             <span className={styles.itemName}>Комменатрий</span>
-            <span className={styles.itemValue}>
-              {props.evaluationData.userComment || "Не указан"}
-            </span>
-
+            <span className={styles.itemValue}>{props.evaluationData.userComment || 'Не указан'}</span>
           </p>
 
-          <h3 className={styles.sectionName} style={{ marginTop: 20 }}>Статус</h3>
+          <h3 className={styles.sectionName} style={{ marginTop: 20 }}>
+            Статус
+          </h3>
 
           <div className={styles.statusList}>
             <p
               className={styles.statusItem}
               style={{
-                backgroundColor: props.evaluationData.isPaid ? "seagreen" : "#f26025"
+                backgroundColor: props.evaluationData.isPaid ? 'seagreen' : '#f26025',
               }}
             >
-              {props.evaluationData.isPaid ? "Заявка оплачена" : "Заявка не оплачена"}
+              {props.evaluationData.isPaid ? 'Заявка оплачена' : 'Заявка не оплачена'}
             </p>
             <p
               className={styles.statusItem}
               style={{
-                backgroundColor: props.evaluationData.isEvaluated ? "seagreen" : "#f26025"
+                backgroundColor: props.evaluationData.isEvaluated ? 'seagreen' : '#f26025',
               }}
             >
-              {props.evaluationData.isEvaluated ? "Расчет выполнен" : "Расчет не выполнен"}
-
+              {props.evaluationData.isEvaluated ? 'Расчет выполнен' : 'Расчет не выполнен'}
             </p>
             <img
               src={questionIcon}
@@ -91,32 +81,30 @@ const EvaluationUserPopup = (props) => {
               message={statusInfoVariants[props.evaluationData.isEvaluated + props.evaluationData.isPaid]}
               style={{ top: 190, left: 320 }}
             />
-
           </div>
-
-
         </li>
 
         <li>
           <ExpandableContent
             style={{
-              width: "100%",
-              backgroundColor: "#ECF2FA"
+              width: '100%',
+              backgroundColor: '#ECF2FA',
             }}
-            isExpandable={!["created", "pending"].includes(props.evaluationData.status)}
-            titleItem={(
+            isExpandable={!['created', 'pending'].includes(props.evaluationData.status)}
+            titleItem={
               <>
-                <h3 className={styles.sectionName}>
-                  Оплата
-                </h3>
-                {["created", "pending"].includes(props.evaluationData.status) && (
+                <h3 className={styles.sectionName}>Оплата</h3>
+                {['created', 'pending'].includes(props.evaluationData.status) && (
                   <>
                     <img src={lockedIcon} alt="" />
                     <img
                       src={questionIcon}
                       className={styles.questionIcon}
                       alt=""
-                      onClick={(evt) => {evt.stopPropagation(); setIsPaymentInfoPopupOpen(prev => !prev)}}
+                      onClick={(evt) => {
+                        evt.stopPropagation();
+                        setIsPaymentInfoPopupOpen((prev) => !prev);
+                      }}
                     />
 
                     <InfoPopup
@@ -128,7 +116,7 @@ const EvaluationUserPopup = (props) => {
                   </>
                 )}
               </>
-            )}
+            }
           >
             <div className={styles.ExtendableInner}>
               <div className={styles.ExtendableInnerWrapper}>
@@ -144,23 +132,24 @@ const EvaluationUserPopup = (props) => {
         <li>
           <ExpandableContent
             style={{
-              width: "100%",
-              backgroundColor: "#ECF2FA"
+              width: '100%',
+              backgroundColor: '#ECF2FA',
             }}
-            isExpandable={!["created", "pending", "awaiting payment"].includes(props.evaluationData.status)}
-            titleItem={(
+            isExpandable={!['created', 'pending', 'awaiting payment'].includes(props.evaluationData.status)}
+            titleItem={
               <>
-                <h3 className={styles.sectionName}>
-                  Результат
-                </h3>
-                {["created", "pending", "awaiting payment"].includes(props.evaluationData.status) && (
+                <h3 className={styles.sectionName}>Результат</h3>
+                {['created', 'pending', 'awaiting payment'].includes(props.evaluationData.status) && (
                   <>
                     <img src={lockedIcon} alt="" />
                     <img
                       src={questionIcon}
                       className={styles.questionIcon}
                       alt=""
-                      onClick={(evt) => {evt.stopPropagation(); setIsEvaluatedStatusPopupOpen(prev => !prev)}}
+                      onClick={(evt) => {
+                        evt.stopPropagation();
+                        setIsEvaluatedStatusPopupOpen((prev) => !prev);
+                      }}
                     />
 
                     <InfoPopup
@@ -172,20 +161,16 @@ const EvaluationUserPopup = (props) => {
                   </>
                 )}
               </>
-            )}
+            }
           >
             <div className={styles.ExtendableInner}>
               <div className={styles.ExtendableInnerWrapper}>
                 <img src={dogImage} width={200} alt="" />
-                <p className={styles.ExtendableInnerText}>
-                  Скоро здесь можно будет скачать итоговый файл расчета
-                </p>
+                <p className={styles.ExtendableInnerText}>Скоро здесь можно будет скачать итоговый файл расчета</p>
               </div>
             </div>
           </ExpandableContent>
         </li>
-
-
       </ul>
     </Popup>
   );

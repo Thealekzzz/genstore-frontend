@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import styles from "./Dropdown.module.css";
-import arrowIcon from "./imgs/arrow.svg";
+import styles from './Dropdown.module.css';
+import arrowIcon from './imgs/arrow.svg';
 
 const DropdownMenu = ({ options, onSelect, defaultValue }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ const DropdownMenu = ({ options, onSelect, defaultValue }) => {
 
   const handleDropdownClick = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -19,14 +19,11 @@ const DropdownMenu = ({ options, onSelect, defaultValue }) => {
   };
 
   const handleCloseDropdown = useCallback((evt) => {
-    if (
-      !evt.target.closest(`.${styles.dropdownMenu}`)
-      || evt.key === 'Escape'
-    ) {
+    if (!evt.target.closest(`.${styles.dropdownMenu}`) || evt.key === 'Escape') {
       setIsOpen(false);
     }
   }, []);
-  
+
   useEffect(() => {
     if (isOpen) {
       window.addEventListener('click', handleCloseDropdown);
@@ -35,17 +32,21 @@ const DropdownMenu = ({ options, onSelect, defaultValue }) => {
       window.removeEventListener('click', handleCloseDropdown);
       window.removeEventListener('keydown', handleCloseDropdown);
     }
-
   }, [isOpen, handleCloseDropdown]);
 
   return (
     <div className={styles.dropdownMenu}>
       <button className={styles.dropdown} onClick={handleDropdownClick}>
-        <span>{selectedOption || "Select an option"}</span>
-        <img src={arrowIcon} className={styles.arrow} style={{transform: `rotateZ(${isOpen ? "90deg" : 0})`}} alt="" />
+        <span>{selectedOption || 'Select an option'}</span>
+        <img
+          src={arrowIcon}
+          className={styles.arrow}
+          style={{ transform: `rotateZ(${isOpen ? '90deg' : 0})` }}
+          alt=""
+        />
       </button>
 
-      <ul className={[styles.options, !isOpen ? styles.hidden: ""].join(" ")} >
+      <ul className={[styles.options, !isOpen ? styles.hidden : ''].join(' ')}>
         {options.map((option) => (
           <li className={styles.option} key={option} onClick={() => handleOptionClick(option)}>
             {option}
