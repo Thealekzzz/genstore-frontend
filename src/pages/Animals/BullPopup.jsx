@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import FirstTab from './tabs/FirstTab';
 import FourTab from './tabs/FourTab';
 import { searchBulls } from '../../api/search';
+import SecondTab from './tabs/SecondTab';
+import ThirdTab from './tabs/ThirdTab';
 
 const mainFields = [
   { name: 'Кличка', key: 'Name' },
@@ -89,13 +91,21 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
       <TabsContainer>
         <Tabs value={tabValue} onChange={handleChange} aria-label="wrapped label tabs example">
           <Tab value={1} label="Общие" />
-          <Tab value={2} label="Фенотип" />
+          <Tab value={2} label="Экстерьер" />
           <Tab value={3} label="Здоровье" />
           <Tab value={4} label="Родословная" />
         </Tabs>
 
         {tabValue === 1 && (
           <FirstTab selectedBull={selectedBull} isPopupOpen={isPopupOpen} averageValues={averageValues} />
+        )}
+
+        {tabValue === 2 && (
+          <SecondTab selectedBull={selectedBull} isPopupOpen={isPopupOpen} averageValues={averageValues} />
+        )}
+
+        {tabValue === 3 && (
+          <ThirdTab selectedBull={selectedBull} isPopupOpen={isPopupOpen} averageValues={averageValues} />
         )}
 
         {tabValue === 4 && (

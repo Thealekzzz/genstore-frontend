@@ -24,6 +24,7 @@ const Popup = ({ isOpen, setIsOpen, style, children }) => {
   }, []);
 
   function handleWrapperClick(evt) {
+    evt.stopPropagation();
     if (evt.target.classList.contains(styles.popup)) {
       closePopup();
     }
