@@ -12,7 +12,7 @@ const mainFields = [
   { name: 'Кличка', key: 'Name' },
   { name: 'ID', key: 'InterRegNumber' },
   { name: 'Инвентарный номер', key: 'inv' },
-  { name: 'Пол', key: 'sex' },
+  { name: 'Пол', key: 'sex', proceedValue: (value) => value === 1 ? "М" : "Ж" },
   { name: 'Дата рождения', key: 'birth' },
   { name: 'Порода', key: 'breed' },
 ];
@@ -71,18 +71,18 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
 
       <MainInformation>
         <MainInformationGroup>
-          {mainFields.slice(0, 3).map(({ name, key }) => (
+          {mainFields.slice(0, 3).map(({ name, key, proceedValue }) => (
             <MainInformationRow key={key}>
               <FieldName>{name}</FieldName>
-              <FieldValue>{selectedBull[key] || '--'}</FieldValue>
+              <FieldValue>{(proceedValue ? proceedValue(selectedBull[key]) : selectedBull[key]) || '--'}</FieldValue>
             </MainInformationRow>
           ))}
         </MainInformationGroup>
         <MainInformationGroup>
-          {mainFields.slice(3, 6).map(({ name, key }) => (
+          {mainFields.slice(3, 6).map(({ name, key, proceedValue }) => (
             <MainInformationRow key={key}>
               <FieldName>{name}</FieldName>
-              <FieldValue>{selectedBull[key] || '--'}</FieldValue>
+              <FieldValue>{(proceedValue ? proceedValue(selectedBull[key]) : selectedBull[key]) || '--'}</FieldValue>
             </MainInformationRow>
           ))}
         </MainInformationGroup>
