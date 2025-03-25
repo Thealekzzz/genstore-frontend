@@ -13,8 +13,8 @@ const mainFields = [
   { name: 'ID', key: 'InterRegNumber' },
   { name: 'Инвентарный номер', key: 'inv' },
   { name: 'Пол', key: 'sex', proceedValue: (value) => value === 1 ? "М" : "Ж" },
-  { name: 'Дата рождения', key: 'birth' },
-  { name: 'Порода', key: 'breed' },
+  { name: 'Дата рождения', key: 'Birth Date' },
+  { name: 'Порода', key: 'Breed' },
 ];
 
 const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
@@ -33,7 +33,7 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
         data: selectedBull.techPedigree
           .split(':')
           .map((parentData) => parentData.split('-'))
-          .map(([naab, ID]) => ({ naab, ID })),
+          .map(([naab, ID]) => ({ naab: naab || null, ID: ID || null })),
       })
         .then((data) => {
           setPedigree({
