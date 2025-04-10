@@ -8,11 +8,16 @@ import { searchBulls } from '../../api/search';
 import SecondTab from './tabs/SecondTab';
 import ThirdTab from './tabs/ThirdTab';
 
+const sexByNumber = {
+  0: 'Ж',
+  1: 'М',
+};
+
 const mainFields = [
   { name: 'Кличка', key: 'Name' },
   { name: 'ID', key: 'InterRegNumber' },
   { name: 'Инвентарный номер', key: 'inv' },
-  { name: 'Пол', key: 'sex', proceedValue: (value) => value === 1 ? "М" : "Ж" },
+  { name: 'Пол', key: 'sex', proceedValue: (value) => sexByNumber[value] || '--' },
   { name: 'Дата рождения', key: 'Birth Date' },
   { name: 'Порода', key: 'Breed' },
 ];
