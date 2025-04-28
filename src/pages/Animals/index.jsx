@@ -10,11 +10,11 @@ import getAvarageValues from '../../utils/bulls';
 import wordEnding from '../../utils/wordEnding';
 
 const fieldsToShowInTable = {
-  Имя: 'Name',
-  TPI: 'TPI',
-  Молоко: 'Milk',
-  Белок: 'Protein',
-  Жир: 'Fat',
+  Имя: 'name',
+  TPI: 'tpi',
+  Молоко: 'milk',
+  Белок: 'protein',
+  Жир: 'fat',
 };
 
 function compareFn(a, b, key, asc) {

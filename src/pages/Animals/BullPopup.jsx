@@ -14,12 +14,12 @@ const sexByNumber = {
 };
 
 const mainFields = [
-  { name: 'Кличка', key: 'Name' },
-  { name: 'ID', key: 'InterRegNumber' },
-  { name: 'Инвентарный номер', key: 'inv' },
+  { name: 'Кличка', key: 'name' },
+  { name: 'ID', key: 'inter_reg_number' },
+  { name: 'Инвентарный номер', key: 'inventory_number' },
   { name: 'Пол', key: 'sex', proceedValue: (value) => sexByNumber[value] || '--' },
-  { name: 'Дата рождения', key: 'Birth Date' },
-  { name: 'Порода', key: 'Breed' },
+  { name: 'Дата рождения', key: 'birth_date' },
+  { name: 'Порода', key: 'breed' },
 ];
 
 const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {

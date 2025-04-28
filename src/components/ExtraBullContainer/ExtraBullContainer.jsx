@@ -25,7 +25,7 @@ const ExtraBullContainer = ({
   function handleGlobalSearch(searchValue) {
     search({
       isShort: true,
-      markerType: 'Name',
+      markerType: 'name',
       markers: [searchValue],
     })
       .then(({ data }) => {
@@ -123,11 +123,11 @@ const ExtraBullContainer = ({
                 key={foundedBull.id}
               >
                 <p></p>
-                <p className={styles.bullInfo}>{foundedBull['Name']}</p>
-                <p className={styles.bullInfo}>{foundedBull['NAAB Code']}</p>
-                <p className={styles.bullInfo}>{foundedBull['InterRegNumber']}</p>
-                <p className={styles.bullInfo}>{foundedBull['TPI']}</p>
-                <p className={styles.bullInfo}>{foundedBull['Milk']}</p>
+                <p className={styles.bullInfo}>{foundedBull['name']}</p>
+                <p className={styles.bullInfo}>{foundedBull['naab_code']}</p>
+                <p className={styles.bullInfo}>{foundedBull['inter_reg_number']}</p>
+                <p className={styles.bullInfo}>{foundedBull['tpi']}</p>
+                <p className={styles.bullInfo}>{foundedBull['milk']}</p>
               </div>
             ))}
           </div>
@@ -135,29 +135,29 @@ const ExtraBullContainer = ({
       ) : (
         <div className={styles.bullsOptions}>
           {bullData.matches
-            .filter((option) => option.Name.trim() !== '')
-            .filter((option) => option.Name.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1)
+            .filter((option) => option.name.trim() !== '')
+            .filter((option) => option.name.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1)
             .slice(0, 100)
             .map((option) => {
               return (
                 <label
-                  htmlFor={`${bullData.name}_${option.Name}`}
+                  htmlFor={`${bullData.name}_${option.name}`}
                   className={styles.bullsOption}
-                  key={`${bullData.name}_${option.Name}_${
-                    option.InterRegNumber ? option.InterRegNumber : option['NAAB Code']
+                  key={`${bullData.name}_${option.name}_${
+                    option.inter_reg_number ? option.inter_reg_number : option['naab_code']
                   }`}
                 >
                   <input
                     type="radio"
                     name={bullData.name}
-                    id={`${bullData.name}_${option.Name}`}
-                    value={`${bullData.name}_${option.Name}`}
+                    id={`${bullData.name}_${option.name}`}
+                    value={`${bullData.name}_${option.name}`}
                   />
-                  <p className={styles.bullInfo}>{option['Name']}</p>
-                  <p className={styles.bullInfo}>{option['NAAB Code']}</p>
-                  <p className={styles.bullInfo}>{option['InterRegNumber']}</p>
-                  <p className={styles.bullInfo}>{option['TPI']}</p>
-                  <p className={styles.bullInfo}>{option['Milk']}</p>
+                  <p className={styles.bullInfo}>{option['name']}</p>
+                  <p className={styles.bullInfo}>{option['naab_code']}</p>
+                  <p className={styles.bullInfo}>{option['inter_reg_number']}</p>
+                  <p className={styles.bullInfo}>{option['tpi']}</p>
+                  <p className={styles.bullInfo}>{option['milk']}</p>
                 </label>
               );
             })}

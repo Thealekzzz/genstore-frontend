@@ -37,10 +37,10 @@ const FourTab = ({ pedigree, isPedigreeLoading }) => {
                     <>
                       <Text sx={{ transform: 'translate(-20px, -36px)', position: 'absolute' }}>{names[name]}</Text>
                       <ParentContainerHeader>
-                        <Title>{data.Name || '--'}</Title>
-                        <Text>{data.TPI ? (data.TPI > 0 ? '+' + data.TPI : data.TPI) : '--'}</Text>
+                        <Title>{data.name || '--'}</Title>
+                        <Text>{data.tpi ? (data.tpi > 0 ? '+' + data.tpi : data.tpi) : '--'}</Text>
                       </ParentContainerHeader>
-                      <Text>{data.InterRegNumber || '--'}</Text>
+                      <Text>{data.inter_reg_number || '--'}</Text>
                     </>
                   ) : (
                     <>
@@ -61,10 +61,10 @@ const FourTab = ({ pedigree, isPedigreeLoading }) => {
                     <>
                       <Text sx={{ transform: 'translate(-20px, -36px)', position: 'absolute' }}>{names[name]}</Text>
                       <ParentContainerHeader>
-                        <Title>{data.Name}</Title>
-                        <Text>{data.TPI > 0 ? '+' + data.TPI : data.TPI}</Text>
+                        <Title>{data.name}</Title>
+                        <Text>{data.tpi > 0 ? '+' + data.tpi : data.tpi}</Text>
                       </ParentContainerHeader>
-                      <Text>{data.InterRegNumber}</Text>
+                      <Text>{data.inter_reg_number}</Text>
                     </>
                   ) : (
                     <>
@@ -85,10 +85,10 @@ const FourTab = ({ pedigree, isPedigreeLoading }) => {
                     <>
                       <Text sx={{ transform: 'translate(-20px, -30px)', position: 'absolute' }}>{names[name]}</Text>
                       <ParentContainerHeader>
-                        <Title>{data.Name}</Title>
-                        <Text>{data.TPI > 0 ? '+' + data.TPI : data.TPI}</Text>
+                        <Title>{data.name}</Title>
+                        <Text>{data.tpi > 0 ? '+' + data.tpi : data.tpi}</Text>
                       </ParentContainerHeader>
-                      <Text>{data.InterRegNumber}</Text>
+                      <Text>{data.inter_reg_number}</Text>
                     </>
                   ) : (
                     <>

@@ -5,12 +5,12 @@ import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from 'recharts';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 
 const tableRows = [
-  { name: 'TPI', key: 'TPI', postfix: '' },
-  { name: 'Белок', key: 'Protein', postfix: '' },
-  { name: '% белка', key: 'Prot%', postfix: '%' },
-  { name: 'Жир', key: 'Fat', postfix: '' },
-  { name: '% жира', key: 'Fat %', postfix: '%' },
-  { name: 'Молоко', key: 'Milk', postfix: '' },
+  { name: 'TPI', key: 'tpi', postfix: '' },
+  { name: 'Белок', key: 'protein', postfix: '' },
+  { name: '% белка', key: 'prot_percent', postfix: '%' },
+  { name: 'Жир', key: 'fat', postfix: '' },
+  { name: '% жира', key: 'fat_percent', postfix: '%' },
+  { name: 'Молоко', key: 'milk', postfix: '' },
 ];
 
 const FirstTab = ({ selectedBull, isPopupOpen, averageValues }) => {

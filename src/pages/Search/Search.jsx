@@ -23,97 +23,99 @@ const Search = () => {
 
   const columnNames = {
     AltaGenetic: [
-      'NAAB Code',
-      'InterRegNumber',
-      'Name',
-      'Full Name',
-      'Breed',
-      'TPI',
-      'NM$',
-      'CM$',
-      'FM$',
-      'GM$',
-      'Milk',
-      'Protein',
-      'Prot%',
-      'Fat',
-      'Fat %',
-      'CFP',
-      'FE',
-      'Feed Saved',
-      'Prel',
-      'D / H',
-      'PL',
-      'C-LIV',
-      'H-LIV',
-      'DPR',
-      'SCS',
-      'SCE',
-      'SCE Rel',
-      'SCE Obs',
-      'DCE',
-      'SSB',
-      'DSB',
-      'CCR',
-      'HCR',
-      'EFC',
-      'GL',
-      'MAST',
-      'KET',
-      'RP',
-      'MET',
-      'DA',
-      'MF',
-      'MS',
-      'DWP$',
-      'WT$',
-      'CW$',
-      'PTAT',
-      'UDC',
-      'FLC',
-      'BWC',
-      'DC',
-      'TRel',
-      'D / H2',
-      'Stature',
-      'Strength',
-      'Body Depth',
-      'Dairy form',
-      'Rump Angle',
-      'Thurl Width',
-      'RLSV',
-      'RLRV',
-      'Foot Angle',
-      'FLS',
-      'F. Udder Att.',
-      'R Udder Height',
-      'Rear Udder Width',
-      'Udder Cleft',
-      'Udder Depth',
-      'FTP',
-      'RTP',
-      'RTP SV',
-      'Teat Length',
-      'Pedigree',
-      'aAa',
-      'DMS',
-      'Kappa-Casein',
-      'Beta-Casein',
-      'BBR',
-      'B-LACT',
-      'Genetic Codes',
-      'Haplotypes',
-      'RHA',
-      'EFI',
-      'Birth Date',
-      'Proof',
-      'ADV',
-      'GS',
-      'FS',
-      '511',
-      'EDGE',
-      'CP',
-      'CP511',
+      'naab_code',
+      'inter_reg_number',
+      'inventory_number',
+      'name',
+      'full_name',
+      'breed',
+      'tpi',
+      'nm_dollar',
+      'cm_dollar',
+      'fm_dollar',
+      'gm_dollar',
+      'milk',
+      'protein',
+      'prot_percent',
+      'fat',
+      'fat_percent',
+      'cfp',
+      'fe',
+      'feed_saved',
+      'prel',
+      'd_h',
+      'pl',
+      'c_liv',
+      'h_liv',
+      'fi',
+      'dpr',
+      'scs',
+      'sce',
+      'sce_rel',
+      'sce_obs',
+      'dce',
+      'ssb',
+      'dsb',
+      'ccr',
+      'hcr',
+      'efc',
+      'gl',
+      'mast',
+      'ket',
+      'rp',
+      'met',
+      'da',
+      'mf',
+      'ms',
+      'dwp_dollar',
+      'wt_dollar',
+      'cw_dollar',
+      'ptat',
+      'udc',
+      'flc',
+      'bwc',
+      'dc',
+      't_rel',
+      'd_h2',
+      'stature',
+      'strength',
+      'body_depth',
+      'dairy_form',
+      'rump_angle',
+      'thurl_width',
+      'rlsv',
+      'rlrv',
+      'foot_angle',
+      'fls',
+      'f_udder_att',
+      'r_udder_height',
+      'rear_udder_width',
+      'udder_cleft',
+      'udder_depth',
+      'ftp',
+      'rtp',
+      'rtp_sv',
+      'teat_length',
+      'pedigree',
+      'aaa',
+      'dms',
+      'kappa_casein',
+      'beta_casein',
+      'bbr',
+      'b_lact',
+      'genetic_codes',
+      'haplotypes',
+      'rha',
+      'efi',
+      'birth_date',
+      'proof',
+      'adv',
+      'gs',
+      'fs',
+      'num_511',
+      'edge',
+      'cp',
+      'cp511',
     ],
   };
 
@@ -132,10 +134,10 @@ const Search = () => {
   const [extendedMarkersOfBullsWithNoMatches, setExtendedMarkersOfBullsWithNoMatches] = useState(new Set());
 
   const markerTypes = {
-    NAAB: 'NAAB Code',
-    ID: 'InterRegNumber',
-    Кличка: 'Name',
-    'Инв. Номер': 'InventoryNumber',
+    NAAB: 'naab_code',
+    ID: 'inter_reg_number',
+    Кличка: 'name',
+    'Инв. Номер': 'inventory_number',
   };
 
   const separators = {
@@ -160,7 +162,7 @@ const Search = () => {
 
     prevSingle.set(marker, bullData);
     prevSeveral.get(marker).forEach((currBull) => {
-      if (currBull.InterRegNumber === bullData.InterRegNumber) {
+      if (currBull.inter_reg_number === bullData.inter_reg_number) {
         currBull.chosen = true;
       } else {
         currBull.chosen = false;
@@ -355,50 +357,50 @@ const Search = () => {
                     <input
                       type="text"
                       className="search__extra-filter-input"
-                      id="NAAB Code"
+                      id="naab_code"
                       placeholder="NAAB"
                       autoComplete="nope"
-                      value={filterInputsValue[marker]?.['NAAB Code'] || ''}
+                      value={filterInputsValue[marker]?.naab_code || ''}
                       onChange={(evt) => handleFilterInputChange(evt, marker)}
                     />
 
                     <input
                       type="text"
                       className="search__extra-filter-input"
-                      id="InterRegNumber"
+                      id="inter_reg_number"
                       placeholder="ID"
                       autoComplete="nope"
-                      value={filterInputsValue[marker]?.['InterRegNumber'] || ''}
+                      value={filterInputsValue[marker]?.inter_reg_number || ''}
                       onChange={(evt) => handleFilterInputChange(evt, marker)}
                     />
 
                     <input
                       type="text"
                       className="search__extra-filter-input"
-                      id="InventoryNumber"
+                      id="inventory_number"
                       placeholder="Инв. номер"
                       autoComplete="nope"
-                      value={filterInputsValue[marker]?.['InventoryNumber'] || ''}
+                      value={filterInputsValue[marker]?.inventory_number || ''}
                       onChange={(evt) => handleFilterInputChange(evt, marker)}
                     />
 
                     <input
                       type="text"
                       className="search__extra-filter-input"
-                      id="Name"
+                      id="name"
                       placeholder="Имя"
                       autoComplete="nope"
-                      value={filterInputsValue[marker]?.['Name'] || ''}
+                      value={filterInputsValue[marker]?.name || ''}
                       onChange={(evt) => handleFilterInputChange(evt, marker)}
                     />
 
                     <input
                       type="text"
                       className="search__extra-filter-input"
-                      id="Full Name"
+                      id="full_name"
                       placeholder="Полное имя"
                       autoComplete="nope"
-                      value={filterInputsValue[marker]?.['Full Name'] || ''}
+                      value={filterInputsValue[marker]?.full_name || ''}
                       onChange={(evt) => handleFilterInputChange(evt, marker)}
                     />
 
@@ -423,7 +425,7 @@ const Search = () => {
                           ].join(' ')}
                           onClick={(evt) => handleOptionClick(marker, match, evt)}
                         >
-                          {['NAAB Code', 'InterRegNumber', 'InventoryNumber', 'Name', 'Full Name', 'TPI'].map(
+                          {['naab_code', 'inter_reg_number', 'inventory_number', 'name', 'full_name', 'tpi'].map(
                             (char, index) => {
                               return <span key={'char_' + index}>{match[char]}</span>;
                             },
