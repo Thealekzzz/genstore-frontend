@@ -17,7 +17,7 @@ const ExtraBullsList = React.forwardRef(
     return (
       <form action="/evaluate2" className={[styles.bullsList, 'animated'].join(' ')} ref={ref}>
         {extraMatchesBullsMarkers
-          .filter((a) => a.name.trim() !== '')
+          .filter((a) => a.name?.trim() !== '')
           .sort((a, b) => a.name - b.name)
           .map((el) => {
             return (

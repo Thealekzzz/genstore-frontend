@@ -135,8 +135,8 @@ const ExtraBullContainer = ({
       ) : (
         <div className={styles.bullsOptions}>
           {bullData.matches
-            .filter((option) => option.name.trim() !== '')
-            .filter((option) => option.name.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1)
+            .filter((option) => option.name?.trim() !== '')
+            .filter((option) => option.name?.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1)
             .slice(0, 100)
             .map((option) => {
               return (
@@ -153,11 +153,11 @@ const ExtraBullContainer = ({
                     id={`${bullData.name}_${option.name}`}
                     value={`${bullData.name}_${option.name}`}
                   />
-                  <p className={styles.bullInfo}>{option['name']}</p>
-                  <p className={styles.bullInfo}>{option['naab_code']}</p>
-                  <p className={styles.bullInfo}>{option['inter_reg_number']}</p>
-                  <p className={styles.bullInfo}>{option['tpi']}</p>
-                  <p className={styles.bullInfo}>{option['milk']}</p>
+                  <p className={styles.bullInfo}>{option.name}</p>
+                  <p className={styles.bullInfo}>{option.naab_code}</p>
+                  <p className={styles.bullInfo}>{option.inter_reg_number}</p>
+                  <p className={styles.bullInfo}>{option.tpi}</p>
+                  <p className={styles.bullInfo}>{option.milk}</p>
                 </label>
               );
             })}
