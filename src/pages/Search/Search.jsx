@@ -17,108 +17,10 @@ import TokenContext from '../../contexts/TokenContext';
 import { SERVER_PORT, SERVER_URL } from '../../config';
 import wordEnding from '../../utils/wordEnding';
 import Loader from '../../components/Loader/Loader';
+import { columnNames } from '../../consts';
 
 const Search = () => {
   // const [isSearchBySingleParameter, setIsSearchBySingleParameter] = useState(true);
-
-  const columnNames = {
-    AltaGenetic: [
-      'naab_code',
-      'inter_reg_number',
-      'inventory_number',
-      'name',
-      'full_name',
-      'breed',
-      'tpi',
-      'nm_dollar',
-      'cm_dollar',
-      'fm_dollar',
-      'gm_dollar',
-      'milk',
-      'protein',
-      'prot_percent',
-      'fat',
-      'fat_percent',
-      'cfp',
-      'fe',
-      'feed_saved',
-      'prel',
-      'd_h',
-      'pl',
-      'c_liv',
-      'h_liv',
-      'fi',
-      'dpr',
-      'scs',
-      'sce',
-      'sce_rel',
-      'sce_obs',
-      'dce',
-      'ssb',
-      'dsb',
-      'ccr',
-      'hcr',
-      'efc',
-      'gl',
-      'mast',
-      'ket',
-      'rp',
-      'met',
-      'da',
-      'mf',
-      'ms',
-      'dwp_dollar',
-      'wt_dollar',
-      'cw_dollar',
-      'ptat',
-      'udc',
-      'flc',
-      'bwc',
-      'dc',
-      't_rel',
-      'd_h2',
-      'stature',
-      'strength',
-      'body_depth',
-      'dairy_form',
-      'rump_angle',
-      'thurl_width',
-      'rlsv',
-      'rlrv',
-      'foot_angle',
-      'fls',
-      'f_udder_att',
-      'r_udder_height',
-      'rear_udder_width',
-      'udder_cleft',
-      'udder_depth',
-      'ftp',
-      'rtp',
-      'rtp_sv',
-      'teat_length',
-      'pedigree',
-      'aaa',
-      'dms',
-      'kappa_casein',
-      'beta_casein',
-      'bbr',
-      'b_lact',
-      'genetic_codes',
-      'haplotypes',
-      'rha',
-      'efi',
-      'birth_date',
-      'proof',
-      'adv',
-      'gs',
-      'fs',
-      'num_511',
-      'edge',
-      'cp',
-      'cp511',
-    ],
-  };
-
   const token = useContext(TokenContext);
 
   const [markerType, setMarkerType] = useState('NAAB');
@@ -216,6 +118,24 @@ const Search = () => {
             // console.log("Много совпадений");
             extraMatches.set(markerExtended.marker, markerExtended.matches);
           }
+        });
+
+        singleMatch.forEach((singleMatchBull) => {
+          if (!singleMatchBull.birth_date) {
+            return;
+          }
+
+          singleMatchBull.birth_date = singleMatchBull.birth_date.slice(0, 10).split("-").reverse().join(".");
+        });
+
+        extraMatches.forEach((extraMatchBulls) => {
+          extraMatchBulls.forEach((bull) => {
+            if (!bull.birth_date) {
+              return;
+            }
+  
+            bull.birth_date = bull.birth_date.slice(0, 10).split("-").reverse().join(".");
+          })
         });
 
         setExtendedMarkersOfBullsWithNoMatches(noMatches);
@@ -316,14 +236,14 @@ const Search = () => {
           <table className={[styles['search__table']].join(' ')}>
             <tbody>
               <tr>
-                {columnNames['AltaGenetic'].map((colName, index) => (
-                  <th key={'h_' + index}>{colName}</th>
+                {columnNames['AltaGenetic'].map(({ tableColumnName }, index) => (
+                  <th key={'h_' + index}>{tableColumnName}</th>
                 ))}
               </tr>
               {[...extendedMarkersOfBullsWithSingleMatch.values()].map((value, i) => (
                 <tr key={'r_' + i}>
-                  {columnNames['AltaGenetic'].map((colName, k) => (
-                    <td key={'d_' + k}>{value[colName] || ''}</td>
+                  {columnNames['AltaGenetic'].map(({ dbColumnName }, k) => (
+                    <td key={'d_' + k}>{value[dbColumnName] || ''}</td>
                   ))}
                 </tr>
               ))}
