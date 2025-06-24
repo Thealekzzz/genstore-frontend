@@ -7,6 +7,7 @@ import FourTab from './tabs/FourTab';
 import { searchBulls } from '../../api/search';
 import SecondTab from './tabs/SecondTab';
 import ThirdTab from './tabs/ThirdTab';
+import FifthTab from './tabs/FifthTab';
 
 const sexByNumber = {
   0: 'Ж',
@@ -22,7 +23,7 @@ const mainFields = [
   { name: 'Порода', key: 'breed' },
 ];
 
-const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
+const BullPopup = ({ selectedBull, isPopupOpen, averageValues, onBullUpdate }) => {
   const [isPedigreeLoading, setIsPedigreeLoading] = useState(false);
   const [pedigree, setPedigree] = useState({});
   const [tabValue, setTabValue] = useState(1);
@@ -99,6 +100,7 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
           <Tab value={2} label="Экстерьер" />
           <Tab value={3} label="Здоровье" />
           <Tab value={4} label="Родословная" />
+          <Tab value={5} label="Промеры" />
         </Tabs>
 
         {tabValue === 1 && (
@@ -120,6 +122,15 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues }) => {
             averageValues={averageValues}
             pedigree={pedigree}
             isPedigreeLoading={isPedigreeLoading}
+          />
+        )}
+
+        {tabValue === 5 && (
+          <FifthTab
+            selectedBull={selectedBull}
+            isPopupOpen={isPopupOpen}
+            averageValues={averageValues}
+            onBullUpdate={onBullUpdate}
           />
         )}
       </TabsContainer>

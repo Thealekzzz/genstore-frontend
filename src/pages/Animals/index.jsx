@@ -121,6 +121,11 @@ const Animals = ({ userData }) => {
     });
   }
 
+  function handleBullUpdate(updatedBull) {
+    setBulls(bulls.map((bull) => (bull.id === updatedBull.id ? updatedBull : { ...bull })));
+    setSelectedBull(updatedBull);
+  }
+
   useEffect(() => {
     console.log(checkedBullIds);
   }, [checkedBullIds]);
@@ -297,7 +302,7 @@ const Animals = ({ userData }) => {
           overflowY: 'auto',
         }}
       >
-        <BullPopup selectedBull={selectedBull} isPopupOpen={isBullPopupOpen} averageValues={averageValues} />
+        <BullPopup selectedBull={selectedBull} isPopupOpen={isBullPopupOpen} averageValues={averageValues} onBullUpdate={handleBullUpdate} />
       </Popup>
     </>
   );

@@ -13,6 +13,19 @@ export function getBulls(userId, offset) {
   }).then((res) => res.json());
 }
 
+export function patchUserBulls(bullData) {
+  const token = localStorage.getItem('token');
+
+  return fetch(`${SERVER_URL}:${SERVER_PORT}/api/bulls`, {
+    method: 'PATCH',
+    body: JSON.stringify(bullData),
+    headers: {
+      authorization: token ? 'Bearer ' + token : null,
+      'Content-Type': 'application/json',
+    },
+  }).then((res) => res.json());
+}
+
 export function deleteUserBulls(payload) {
   const token = localStorage.getItem('token');
 
