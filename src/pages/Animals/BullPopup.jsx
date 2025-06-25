@@ -17,7 +17,7 @@ const sexByNumber = {
 const mainFields = [
   { name: 'Кличка', key: 'name' },
   { name: 'ID', key: 'inter_reg_number' },
-  { name: 'Инвентарный номер', key: 'inventory_number' },
+  { name: 'Инвентарный номер', key: 'inv' },
   { name: 'Пол', key: 'sex', proceedValue: (value) => sexByNumber[value] || '--' },
   { name: 'Дата рождения', key: 'birth_date' },
   { name: 'Порода', key: 'breed' },
