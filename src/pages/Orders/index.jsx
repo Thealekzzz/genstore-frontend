@@ -1,15 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Typography, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import getPrettyDateTime from '../../utils/getPrettyDateTime';
 
-import TokenContext from '../../contexts/TokenContext';
-
 import EvaluationUserPopup from '../../components/EvaluationUserPopup/EvaluationUserPopup';
-import { getOrders } from '../../api/orders';
 
-const Orders = () => {
+const Orders = ({ orders }) => {
   const nameByStatus = {
     created: 'Создана',
     pending: 'В работе',
@@ -24,12 +21,9 @@ const Orders = () => {
     done: '#CACACA',
   };
 
-  const token = useContext(TokenContext);
-
-  const [orders, setOrders] = useState([]);
   // const [bulls, setBulls] = useState([]);
 
-  const [areEvaluatesLoading, setAreEvaluatesLoading] = useState(false);
+  // const [areEvaluatesLoading, setAreEvaluatesLoading] = useState(false);
   const [isEvaluationPopupOpen, setIsEvaluationPopupOpen] = useState(false);
   const [selectedEvaluationData, setSelectedEvaluationData] = useState({});
 
@@ -37,19 +31,6 @@ const Orders = () => {
     setIsEvaluationPopupOpen(true);
     setSelectedEvaluationData(order);
   }
-
-  useEffect(() => {
-    setAreEvaluatesLoading(true);
-
-    getOrders()
-      .then((data) => {
-        setAreEvaluatesLoading(false);
-        setOrders(data.orders);
-      })
-      .catch(() => {
-        console.error('Ошибка при получении данных о расчетах пользователя');
-      });
-  }, [token]);
 
   return (
     <>
@@ -77,7 +58,6 @@ const Orders = () => {
           </>
         ) : (
           <CenterContainer>
-            <p className="noEvaluates">{areEvaluatesLoading ? 'Загрузка заявок...' : 'Заявок пока нет'}</p>
             <Link to="/createrequest">
               <Button variant="contained">Создать заявку</Button>
             </Link>

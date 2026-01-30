@@ -1,4 +1,4 @@
-const numericFieldsToCount = [
+export const numericFieldsToCount = [
   'tpi',
   'nm_dollar',
   'cm_dollar',
@@ -66,34 +66,3 @@ const numericFieldsToCount = [
   'rha',
   'efi',
 ];
-
-export default function getAvarageValues(bulls) {
-  const acc = {};
-  const result = {};
-
-  numericFieldsToCount.forEach((fieldName) => {
-    bulls.forEach((bull) => {
-      if (bull[fieldName] && !isNaN(+bull[fieldName])) {
-        if (!acc[fieldName]) {
-          acc[fieldName] = { count: 0, value: 0 };
-        }
-
-        acc[fieldName].value += +bull[fieldName];
-        acc[fieldName].count += 1;
-      }
-    });
-
-    try {
-      if (acc[fieldName]?.count) {
-        result[fieldName] = acc[fieldName].value / acc[fieldName].count;
-      } else {
-        result[fieldName] = 0;
-      }
-    } catch (e) {
-      console.error('Ошибка при расчете среднего значения характеристик');
-      console.log(e);
-    }
-  });
-
-  return result;
-}

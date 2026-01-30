@@ -54,10 +54,12 @@ export const TableHeader = styled(Box)(({ numberOfFields }) => ({
   fontWeight: 700,
 }));
 
-export const TableBody = styled('ul')(() => ({
+export const TableBody = styled('ul')(({ areBullsLoading }) => ({
   width: '100%',
 
   listStyle: 'none',
+
+  opacity: areBullsLoading ? 0.3 : 1,
 
   padding: 0,
   margin: 0,

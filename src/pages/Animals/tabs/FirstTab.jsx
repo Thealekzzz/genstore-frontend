@@ -44,7 +44,7 @@ const FirstTab = ({ selectedBull, isPopupOpen, averageValues }) => {
       <Table>
         <FieldHeader>Показатель</FieldHeader>
         <FieldHeader>Значение</FieldHeader>
-        <FieldHeader>Среднее по стаду</FieldHeader>
+        <FieldHeader>Среднее</FieldHeader>
 
         {tableRows.map(({ name, key, postfix }) => (
           <>

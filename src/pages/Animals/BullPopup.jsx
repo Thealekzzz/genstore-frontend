@@ -8,6 +8,7 @@ import { searchBulls } from '../../api/search';
 import SecondTab from './tabs/SecondTab';
 import ThirdTab from './tabs/ThirdTab';
 import FifthTab from './tabs/FifthTab';
+import { SERVER_PORT, SERVER_URL } from '../../config';
 
 const sexByNumber = {
   0: 'Ж',
@@ -25,12 +26,41 @@ const mainFields = [
 
 const BullPopup = ({ selectedBull, isPopupOpen, averageValues, onBullUpdate }) => {
   const [isPedigreeLoading, setIsPedigreeLoading] = useState(false);
+  const [isPdfLoading, setIsPdfLoading] = useState(false);
+  
   const [pedigree, setPedigree] = useState({});
   const [tabValue, setTabValue] = useState(1);
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  const downloadBullPDF = async () => {
+    setIsPdfLoading(true);
+
+    const response = await fetch(
+      `${SERVER_URL}:${SERVER_PORT}/api/bulls/pdf?bull_id=${selectedBull.id}`
+    );
+
+    if (!response.ok) {
+      console.log("Ошибка получения файла");
+      return;
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bull_${selectedBull.id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+    setIsPdfLoading(false);
+  };
+
 
   useEffect(() => {
     if (isPopupOpen) {
@@ -73,7 +103,10 @@ const BullPopup = ({ selectedBull, isPopupOpen, averageValues, onBullUpdate }) =
 
   return (
     <Container>
-      <Title>Основная информация</Title>
+      <Head>
+        <Title>Основная информация</Title>
+        <Button onClick={downloadBullPDF} disabled={isPdfLoading}>{isPdfLoading ? 'Генерирую...' : 'Скачать карточку'}</Button>
+      </Head>
 
       <MainInformation>
         <MainInformationGroup>
@@ -154,6 +187,14 @@ const Container = styled(Box)(() => ({
   height: '100%',
 }));
 
+const Head = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: 20,
+}));
+
 const MainInformation = styled(Box)(() => ({
   display: 'flex',
 
@@ -187,4 +228,37 @@ const TabsContainer = styled(Box)(() => ({
   width: '100%',
   marginTop: 40,
   paddingBottom: 100,
+}));
+
+const Button = styled('button')(() => ({
+  boxSizing: 'border-box',
+  padding: '12px 20px',
+
+  border: 'none',
+  outline: 'none',
+  borderRadius: '5px',
+
+  color: 'white',
+  fontFamily: '"Montserrat", "Arial", sans-serif',
+  fontSize: 12,
+  fontWeight: 'bold',
+
+  backgroundColor: '#4380f0',
+  cursor: 'pointer',
+  opacity: 1,
+  transition: 'opacity 0.2s, background-color 0.2s, scale 0.1s',
+
+  '&:hover': {
+    opacity: 0.9,
+  },
+
+  '&:active': {
+    scale: 0.95,
+  },
+
+  '&:disabled': {
+    backgroundColor: '#ccc',
+    cursor: 'auto',
+    opacity: 1,
+  },
 }));

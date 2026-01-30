@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { deleteUserBulls, getBulls } from '../../api/bulls';
+import { getAreThereOrdersBeyondOrders, getAverageBullData, getBulls, getBullsPdf } from '../../api/bulls';
 import { Box, Button, Checkbox, FormControlLabel, MenuItem, Select, Snackbar, Typography } from '@mui/material';
 import SortAscIcon from '../../imgs/sortAsc.svg';
 import SortDescIcon from '../../imgs/sortDesc.svg';
 import Popup from '../../components/Popup/Popup';
 import { ContainerHeader, HeaderCell, OrdersContainer, TableBody, TableHeader, TableRow, Title } from './components';
 import BullPopup from './BullPopup';
-import getAvarageValues from '../../utils/bulls';
 import wordEnding from '../../utils/wordEnding';
 
 const fieldsToShowInTable = {
@@ -17,30 +16,20 @@ const fieldsToShowInTable = {
   Жир: 'fat',
 };
 
-function compareFn(a, b, key, asc) {
-  if (a[key] < b[key]) {
-    return asc ? -1 : 1;
-  } else if (a[key] > b[key]) {
-    return asc ? 1 : -1;
-  }
-
-  return 0;
-}
-
-const Animals = ({ userData }) => {
+const Animals = ({ userData, orders }) => {
   const [areBullsLoading, setAreBullsLoading] = useState(false);
+  const [isPdfLoading, setIsPdfLoading] = useState(false);
 
   const [bulls, setBulls] = useState([]);
+  const [areThereOrdersBeyondOrders, setAreThereOrdersBeyondOrders] = useState(false);
   const [hasMoreBulls, setHasMoreBulls] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [filteredBulls, setFilteredBulls] = useState([]);
-  const [orderIds, setOrderIds] = useState([]);
   const [averageValues, setAverageValues] = useState([]);
-
-  const [selectValue, setSelectValue] = useState('all');
+  
+  const [selectedOrder, setSelectedOrder] = useState('all');
   const [sortedBy, setSortedBy] = useState({ value: null, asc: false });
   const [isOnlyFullPedigree, setIsOnlyFullPedigree] = useState(false);
-
+  
   const [selectedBull, setSelectedBull] = useState({});
   const [isBullPopupOpen, setIsBullPopupOpen] = useState(false);
 
@@ -48,7 +37,7 @@ const Animals = ({ userData }) => {
   const [lastCheckedBullId, setLastCheckedBullId] = useState(null);
 
   function handleSelectChange(event) {
-    setSelectValue(event.target.value);
+    setSelectedOrder(event.target.value);
   }
 
   function handleFullPedigreeCheckboxChange(event) {
@@ -62,36 +51,20 @@ const Animals = ({ userData }) => {
 
   function handleSortButtonClick(sortBy) {
     const newSortedBy = { value: sortBy, asc: sortedBy.value === sortBy ? !sortedBy.asc : false };
+    setOffset(0);
     setSortedBy(newSortedBy);
   }
 
   function handleLoadMoreBulls() {
-    const newOffset = offset + 200;
-
-    getBulls(userData.userId, newOffset)
-      .then(({ data, hasMoreData }) => {
-        const newBulls = [...bulls, ...data];
-
-        setBulls(newBulls);
-        setHasMoreBulls(hasMoreData);
-        setAverageValues(getAvarageValues(newBulls));
-      })
-      .catch(() => {
-        console.error('Ошибка при получении данных о быках');
-      })
-      .finally(() => {
-        setAreBullsLoading(false);
-      });
-
-    setOffset(newOffset);
+    setOffset(offset + 200);
   }
 
   function handleBullCheckboxChange(event, bull) {
     if (event.nativeEvent.shiftKey && lastCheckedBullId) {
-      const lastCheckedBullIndex = filteredBulls.findIndex((checkedBull) => checkedBull.id === lastCheckedBullId);
-      const currentCheckedBullIndex = filteredBulls.findIndex((checkedBull) => checkedBull.id === bull.id);
+      const lastCheckedBullIndex = bulls.findIndex((checkedBull) => checkedBull.id === lastCheckedBullId);
+      const currentCheckedBullIndex = bulls.findIndex((checkedBull) => checkedBull.id === bull.id);
 
-      const bullIdsToAdd = filteredBulls
+      const bullIdsToAdd = bulls
         .slice(
           Math.min(lastCheckedBullIndex, currentCheckedBullIndex),
           Math.max(lastCheckedBullIndex, currentCheckedBullIndex) + 1,
@@ -114,11 +87,33 @@ const Animals = ({ userData }) => {
     setLastCheckedBullId(bull.id);
   }
 
-  function handleDeleteCheckedBulls() {
-    deleteUserBulls(checkedBullIds).then(() => {
-      setBulls((prev) => prev.filter((bull) => !checkedBullIds.includes(bull.id)));
-      setCheckedBullIds([]);
-    });
+  // function handleDeleteCheckedBulls() {
+  //   deleteUserBulls(checkedBullIds).then(() => {
+  //     setBulls((prev) => prev.filter((bull) => !checkedBullIds.includes(bull.id)));
+  //     setCheckedBullIds([]);
+  //   });
+  // }
+
+  function downloadPdfForCheckedBulls() {
+    setIsPdfLoading(true);
+
+    getBullsPdf(checkedBullIds)
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Карточки быков [${checkedBullIds.length} шт].pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+      })
+      .finally(() => {
+        setIsPdfLoading(false);
+      });
+
   }
 
   function handleBullUpdate(updatedBull) {
@@ -127,47 +122,36 @@ const Animals = ({ userData }) => {
   }
 
   useEffect(() => {
-    console.log(checkedBullIds);
-  }, [checkedBullIds]);
+    getAverageBullData(userData.userId)
+      .then((averageData) => {
+        setAverageValues(averageData);
+      })
+      .catch(() => {
+        console.error('Ошибка при получении данных о быках');
+      })
 
-  useEffect(() => {
-    let newFilteredAndSortedBulls = [];
-
-    // Фильтр по выпадающему меню
-    if (selectValue === 'all') {
-      newFilteredAndSortedBulls = [...bulls];
-    } else if (selectValue === 'withoutOrder') {
-      newFilteredAndSortedBulls = bulls.filter((bull) => !bull.orderId);
-    } else {
-      newFilteredAndSortedBulls = bulls.filter((bull) => bull.orderId === selectValue);
-    }
-
-    // Фильтр по чекбоксу полной родословной
-    if (isOnlyFullPedigree) {
-      newFilteredAndSortedBulls = newFilteredAndSortedBulls.filter((bull) =>
-        bull.techPedigree
-          .split(':')
-          .map((parentData) => parentData.split('-'))
-          .every((parentMarkers) => parentMarkers[0] !== '' && parentMarkers[1] !== ''),
-      );
-    }
-
-    newFilteredAndSortedBulls.sort((a, b) => compareFn(a, b, sortedBy.value, sortedBy.asc));
-
-    setFilteredBulls(newFilteredAndSortedBulls);
-    setCheckedBullIds([]);
-  }, [selectValue, sortedBy, isOnlyFullPedigree, bulls]);
+    getAreThereOrdersBeyondOrders(userData.userId)
+      .then((areThereOrdersBeyondOrders) => {
+        setAreThereOrdersBeyondOrders(areThereOrdersBeyondOrders);
+      })
+      .catch(() => {
+        console.error('Ошибка при получении данных о быках');
+      })
+  }, [userData]);
 
   useEffect(() => {
     setAreBullsLoading(true);
 
-    getBulls(userData.userId)
-      .then(({ data: bulls, hasMoreData }) => {
-        setBulls(bulls);
+    getBulls(userData.userId, offset, isOnlyFullPedigree, selectedOrder, sortedBy)
+      .then(({ data: newBulls, hasMoreData }) => {
+        if (offset === 0) {
+          setBulls(newBulls);
+
+        } else {
+          setBulls((prev) => ([...prev, ...newBulls]));
+        }
+
         setHasMoreBulls(hasMoreData);
-        setFilteredBulls(bulls);
-        setOrderIds([...new Set(bulls.map((bull) => bull.orderId))]);
-        setAverageValues(getAvarageValues(bulls));
       })
       .catch(() => {
         console.error('Ошибка при получении данных о быках');
@@ -175,7 +159,7 @@ const Animals = ({ userData }) => {
       .finally(() => {
         setAreBullsLoading(false);
       });
-  }, []);
+  }, [userData, offset, selectedOrder, isOnlyFullPedigree, sortedBy]);
 
   return (
     <>
@@ -186,13 +170,14 @@ const Animals = ({ userData }) => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={selectValue}
+            value={selectedOrder}
             color="primary"
             size="small"
             onChange={handleSelectChange}
           >
-            <MenuItem value={'all'}>Из всех заявок</MenuItem>
-            {orderIds.map((orderId) => (
+            <MenuItem value={'all'}>Все животные</MenuItem>
+            {areThereOrdersBeyondOrders && <MenuItem value={'beyond'}>Вне заявок</MenuItem>}
+            {orders.map(({ orderId }) => (
               <MenuItem key={orderId || 'withoutOrder'} value={orderId || 'withoutOrder'}>
                 {orderId ? `Из заявки №${orderId}` : 'Вне заявок'}
               </MenuItem>
@@ -233,8 +218,8 @@ const Animals = ({ userData }) => {
               ))}
             </TableHeader>
 
-            <TableBody>
-              {filteredBulls.map((bull) => (
+            <TableBody areBullsLoading={areBullsLoading}>
+              {bulls.map((bull) => (
                 <TableRow
                   key={bull.id}
                   numberOfFields={Object.keys(fieldsToShowInTable).length}
@@ -283,10 +268,12 @@ const Animals = ({ userData }) => {
           <Typography>
             Выбрано {checkedBullIds.length} {wordEnding(checkedBullIds.length, 'животн', ['ых', 'ое', 'ых'])}
           </Typography>
-          <Button color="primary" variant="outlined" onClick={handleDeleteCheckedBulls}>
-            Удалить
+          <Button color="primary" variant="contained" onClick={downloadPdfForCheckedBulls} disabled={isPdfLoading}>
+            {isPdfLoading ? (
+              'Генерирую...'
+            ) : ('Скачать PDF')}
           </Button>
-          <Button color="primary" variant="contained" onClick={() => setCheckedBullIds([])}>
+          <Button color="primary" variant="outlined" onClick={() => setCheckedBullIds([])} disabled={isPdfLoading}>
             Отмена
           </Button>
         </Box>

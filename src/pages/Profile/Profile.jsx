@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { SERVER_PORT, SERVER_URL } from '../../config';
@@ -10,14 +10,19 @@ import Sidebar from '../../components/Sidebar';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import { regions } from '../../consts';
 import { getCompanies } from '../../api/companies';
+import { getOrders } from '../../api/orders';
 import { patchMe } from '../../api/user';
 import { deepEqual } from '../../utils/objects';
 import Animals from '../Animals';
 import Orders from '../Orders';
+import TokenContext from '../../contexts/TokenContext';
 
 const Profile = ({ setIsAuthorized, userData, setUserData }) => {
   const { values, handleChange, handleBlur, errors, setValues } = useFormAndValidation();
 
+  const token = useContext(TokenContext);
+
+  const [orders, setOrders] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [initialState, setInitialState] = useState({});
@@ -51,6 +56,16 @@ const Profile = ({ setIsAuthorized, userData, setUserData }) => {
   }
 
   useEffect(() => {
+    getOrders()
+      .then((data) => {
+        setOrders(data.orders);
+      })
+      .catch(() => {
+        console.error('Ошибка при получении данных о расчетах пользователя');
+      });
+  }, [token]);
+
+  useEffect(() => {
     console.log(userData);
     setValues(userData);
     setInitialState({ ...userData });
@@ -70,9 +85,9 @@ const Profile = ({ setIsAuthorized, userData, setUserData }) => {
     <Container>
       <Sidebar userData={userData} page={page} />
       <ContentContainer>
-        {page === 'animals' && <Animals userData={userData} />}
+        {page === 'animals' && <Animals userData={userData} orders={orders} />}
 
-        {page === 'orders' && <Orders userData={userData} />}
+        {page === 'orders' && <Orders userData={userData} orders={orders} />}
 
         {page === undefined && (
           <ProfileContainer>
