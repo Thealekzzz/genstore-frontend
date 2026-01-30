@@ -250,7 +250,7 @@ const Animals = ({ userData, orders }) => {
             )}
           </>
         ) : (
-          <p className="noEvaluates">{areBullsLoading ? 'Загрузка животных...' : 'Животных пока нет'}</p>
+          <p className="noEvaluates">{areBullsLoading ? 'Загрузка животных...' : typeof selectedOrder === 'number' ? 'В этой заявке ещё нет рассчитанных животных' : 'Животных пока нет'}</p>
         )}
       </OrdersContainer>
 
