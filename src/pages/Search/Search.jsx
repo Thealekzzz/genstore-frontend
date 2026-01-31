@@ -39,7 +39,6 @@ const Search = () => {
     NAAB: 'naab_code',
     ID: 'inter_reg_number',
     Кличка: 'name',
-    'Инв. Номер': 'inventory_number',
   };
 
   const separators = {
