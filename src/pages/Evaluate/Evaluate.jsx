@@ -282,21 +282,9 @@ const Evaluate = () => {
   function handleDownloadButtonClick(e) {
     e.target.setAttribute('disabled', true);
 
-    // Алгоритм для скачивания файла
-    fetch(linkToResultFile)
-      .then((response) => response.blob())
-      .then((blob) => {
-        console.log(savedFilename);
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = savedFilename;
-        link.click();
-      })
-      .catch(console.error);
-
     setTimeout(() => {
       e.target.removeAttribute('disabled');
-    }, 1000);
+    }, 1500);
   }
 
   function handleInputChange(inputs) {
@@ -487,12 +475,9 @@ const Evaluate = () => {
         </div>
 
         <div className="button-wrapper">
-          {/* <ButtonAccent onClick={handleDownloadButtonClick} href={linkToResultFile} download>Скачать</ButtonAccent> */}
-          <ButtonAccent onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
-
-          {/* <a href="#temp" download className='button button_accent' >
-                        Скачать
-                    </a> */}
+          {linkToResultFile && (
+            <ButtonAccent href={linkToResultFile} onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
+          )}
         </div>
       </section>
     </>
