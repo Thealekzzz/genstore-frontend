@@ -476,7 +476,7 @@ const Evaluate = () => {
 
         <div className="button-wrapper">
           {linkToResultFile && (
-            <ButtonAccent href={linkToResultFile} onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
+            <ButtonAccent href={linkToResultFile} target="_blank" onClick={handleDownloadButtonClick}>Скачать</ButtonAccent>
           )}
         </div>
       </section>
